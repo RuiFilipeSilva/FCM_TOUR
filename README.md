@@ -11,4 +11,4 @@ A aplicação incorporará também uma área de prémios através de uma roleta 
 diárias onde o utilizador vai ganhando pontos que pode trocar por vários prémios, um deles
 sendo um bilhete para a Torre Literária.
 
-nome
+nome + 2
