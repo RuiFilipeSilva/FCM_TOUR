@@ -2,10 +2,14 @@ package com.example.fcm_tour;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.media.AudioAttributes;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +21,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -69,6 +74,9 @@ public class MainActivity extends AppCompatActivity {
 
                 String img = jsonObjetcs.getString("cover");
 
+                String link = jsonObjetcs.getString("audio");
+
+
                 ImageView imgChuck = findViewById(R.id.cover);
                 Picasso.get()
                         .load(img)
@@ -79,9 +87,43 @@ public class MainActivity extends AppCompatActivity {
 
                 TextView text = (TextView) findViewById(R.id.textview);
                 text.setText(TEMP);
-                Log.d("museu", "onPostExecute: " + img);
+                Log.d("museu", "onPostExecute: " + link);
 
-            }catch (JSONException e){
+
+                MediaPlayer mediaPlayer = new MediaPlayer();
+                mediaPlayer.setAudioAttributes(
+                        new AudioAttributes.Builder()
+                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                .setUsage(AudioAttributes.USAGE_MEDIA)
+                                .build()
+                );
+                mediaPlayer.setDataSource(link);
+                mediaPlayer.prepare(); // might take long! (for buffering, etc)
+
+
+                Button play = (Button)findViewById(R.id.button2);
+                Button pause = (Button)findViewById(R.id.button);
+
+                play.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mediaPlayer.start();
+                    }
+                });
+
+
+                pause.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mediaPlayer.stop();
+                    }
+                });
+
+
+
+
+
+            }catch (JSONException | IOException e){
                 e.printStackTrace();
             }
             Toast.makeText(getApplicationContext(), "REQUEST DONE", Toast.LENGTH_LONG).show();
