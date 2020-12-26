@@ -1,151 +1,225 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".Authentication"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:gravity="center_horizontal">
+    tools:context=".Authentication"
+    android:id="@+id/linearLayout7">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="253dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
+        android:id="@+id/imageView7"
+        android:layout_width="match_parent"
+        android:layout_height="251dp"
         android:scaleType="fitStart"
-        android:src="@drawable/ic_background_logo2_01" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_marginTop="50dp"
-            android:id="@+id/name"
-            android:layout_width="300dp"
-            android:layout_height="52dp"
-            android:hint="@string/nome"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/nametxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-
-                />
-
-        </com.google.android.material.textfield.TextInputLayout>
+        android:src="@drawable/ic_background_logo2_01"
+        tools:ignore="MissingConstraints"
+        tools:layout_conversion_absoluteHeight="253dp"
+        tools:layout_conversion_absoluteWidth="411dp"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="0dp" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginTop="20dp"
-        android:id="@+id/textField"
-        android:layout_width="300dp"
-        android:layout_height="52dp"
-        android:hint="@string/email"
+        android:id="@+id/name"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        >
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="30dp"
+        android:hint="@string/nome"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView7"
+        tools:ignore="MissingConstraints"
+        tools:layout_conversion_absoluteHeight="52dp"
+        tools:layout_conversion_absoluteWidth="300dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/nametxt"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:textSize="12sp"
+            tools:layout_conversion_absoluteHeight="47dp"
+            tools:layout_conversion_absoluteWidth="300dp"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="308dp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textField"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/email"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/name"
+        tools:ignore="MissingConstraints"
+        tools:layout_conversion_absoluteHeight="52dp"
+        tools:layout_conversion_absoluteWidth="300dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/mail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
             android:inputType="textEmailAddress"
             android:textSize="12sp"
 
-            />
+            tools:layout_conversion_absoluteHeight="47dp"
+            tools:layout_conversion_absoluteWidth="300dp"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="381dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.textfield.TextInputLayout
-        android:layout_marginTop="20dp"
         android:id="@+id/pass"
-        android:layout_width="300dp"
-        android:layout_height="52dp"
-        android:hint="@string/palavraPasse"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        >
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/palavraPasse"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textField"
+        tools:ignore="MissingConstraints"
+        tools:layout_conversion_absoluteHeight="52dp"
+        tools:layout_conversion_absoluteWidth="300dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passtxt"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
             android:inputType="textPassword"
             android:textSize="12sp"
 
-            />
+            tools:layout_conversion_absoluteHeight="47dp"
+            tools:layout_conversion_absoluteWidth="300dp"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="453dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/confpass"
-            android:layout_marginTop="20dp"
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/confpass"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="300dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/confPalavraPasse"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pass"
+        tools:ignore="MissingConstraints"
+        tools:layout_conversion_absoluteHeight="52dp"
+        tools:layout_conversion_absoluteWidth="300dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/confpassTxt"
             android:layout_width="300dp"
-            android:layout_height="52dp"
-            android:hint="@string/confPalavraPasse"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            >
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/confpassTxt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:textSize="12sp"
-
-                />
-
-
-        </com.google.android.material.textfield.TextInputLayout>
-        <Button
-            android:layout_marginTop="30dp"
-            android:layout_width="170dp"
             android:layout_height="40dp"
-            android:background="@drawable/rounded_button"
-            android:text="@string/registar"/>
+            android:inputType="textPassword"
+            android:textSize="12sp"
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
-            android:orientation="horizontal"
-            android:gravity="center_horizontal">
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:background="@drawable/circle_btn_face"
-                android:src="@drawable/ic_btn_face"/>
-
-            <ImageButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="50dp"
-                android:background="@drawable/circle_btn_google"
-                android:src="@drawable/ic_btn_google" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_marginTop="30dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/criarConta"
-                android:gravity="center"/>
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:background="?android:attr/selectableItemBackground"
-                android:text="@string/registar"
-                android:textSize="12sp"
-                android:textColor="@color/black" />
-        </LinearLayout>
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="?android:attr/selectableItemBackground"
-            android:text="@string/voltar"
-            android:textColor="@color/black" />
+            tools:layout_conversion_absoluteHeight="47dp"
+            tools:layout_conversion_absoluteWidth="300dp"
+            tools:layout_editor_absoluteX="56dp"
+            tools:layout_editor_absoluteY="525dp" />
 
 
+    </com.google.android.material.textfield.TextInputLayout>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/button16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/registar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/confpass"
+        tools:ignore="MissingConstraints"
+        tools:layout_conversion_absoluteHeight="40dp"
+        tools:layout_conversion_absoluteWidth="170dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button16"
+        tools:ignore="MissingConstraints"
+        tools:layout_conversion_absoluteHeight="39dp"
+        tools:layout_conversion_absoluteWidth="411dp">
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/circle_btn_face"
+            android:src="@drawable/ic_btn_face" />
+
+        <ImageButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="50dp"
+            android:background="@drawable/circle_btn_google"
+            android:src="@drawable/ic_btn_google" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        tools:layout_conversion_absoluteHeight="0dp"
+        tools:layout_editor_absoluteY="762dp"
+        tools:layout_editor_absoluteX="74dp"
+        tools:layout_conversion_absoluteWidth="263dp"
+        tools:ignore="MissingConstraints">
+
+    </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:text="@string/voltar"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_conversion_absoluteHeight="0dp"
+        tools:layout_conversion_absoluteWidth="90dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:gravity="center"
+        android:text="@string/criarConta"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="664dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="72dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center"
+        android:text="@string/registar"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteY="646dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
