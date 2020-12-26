@@ -3,15 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Authentication"
-    android:gravity="top">
+    tools:context=".Authentication">
 
     <ImageView
-        android:src="@drawable/ic_background"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_marginTop="-45dp"
+        android:src="@drawable/ic_background" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,12 +20,32 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="110dp"
-            android:src="@drawable/ic_logo" />
+            android:layout_marginTop="150dp"
+            android:src="@drawable/ic_logo2_0" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_marginTop="50dp"
             android:id="@+id/textField"
+            android:layout_width="300dp"
+            android:layout_height="52dp"
+            android:hint="@string/nome"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:textSize="12sp"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="20dp"
+            android:id="@+id/nametxt"
             android:layout_width="300dp"
             android:layout_height="52dp"
             android:hint="@string/email"
@@ -46,11 +64,31 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:layout_marginTop="20dp"
+            android:id="@+id/passwrd"
+            android:layout_width="300dp"
+            android:layout_height="52dp"
+            android:hint="@string/palavraPasse"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/passwordtxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:textSize="12sp"
+
+                />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/pass"
             android:layout_marginTop="20dp"
             android:layout_width="300dp"
             android:layout_height="52dp"
-            android:hint="@string/palavraPasse"
+            android:hint="@string/confPalavraPasse"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             >
 
@@ -71,7 +109,7 @@
             android:layout_width="170dp"
             android:layout_height="40dp"
             android:background="@drawable/rounded_button"
-            android:text="@string/registar"/>
+            android:text="@string/login"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -102,14 +140,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@string/criarConta"
+                android:text="@string/iniciarSessão"
                 android:gravity="center"/>
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:background="?android:attr/selectableItemBackground"
-                android:text="@string/registar"
+                android:text="@string/login"
                 android:textSize="12sp"
                 android:textColor="@color/black" />
         </LinearLayout>

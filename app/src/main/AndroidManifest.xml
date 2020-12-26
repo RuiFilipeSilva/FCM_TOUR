@@ -11,7 +11,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FCM_TOUR">
-        <activity android:name=".Login"></activity>
+        <activity android:name=".Register"></activity>
+        <activity android:name=".Login" />
+        <activity android:name=".Authentication" />
         <activity android:name=".SampleHTTP" />
         <activity android:name=".MainActivity">
             <intent-filter>
