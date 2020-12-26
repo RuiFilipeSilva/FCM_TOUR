@@ -10,10 +10,10 @@
         android:id="@+id/cover"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="216dp"
         android:scaleType="fitXY"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp"></ImageView>
+        tools:layout_editor_absoluteX="-16dp"></ImageView>
 
     <TextView
         android:id="@+id/textview"
@@ -40,13 +40,73 @@
         app:layout_constraintTop_toBottomOf="@+id/cover"
         tools:layout_editor_absoluteX="0dp" />
 
+
     <Button
         android:id="@+id/auth"
-        android:layout_width="154dp"
-        android:layout_height="43dp"
+        android:layout_width="409dp"
+        android:layout_height="79dp"
         android:text="Autenticação"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="51dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="-5dp" />
+
+    <TableRow
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:elevation="40dp"
+        app:layout_constraintBottom_toTopOf="@+id/cover"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/auth"
+        app:layout_constraintVertical_bias="0.404">
+
+        <ImageButton
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="5dp"
+            android:elevation="2dp"
+            android:scaleType="center"
+            android:src="@drawable/torre"></ImageButton>
+
+        <ImageButton
+            android:id="@+id/imageButton"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:scaleType="center"
+
+            android:src="@drawable/museu"></ImageButton>
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:scaleType="center"
+
+            android:src="@drawable/musica"></ImageButton>
+
+        <ImageButton
+            android:id="@+id/imageButton3"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="15dp"
+            android:scaleType="center"
+
+            android:src="@drawable/biblio"></ImageButton>
+
+
+    </TableRow>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
