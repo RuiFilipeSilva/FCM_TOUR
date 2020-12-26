@@ -10,6 +10,7 @@ import android.widget.Button;
 public class Authentication extends AppCompatActivity {
 Intent login;
 Intent register;
+Intent voltar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,6 +35,17 @@ Intent register;
                 startActivity(register);
             }
         });
+
+        Button btnVoltar = (Button)findViewById(R.id.voltar);
+
+        btnVoltar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                voltar = new Intent(v.getContext(), MainActivity.class);
+                startActivity(voltar);
+            }
+        });
+
 
 
     }

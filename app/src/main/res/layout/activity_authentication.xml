@@ -65,11 +65,12 @@
         android:layout_height="match_parent"
         android:gravity="center_horizontal">
         <Button
-            android:layout_width="114dp"
+            android:id="@+id/voltar"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:background="?android:attr/selectableItemBackground"
             android:text="@string/voltar"
-            android:textColor="@color/black"
+            android:textColor="@color/grey"
             android:layout_gravity="bottom"
             />
 
