@@ -20,7 +20,7 @@ Intent register;
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                login = new Intent(v.getContext(), Login.class);
+                login = new Intent(v.getContext(), Login2.class);
                 startActivity(login);
             }
         });
