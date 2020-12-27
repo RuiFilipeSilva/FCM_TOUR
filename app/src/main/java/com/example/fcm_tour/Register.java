@@ -16,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -90,17 +91,27 @@ EditText confPassword;
         }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData, new Response.Listener<JSONObject>() {
+
             @Override
             public void onResponse(JSONObject response) {
+
                 Log.d("RESPONSE", "onResponse: "+ response);
-                Toast.makeText(getApplicationContext(), "Bem-vindo " + name, Toast.LENGTH_LONG).show();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Log.d("ERROR", "onErrorResponse: "+error.networkResponse.data[2]);
+                if( error.networkResponse.statusCode == 409){
+                    Toast.makeText(getApplicationContext(), error.networkResponse.data.toString(), Toast.LENGTH_LONG).show();
+                }
+
+                Log.d("ERROR", "onErrorResponse: "+ error);
                 error.printStackTrace();
             }
+
+
         });
+
 
         requestQueue.add(jsonObjectRequest);
 
