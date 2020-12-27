@@ -29,12 +29,25 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
     Intent intent;
+    Intent thisPage;
+    String token;
+    Button auth;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button auth = (Button)findViewById(R.id.auth);
+
+        //EXTRAS FROM LOGIN RESULT
+        thisPage = getIntent();
+        Bundle extras = thisPage.getExtras();
+        if(extras != null) {
+            token = extras.getString("token");
+            Toast.makeText(getApplicationContext(), "" + token, Toast.LENGTH_LONG).show();
+        }
+
+        auth = (Button)findViewById(R.id.auth);
 
         auth.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -16,7 +16,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,6 +24,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
@@ -100,20 +100,27 @@ EditText confPassword;
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("ERROR", "onErrorResponse: "+error.networkResponse.data[2]);
-                if( error.networkResponse.statusCode == 409){
-                    Toast.makeText(getApplicationContext(), error.networkResponse.data.toString(), Toast.LENGTH_LONG).show();
-                }
+                //if( error.networkResponse.statusCode == 409){
+                //   Toast.makeText(getApplicationContext(), error.networkResponse.data.toString(), Toast.LENGTH_LONG).show();
+                //}
 
-                Log.d("ERROR", "onErrorResponse: "+ error);
+                //mostra a mensagem de erro
+                handleError(error);
                 error.printStackTrace();
             }
-
-
         });
-
-
         requestQueue.add(jsonObjectRequest);
+    }
 
+    //------------------------------------------------FUNÇAO DA MENSAGEM DOS ERROS----------
+    public void handleError(VolleyError error) {
+        String body = null;
+        try {
+            body = new String(error.networkResponse.data,"UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            // exception
+        }
+        Log.d("ERROR", "onErrorResponse: " + body);
+        Toast.makeText(getApplicationContext(), "Erro: " + body, Toast.LENGTH_LONG).show();
     }
 }

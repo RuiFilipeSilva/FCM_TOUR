@@ -24,7 +24,6 @@
             </intent-filter>
         </activity>
         <activity android:name=".Register" />
-        <activity android:name=".Login" />
         <activity android:name=".Authentication" />
         <activity android:name=".SampleHTTP" />
         <activity android:name=".MainActivity">
