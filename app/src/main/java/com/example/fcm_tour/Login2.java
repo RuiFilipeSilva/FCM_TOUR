@@ -3,7 +3,9 @@ package com.example.fcm_tour;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.Context;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
@@ -11,6 +13,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -22,12 +26,19 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.security.AccessController;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,6 +54,7 @@ public class Login2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
+        Preferences.init(getApplicationContext());
 
         Intent x = getIntent();
 
@@ -50,6 +62,14 @@ public class Login2 extends AppCompatActivity {
             Uri uri = x.getData();
             String result = uri.getQueryParameter("code").toString();
             Log.d("RESULTADO", result);
+
+            new android.os.Handler().postDelayed(
+                    new Runnable() {
+                        public void run() {
+                            new Login2.GetUserGoogle().execute("https://fcm-tour.herokuapp.com/token/"+result.substring(2));
+                        }
+                    }, 1000);
+
         }
 
         Button btnVoltar = (Button) findViewById(R.id.voltar);
@@ -158,5 +178,79 @@ public class Login2 extends AppCompatActivity {
         }
         Log.d("ERROR", "onErrorResponse: " + body);
         Toast.makeText(getApplicationContext(), "Erro: " + body, Toast.LENGTH_LONG).show();
+    }
+
+    class GetUserGoogle extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... fileUrl){
+            StringBuilder stringBuilder = new StringBuilder();
+            try {
+                URL url = new URL(fileUrl[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+                connection.connect();
+                InputStream in = connection.getInputStream();
+
+                stringBuilder = new StringBuilder();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                String line = "";
+                while ((line = reader.readLine()) !=null){
+                    stringBuilder.append(line);
+                }
+            }catch (Exception e){
+                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
+            }
+            return stringBuilder.toString();
+        }
+
+        @Override
+        protected void onPostExecute(String result){
+            super.onPostExecute(result);
+            try {
+                JSONArray jsonResponse = new JSONArray(result);
+                JSONObject jsonObjetcs = jsonResponse.getJSONObject(0);
+                String bearer = jsonObjetcs.getString("bearer");
+
+                Log.e("GOOGLE", String.valueOf(jsonObjetcs));
+                JWTUtils.decoded(bearer);
+                home();
+
+
+            }catch (JSONException e){
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(getApplicationContext(), "REQUEST DONE", Toast.LENGTH_LONG).show();
+        }
+
+
+    }
+
+    public static class JWTUtils {
+
+        public static void decoded(String JWTEncoded) throws Exception {
+            try {
+                String[] split = JWTEncoded.split("\\.");
+                Log.d("JWT_DECODED", "Header: " + getJson(split[0]));
+                Log.d("JWT_DECODED", "Body: " + getJson(split[1]));
+                String user = split[1];
+                Preferences.write("user", user);
+
+            } catch (UnsupportedEncodingException e) {
+                //Error
+            }
+        }
+
+        private static String getJson(String strEncoded) throws UnsupportedEncodingException{
+            byte[] decodedBytes = Base64.decode(strEncoded, Base64.URL_SAFE);
+            return new String(decodedBytes, "UTF-8");
+        }
+    }
+
+    public void home(){
+        homePage = new Intent(this, MainActivity.class);
+        startActivity(homePage);
+
     }
 }

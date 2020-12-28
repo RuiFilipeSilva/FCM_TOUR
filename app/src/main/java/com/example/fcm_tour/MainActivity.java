@@ -1,5 +1,6 @@
 package com.example.fcm_tour;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
@@ -43,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Preferences.init(getApplicationContext());
 
         //BUTTONS
         ImageButton tower = (ImageButton) findViewById(R.id.tower);
@@ -55,13 +57,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+
         ImageButton museum = (ImageButton) findViewById(R.id.museum);
 
         museum.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                museumIntent = new Intent(v.getContext(), Museum.class);
-                startActivity(museumIntent);
+               // museumIntent = new Intent(v.getContext(), Museum.class);
+                //startActivity(museumIntent);
+                Preferences.read("user", null);
+                Log.d("PREFERENCES", Preferences.read("user", null));
             }
         });
 
