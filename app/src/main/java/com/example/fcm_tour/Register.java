@@ -3,6 +3,7 @@ package com.example.fcm_tour;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,6 +29,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Register extends AppCompatActivity {
 Intent voltar;
@@ -69,6 +72,7 @@ EditText confPassword;
                 email = (EditText) findViewById(R.id.mail);
                 password = (EditText) findViewById(R.id.passtxt);
                 confPassword = (EditText) findViewById(R.id.confpassTxt);
+                login = new Intent(v.getContext(), Login2.class);
                 volleyPost(name.getText().toString(), email.getText().toString() , password.getText().toString(), confPassword.getText().toString());
             }
         });
@@ -76,40 +80,55 @@ EditText confPassword;
 
     }
     public void volleyPost(String name, String email, String password, String confPassword){
-        String postUrl = "https://fcm-tour.herokuapp.com/register";
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        if (isEmailValid(email)) {
+            if (isPasswordValid(password)) {
+                String postUrl = "https://fcm-tour.herokuapp.com/register";
+                RequestQueue requestQueue = Volley.newRequestQueue(this);
+                JSONObject postData = new JSONObject();
+                try {
+                    postData.put("username", name);
+                    postData.put("email", email);
+                    postData.put("password", password);
+                    postData.put("confPassword", confPassword);
 
-        JSONObject postData = new JSONObject();
-        try {
-            postData.put("username", name);
-            postData.put("email", email);
-            postData.put("password",password);
-            postData.put("confPassword",confPassword);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
 
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData, new Response.Listener<JSONObject>() {
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData, new Response.Listener<JSONObject>() {
 
-            @Override
-            public void onResponse(JSONObject response) {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        String message = "";
+                        try {
+                            message = response.get("res").toString();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        startActivity(login);
+                        Toast.makeText(getApplicationContext(), message + "! Inicie Sessão", Toast.LENGTH_LONG).show();
+                        Log.d("RESPONSE", "onResponse: " + response);
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //if( error.networkResponse.statusCode == 409){
+                        //   Toast.makeText(getApplicationContext(), error.networkResponse.data.toString(), Toast.LENGTH_LONG).show();
+                        //}
 
-                Log.d("RESPONSE", "onResponse: "+ response);
+                        //mostra a mensagem de erro
+                        handleError(error);
+                        error.printStackTrace();
+                    }
+                });
+                requestQueue.add(jsonObjectRequest);
+            }else{
+                Toast.makeText(getApplicationContext(), "Password não é válido", Toast.LENGTH_LONG).show();
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                //if( error.networkResponse.statusCode == 409){
-                //   Toast.makeText(getApplicationContext(), error.networkResponse.data.toString(), Toast.LENGTH_LONG).show();
-                //}
+            } else {
 
-                //mostra a mensagem de erro
-                handleError(error);
-                error.printStackTrace();
             }
-        });
-        requestQueue.add(jsonObjectRequest);
     }
 
     //------------------------------------------------FUNÇAO DA MENSAGEM DOS ERROS----------
@@ -123,4 +142,26 @@ EditText confPassword;
         Log.d("ERROR", "onErrorResponse: " + body);
         Toast.makeText(getApplicationContext(), "Erro: " + body, Toast.LENGTH_LONG).show();
     }
+
+
+    //------------------------------------------------Validar e-mail----------------
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
+    }
+    //-----------------------------------------------------PASWORD---------------------
+    boolean isPasswordValid(String password) {
+        Boolean value = false;
+            Pattern pattern = Pattern.compile("(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,}).*$");
+            Matcher matcher = pattern.matcher(password);
+            Log.d("TESTE", "isPasswordValid: "+ matcher.matches());
+            if (matcher.matches()) {
+                Log.d("CHAR", "isPasswordValid: string " + password + " contains special character");
+                value = true;
+            } else {
+                Log.d("CHAR", "isPasswordValid: string " + password + " does not contains special character");
+            }
+        Log.d("VALUE", "isPasswordValid: "+value);
+        return value;
+    }
+
 }
