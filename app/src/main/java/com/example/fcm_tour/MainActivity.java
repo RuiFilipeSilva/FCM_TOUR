@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,11 +33,58 @@ public class MainActivity extends AppCompatActivity {
     Intent thisPage;
     String token;
     Button auth;
+    Intent towerIntent;
+    Intent museumIntent;
+    Intent musicIntent;
+    Intent libraryIntent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //BUTTONS
+        ImageButton tower = (ImageButton) findViewById(R.id.tower);
+
+        tower.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                towerIntent = new Intent(v.getContext(), Tower.class);
+                startActivity(towerIntent);
+            }
+        });
+
+        ImageButton museum = (ImageButton) findViewById(R.id.museum);
+
+        museum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                museumIntent = new Intent(v.getContext(), Museum.class);
+                startActivity(museumIntent);
+            }
+        });
+
+        ImageButton music = (ImageButton) findViewById(R.id.music);
+
+        music.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                musicIntent = new Intent(v.getContext(), Music.class);
+                startActivity(musicIntent);
+            }
+        });
+
+        ImageButton  library = (ImageButton) findViewById(R.id.library);
+
+        library.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                libraryIntent = new Intent(v.getContext(), Library.class);
+                startActivity(libraryIntent);
+            }
+        });
+
 
 
         //EXTRAS FROM LOGIN RESULT
