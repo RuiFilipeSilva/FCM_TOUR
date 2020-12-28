@@ -69,6 +69,7 @@ EditText confPassword;
                 email = (EditText) findViewById(R.id.mail);
                 password = (EditText) findViewById(R.id.passtxt);
                 confPassword = (EditText) findViewById(R.id.confpassTxt);
+                login = new Intent(v.getContext(), Login2.class);
                 volleyPost(name.getText().toString(), email.getText().toString() , password.getText().toString(), confPassword.getText().toString());
             }
         });
@@ -94,7 +95,14 @@ EditText confPassword;
 
             @Override
             public void onResponse(JSONObject response) {
-
+                String message = "";
+                try {
+                    message = response.get("res").toString();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                startActivity(login);
+                Toast.makeText(getApplicationContext(), message+"! Inicie Sessão", Toast.LENGTH_LONG).show();
                 Log.d("RESPONSE", "onResponse: "+ response);
             }
         }, new Response.ErrorListener() {
