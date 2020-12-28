@@ -33,6 +33,15 @@
                     android:host="fcm-tour.herokuapp.com"
                     android:path="/login"
                     android:scheme="http" />
+
+                <data
+                    android:host="fcm-tour.herokuapp.com"
+                    android:path="/auth/facebook/callback"
+                    android:scheme="https" />
+                <data
+                    android:host="fcm-tour.herokuapp.com"
+                    android:path="/auth/facebook/callback"
+                    android:scheme="http" />
             </intent-filter>
         </activity>
         <activity android:name=".Register" />
