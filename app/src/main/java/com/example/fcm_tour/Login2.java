@@ -48,7 +48,7 @@ public class Login2 extends AppCompatActivity {
 
         if(Intent.ACTION_VIEW.equals(x.getAction())) {
             Uri uri = x.getData();
-            String result = uri.getQuery().toString();
+            String result = uri.getQueryParameter("code").toString();
             Log.d("RESULTADO", result);
         }
 
