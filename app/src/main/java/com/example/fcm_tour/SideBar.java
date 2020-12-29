@@ -2,6 +2,7 @@ package com.example.fcm_tour;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.graphics.drawable.Drawable;
@@ -23,7 +24,7 @@ public class SideBar extends AppCompatActivity {
         findViewById(R.id.menu).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                drawerLayout.openDrawer(Gravity.START);
+                drawerLayout.openDrawer(GravityCompat.START);
             }
         });
         NavigationView navigationView = findViewById(R.id.navigationView);

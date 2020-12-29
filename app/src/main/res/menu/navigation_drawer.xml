@@ -34,4 +34,13 @@
         </menu>
     </item>
 
+    <item
+        android:id="@+id/roleta"
+        android:title="Roleta"
+        android:icon="@drawable/ic_roleta_icon" />
+    <item
+        android:id="@+id/def"
+        android:title="Defenições"
+        android:icon="@drawable/ic_def_icon" />
+
 </menu>
