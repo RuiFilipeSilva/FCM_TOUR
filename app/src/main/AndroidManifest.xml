@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FCM_TOUR">
-        <activity android:name=".Library"></activity>
+        <activity android:name=".SideBar">
+        </activity>
+        <activity android:name=".Library" />
         <activity android:name=".Music" />
         <activity android:name=".Museum" />
         <activity android:name=".Tower" />
@@ -33,7 +35,6 @@
                     android:host="fcm-tour.herokuapp.com"
                     android:path="/login"
                     android:scheme="http" />
-
                 <data
                     android:host="fcm-tour.herokuapp.com"
                     android:path="/auth/facebook/callback"
