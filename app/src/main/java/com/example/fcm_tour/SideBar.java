@@ -4,10 +4,13 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Toolbar;
+
+import com.google.android.material.navigation.NavigationView;
 
 public class SideBar extends AppCompatActivity {
 
@@ -23,6 +26,8 @@ public class SideBar extends AppCompatActivity {
                 drawerLayout.openDrawer(Gravity.START);
             }
         });
+        NavigationView navigationView = findViewById(R.id.navigationView);
+        navigationView.setItemIconTintList(null);
     }
 
 }
