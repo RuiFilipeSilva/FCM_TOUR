@@ -6,8 +6,8 @@
     >
     <item
         android:id="@+id/inicio"
-        android:title="Inicio"
-        android:icon="@drawable/ic_logo_icon" />
+        android:icon="@drawable/ic_logo_icon"
+        android:title="Inicio" />
     <item android:title="FCM">
         <menu>
             <group
@@ -24,8 +24,7 @@
                 <item
                     android:id="@+id/item3"
                     android:icon="@drawable/ic_biblioteca_icon"
-                    android:title="Biblioteca"
-                    />
+                    android:title="Biblioteca" />
                 <item
                     android:id="@+id/item4"
                     android:icon="@drawable/ic_musica_icon"
@@ -33,14 +32,16 @@
             </group>
         </menu>
     </item>
-
-    <item
-        android:id="@+id/roleta"
-        android:title="Roleta"
-        android:icon="@drawable/ic_roleta_icon" />
-    <item
-        android:id="@+id/def"
-        android:title="Defenições"
-        android:icon="@drawable/ic_def_icon" />
-
+    <item android:title="">
+        <menu>
+            <item
+                android:id="@+id/roleta"
+                android:icon="@drawable/ic_roleta_icon"
+                android:title="Roleta" />
+            <item
+                android:id="@+id/def"
+                android:icon="@drawable/ic_def_icon"
+                android:title="Defenições" />
+        </menu>
+    </item>
 </menu>
