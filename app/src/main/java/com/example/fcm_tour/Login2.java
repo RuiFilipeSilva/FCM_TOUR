@@ -49,6 +49,7 @@ public class Login2 extends AppCompatActivity {
     EditText email;
     EditText password;
     String token;
+    String loginType; // "Normal" / "Google" / "Facebook"
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,24 +57,26 @@ public class Login2 extends AppCompatActivity {
         setContentView(R.layout.activity_login2);
         Preferences.init(getApplicationContext());
 
-        Intent x = getIntent();
 
-        if(Intent.ACTION_VIEW.equals(x.getAction())) {
+        Intent x = getIntent();
+        if (Intent.ACTION_VIEW.equals(x.getAction())) {
+            loginType = Preferences.readLoginType();
             Uri uri = x.getData();
             String result = uri.getQueryParameter("code").toString();
-            Log.d("RESULTADO", result);
 
             new android.os.Handler().postDelayed(
                     new Runnable() {
                         public void run() {
-                            new Login2.GetUserGoogle().execute("https://fcm-tour.herokuapp.com/token/"+result.substring(2));
+                            if(loginType.equals("Google")) {
+                                new Login2.GetUserGoogle().execute("https://fcm-tour.herokuapp.com/token/Google/" + result.substring(2));
+                            } else if(loginType.equals("Facebook")) {
+                                new Login2.GetUserGoogle().execute("https://fcm-tour.herokuapp.com/token/Facebook/" + result);
+                            }
                         }
                     }, 1000);
-
         }
 
         Button btnVoltar = (Button) findViewById(R.id.voltar);
-
         btnVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,8 +84,8 @@ public class Login2 extends AppCompatActivity {
                 startActivity(voltar);
             }
         });
-        Button btnRegister = (Button) findViewById(R.id.register);
 
+        Button btnRegister = (Button) findViewById(R.id.register);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -92,10 +95,10 @@ public class Login2 extends AppCompatActivity {
         });
 
         ImageButton google = (ImageButton) findViewById(R.id.google);
-
         google.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Preferences.saveloginType("Google");
                 Uri uri = Uri.parse("https://accounts.google.com/o/oauth2/v2/auth?access_type=offline&prompt=consent&scope=https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.profile%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fuserinfo.email&response_type=code&client_id=817455743730-8aptanrqdh06q6aje2jhdp7i30l38mo8.apps.googleusercontent.com&redirect_uri=https%3A%2F%2Ffcm-tour.herokuapp.com%2Flogin"); // missing 'http://' will cause crashed
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
@@ -103,10 +106,10 @@ public class Login2 extends AppCompatActivity {
         });
 
         ImageButton facebook = (ImageButton) findViewById(R.id.facebook);
-
         facebook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Preferences.saveloginType("Facebook");
                 Uri uri = Uri.parse("https://fcm-tour.herokuapp.com/auth/facebook");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
@@ -114,10 +117,10 @@ public class Login2 extends AppCompatActivity {
         });
 
         Button loginBtn = (Button) findViewById(R.id.loginBtn);
-
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Preferences.saveloginType("Normal");
                 email = (EditText) findViewById(R.id.mail);
                 password = (EditText) findViewById(R.id.passwordTxt);
                 homePage = new Intent(v.getContext(), MainActivity.class);
@@ -149,6 +152,9 @@ public class Login2 extends AppCompatActivity {
                             e.printStackTrace();
                         }
                         homePage.putExtra("token", token);
+                        Preferences.saveUserToken(token);
+                        Preferences.write("userEmail", email);
+                        Preferences.write("", email);
                         startActivity(homePage);
                         Toast.makeText(getApplicationContext(), "Bem-vindo", Toast.LENGTH_LONG).show();
                     }
@@ -172,17 +178,16 @@ public class Login2 extends AppCompatActivity {
     public void handleError(VolleyError error) {
         String body = null;
         try {
-            body = new String(error.networkResponse.data,"UTF-8");
+            body = new String(error.networkResponse.data, "UTF-8");
         } catch (UnsupportedEncodingException e) {
             // exception
         }
-        Log.d("ERROR", "onErrorResponse: " + body);
         Toast.makeText(getApplicationContext(), "Erro: " + body, Toast.LENGTH_LONG).show();
     }
 
     class GetUserGoogle extends AsyncTask<String, String, String> {
         @Override
-        protected String doInBackground(String... fileUrl){
+        protected String doInBackground(String... fileUrl) {
             StringBuilder stringBuilder = new StringBuilder();
             try {
                 URL url = new URL(fileUrl[0]);
@@ -194,63 +199,63 @@ public class Login2 extends AppCompatActivity {
                 stringBuilder = new StringBuilder();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 String line = "";
-                while ((line = reader.readLine()) !=null){
+                while ((line = reader.readLine()) != null) {
                     stringBuilder.append(line);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
             }
             return stringBuilder.toString();
         }
 
         @Override
-        protected void onPostExecute(String result){
+        protected void onPostExecute(String result) {
             super.onPostExecute(result);
             try {
                 JSONArray jsonResponse = new JSONArray(result);
-                JSONObject jsonObjetcs = jsonResponse.getJSONObject(0);
-                String bearer = jsonObjetcs.getString("bearer");
+                JSONObject jsonObjectcs = jsonResponse.getJSONObject(0);
+                String bearer = jsonObjectcs.getString("bearer");
 
-                Log.e("GOOGLE", String.valueOf(jsonObjetcs));
+                Log.e("INFO", String.valueOf(bearer));
                 JWTUtils.decoded(bearer);
                 home();
-
-
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             } catch (Exception e) {
                 e.printStackTrace();
             }
             Toast.makeText(getApplicationContext(), "REQUEST DONE", Toast.LENGTH_LONG).show();
         }
-
-
     }
 
     public static class JWTUtils {
-
         public static void decoded(String JWTEncoded) throws Exception {
             try {
                 String[] split = JWTEncoded.split("\\.");
-                Log.d("JWT_DECODED", "Header: " + getJson(split[0]));
-                Log.d("JWT_DECODED", "Body: " + getJson(split[1]));
-                String user = split[1];
-                Preferences.write("user", user);
-
+                JSONObject body = new JSONObject(getJson(split[1]));
+                if(Preferences.readLoginType().equals("Google")) {
+                    String name = body.getString("name");
+                    String email = body.getString("email");
+                    Preferences.write("username", name);
+                    Preferences.write("userEmail", email);
+                } else {
+                    String data = body.getString("data");
+                    JSONObject body2 = new JSONObject(data);
+                    String email = body2.getString("user");
+                    Preferences.write("userEmail", email);
+                }
             } catch (UnsupportedEncodingException e) {
                 //Error
             }
         }
-
-        private static String getJson(String strEncoded) throws UnsupportedEncodingException{
+        private static String getJson(String strEncoded) throws UnsupportedEncodingException {
             byte[] decodedBytes = Base64.decode(strEncoded, Base64.URL_SAFE);
             return new String(decodedBytes, "UTF-8");
         }
     }
 
-    public void home(){
+    public void home() {
         homePage = new Intent(this, MainActivity.class);
         startActivity(homePage);
-
     }
 }

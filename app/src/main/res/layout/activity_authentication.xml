@@ -46,13 +46,16 @@
     android:layout_marginTop="50dp"
     android:orientation="horizontal"
     android:gravity="center_horizontal">
+
     <ImageButton
+        android:id="@+id/facebookBtn"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:background="@drawable/circle_btn_face"
-        android:src="@drawable/ic_btn_face"/>
+        android:src="@drawable/ic_btn_face" />
 
     <ImageButton
+        android:id="@+id/googleBtn"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginLeft="50dp"

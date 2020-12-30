@@ -170,12 +170,14 @@
         tools:layout_conversion_absoluteWidth="411dp">
 
         <ImageButton
+            android:id="@+id/facebookBtn"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/circle_btn_face"
             android:src="@drawable/ic_btn_face" />
 
         <ImageButton
+            android:id="@+id/googleBtn"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginLeft="50dp"
