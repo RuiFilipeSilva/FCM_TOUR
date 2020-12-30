@@ -47,7 +47,8 @@
         android:theme="@style/DrawerTextStyle"
         app:menu="@menu/navigation_drawer"
         tools:ignore="MissingConstraints"
-        app:headerLayout="@layout/header_navigation_drawer" />
+        app:headerLayout="@layout/header_navigation_drawer"
+        android:background="@drawable/ic_background_sidebar"/>
 
 
 
