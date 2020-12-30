@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
                // museumIntent = new Intent(v.getContext(), Museum.class);
                 //startActivity(museumIntent);
                 Preferences.read("user", null);
-                Log.d("PREFERENCES", Preferences.read("user", null));
+                Log.d("PREFERENCES", Preferences.read("userEmail", null));
             }
         });
 
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         library.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                libraryIntent = new Intent(v.getContext(), Library.class);
+                libraryIntent = new Intent(v.getContext(), SideBar.class);
                 startActivity(libraryIntent);
             }
         });
