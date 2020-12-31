@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 
 import com.example.fcm_tour.Controllers.Users;
+import com.example.fcm_tour.Homepage;
 import com.example.fcm_tour.MainActivity;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
@@ -108,7 +109,7 @@ public class Login2 extends AppCompatActivity {
 
 
     public void home() {
-        homePage = new Intent(this, MainActivity.class);
+        homePage = new Intent(this, Homepage.class);
         startActivity(homePage);
     }
 }
