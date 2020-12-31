@@ -1,4 +1,4 @@
-package com.example.fcm_tour;
+package com.example.fcm_tour.Controllers;
 
 import android.app.Activity;
 import android.content.Context;
@@ -27,6 +27,7 @@ public class Preferences
 
     public static void saveloginType(String value) {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("loginType");
         prefsEditor.putString("loginType", value);
         prefsEditor.commit();
     }

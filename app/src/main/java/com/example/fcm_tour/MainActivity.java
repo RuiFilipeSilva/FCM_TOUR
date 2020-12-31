@@ -1,9 +1,6 @@
 package com.example.fcm_tour;
 
-import android.content.Context;
 import android.content.Intent;
-import android.media.AudioAttributes;
-import android.media.MediaPlayer;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +13,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.fcm_tour.Controllers.Preferences;
+import com.example.fcm_tour.Views.Authentication;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -23,7 +22,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
