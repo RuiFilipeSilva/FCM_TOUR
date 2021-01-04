@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Homepage">
+
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout_editor_absoluteX="185dp"
+        tools:layout_editor_absoluteY="271dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical" >
+
+
+
+            <Button
+                android:id="@+id/auth"
+                android:layout_width="409dp"
+                android:layout_height="79dp"
+                android:text="Autenticação"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="-5dp" />
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_marginTop="20dp"
+                android:elevation="40dp">
+
+                <ImageButton
+                    android:id="@+id/tower"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="5dp"
+                    android:elevation="2dp"
+                    android:scaleType="center"
+                    android:src="@drawable/torre"></ImageButton>
+
+
+                <ImageButton
+                    android:id="@+id/museum"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:scaleType="center"
+
+                    android:src="@drawable/museu"></ImageButton>
+
+                <ImageButton
+                    android:id="@+id/music"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:scaleType="center"
+
+                    android:src="@drawable/musica"></ImageButton>
+
+                <ImageButton
+                    android:id="@+id/library"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="30dp"
+                    android:scaleType="center"
+
+                    android:src="@drawable/biblio"></ImageButton>
+
+
+            </TableRow>
+
+
+            <ImageView
+                android:id="@+id/cover"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="30dp"
+                android:scaleType="fitXY"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:layout_editor_absoluteX="-16dp"></ImageView>
+
+            <TextView
+                android:id="@+id/textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingLeft="20dp"
+                android:text="HISTÓRIA"
+                android:textColor="@color/black"
+                android:fontFamily="@font/stratum1_black"
+                android:textSize="26dp"
+                app:layout_constraintBottom_toTopOf="@+id/textview2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cover"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <TextView
+                android:id="@+id/textview2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                android:fontFamily="@font/barlow_light"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                app:layout_constraintTop_toBottomOf="@+id/cover"
+                tools:layout_editor_absoluteX="0dp" />
+
+
+        </LinearLayout>
+
+
+
+
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
