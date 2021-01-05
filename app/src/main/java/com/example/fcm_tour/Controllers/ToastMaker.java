@@ -13,9 +13,7 @@ public class ToastMaker {
     //Do a toast notification
     public static void sampleToast(String txt)
     {
-
         Toast toast = Toast.makeText(mContext, txt, Toast.LENGTH_SHORT);
-
         toast.show();
     }
 
