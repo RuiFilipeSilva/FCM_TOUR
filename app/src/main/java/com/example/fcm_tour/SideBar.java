@@ -3,6 +3,7 @@ package com.example.fcm_tour;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.ImageButton;
 
 import com.example.fcm_tour.Controllers.Preferences;
+import com.example.fcm_tour.Views.History;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
@@ -25,7 +27,13 @@ public class SideBar extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_side_bar);
-        String userPicture = Preferences.read("userPicture", null);
+        Preferences.init(getApplicationContext());
+        String userPicture = Preferences.readUserImg();
+
+
+        final int homeContainer = R.id.fullpage;
+        History history = new History();
+        openFragment(history, homeContainer);
 
         ImageButton picture = (ImageButton) findViewById(R.id.profilePicture);
 
@@ -47,6 +55,12 @@ public class SideBar extends AppCompatActivity {
         });
         NavigationView navigationView = findViewById(R.id.navigationView);
         navigationView.setItemIconTintList(null);
+    }
+
+    private void openFragment(History history, int homeContainer) {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(homeContainer, history);
+        ft.commit();
     }
 
     public class CircleTransform implements Transformation {
