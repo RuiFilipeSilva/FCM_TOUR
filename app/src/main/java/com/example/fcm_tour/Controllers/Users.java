@@ -246,13 +246,13 @@ public class Users {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Log.d("INFO", "pelo facebook: " + response);
+                            Log.d("SIGA", "pelo facebook: " + response);
                             token = response.get("token").toString();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                         Preferences.saveUserToken(token);
-                        Log.d("INFO", "token: " + Preferences.readUserToken());
+                        Log.d("SIGA", "token: " + Preferences.readUserToken());
                         Intent homePage = new Intent(context, Homepage.class);
                         homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(homePage);
