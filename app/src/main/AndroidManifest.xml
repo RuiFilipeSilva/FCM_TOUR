@@ -18,33 +18,7 @@
         <activity android:name=".Music" />
         <activity android:name=".Museum" />
         <activity android:name=".Tower" />
-        <activity android:name=".Views.Login2">
-            <intent-filter
-                android:autoVerify="true"
-                android:label="fcm_tour">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data
-                    android:host="fcm-tour.herokuapp.com"
-                    android:path="/login"
-                    android:scheme="https" />
-                <data
-                    android:host="fcm-tour.herokuapp.com"
-                    android:path="/login"
-                    android:scheme="http" />
-                <data
-                    android:host="fcm-tour.herokuapp.com"
-                    android:path="/auth/facebook/callback"
-                    android:scheme="https" />
-                <data
-                    android:host="fcm-tour.herokuapp.com"
-                    android:path="/auth/facebook/callback"
-                    android:scheme="http" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".Views.Login2"></activity>
         <activity android:name=".Views.Register" />
         <activity android:name=".Views.Authentication" />
         <activity android:name=".SampleHTTP" />
@@ -55,6 +29,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/FB_APP_ID" />
+
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"/>
     </application>
 
 </manifest>

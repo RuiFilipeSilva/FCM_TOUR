@@ -11,7 +11,7 @@
     app:layout_constraintStart_toStartOf="parent"
     tools:context=".Views.Login2">
 
-        >
+    >
 
     <ImageView
         android:id="@+id/imageView6"
@@ -52,20 +52,10 @@
         app:layout_constraintTop_toBottomOf="@+id/loginBtn"
         tools:ignore="MissingConstraints">
 
-        <ImageButton
-            android:id="@+id/facebook"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/circle_btn_face"
-            android:src="@drawable/ic_btn_face" />
-
-        <ImageButton
-            android:id="@+id/google"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="50dp"
-            android:background="@drawable/circle_btn_google"
-            android:src="@drawable/ic_btn_google" />
+        <FrameLayout
+            android:id="@+id/fragmentAuth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
     <Button
@@ -132,29 +122,29 @@
             android:textSize="12sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/pass"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:gravity="center_horizontal"
-            android:hint="@string/palavraPasse"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textField"
-            tools:ignore="MissingConstraints">
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/pass"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:hint="@string/palavraPasse"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textField"
+        tools:ignore="MissingConstraints">
 
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/passwordTxt"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:inputType="textPassword"
-                android:textSize="12sp"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/passwordTxt"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
+            android:inputType="textPassword"
+            android:textSize="12sp"
 
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
