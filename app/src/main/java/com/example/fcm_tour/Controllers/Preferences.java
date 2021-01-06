@@ -36,12 +36,38 @@ public class Preferences {
         prefsEditor.commit();
     }
 
-    public static String readLoginType() {
-        return mSharedPref.getString("loginType", null);
+    public static void saveUsername(String value) {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("username");
+        prefsEditor.putString("username", value);
+        prefsEditor.commit();
+    }
+
+    public static void saveUserEmail(String value) {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("userEmail");
+        prefsEditor.putString("userEmail", value);
+        prefsEditor.commit();
+    }
+
+    public static void saveUserImg(String value) {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("userImg");
+        prefsEditor.putString("userImg", value);
+        prefsEditor.commit();
     }
 
     public static String readUserToken() {
         return mSharedPref.getString("token", null);
+    }
+    public static String readUsername() {
+        return mSharedPref.getString("username", null);
+    }
+    public static String readUserEmail() {
+        return mSharedPref.getString("userEmail", null);
+    }
+    public static String readUserImg() {
+        return mSharedPref.getString("userImg", null);
     }
 
     public static String read(String key, String defValue) {

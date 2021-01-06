@@ -145,40 +145,6 @@ public class Users {
         }
     }
 
-    //DECODE BEARER TOKEN------------------------------------------------------------------------------------------------
-    public static class JWTUtils {
-        public static void decoded(String JWTEncoded) throws Exception {
-            try {
-                String[] split = JWTEncoded.split("\\.");
-                JSONObject body = new JSONObject(getJson(split[1]));
-                if (Preferences.readLoginType().equals("Google")) {
-                    String name = body.getString("name");
-                    String email = body.getString("email");
-                    String picture = body.getString("picture");
-                    Preferences.write("username", name);
-                    Preferences.write("userEmail", email);
-                    Preferences.write("userPicture", picture);
-                } else {
-                    String data = body.getString("data");
-                    JSONObject body2 = new JSONObject(data);
-                    String email = body2.getString("email");
-                    Preferences.write("userEmail", email);
-                    String name = body2.getString("username");
-                    Preferences.write("username", name);
-                    String picture = body2.getString("picture");
-                    Preferences.write("userPicture", picture);
-                }
-            } catch (UnsupportedEncodingException e) {
-                //Error
-            }
-        }
-
-        private static String getJson(String strEncoded) throws UnsupportedEncodingException {
-            byte[] decodedBytes = Base64.decode(strEncoded, Base64.URL_SAFE);
-            return new String(decodedBytes, "UTF-8");
-        }
-    }
-
     //LOGIN - NORMAL --------------------------------------------------------------------------------------------------------------
     public static void loginVolley(String email, String password, Context context) {
         String postUrl = "https://fcm-tour.herokuapp.com/login";
@@ -199,16 +165,16 @@ public class Users {
                     public void onResponse(JSONObject response) {
                         try {
                             token = response.get("token").toString();
+                            Preferences.saveUserToken(token);
+                            Preferences.saveUserEmail(email);
+                            Intent homePage = new Intent(context, Homepage.class);
+                            homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(homePage);
+                            Toast toast = Toast.makeText(context, "Bem vindo", Toast.LENGTH_SHORT);
+                            toast.show();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-                        Preferences.saveUserToken(token);
-                        Preferences.write("userEmail", email);
-                        Intent homePage = new Intent(context, Homepage.class);
-                        homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(homePage);
-                        Toast toast = Toast.makeText(context, "Bem vindo", Toast.LENGTH_SHORT);
-                        toast.show();
                     }
                 },
                 new Response.ErrorListener() {
@@ -246,18 +212,19 @@ public class Users {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Log.d("SIGA", "pelo facebook: " + response);
                             token = response.get("token").toString();
+                            Users.JWTUtils.decoded(token);
+                            Preferences.saveUserToken(token);
+                            Intent homePage = new Intent(context, Homepage.class);
+                            homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(homePage);
+                            Toast toast = Toast.makeText(context, "Bem vindo Facebook", Toast.LENGTH_SHORT);
+                            toast.show();
                         } catch (JSONException e) {
                             e.printStackTrace();
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                        Preferences.saveUserToken(token);
-                        Log.d("SIGA", "token: " + Preferences.readUserToken());
-                        Intent homePage = new Intent(context, Homepage.class);
-                        homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(homePage);
-                        Toast toast = Toast.makeText(context, "Bem vindo Facebook", Toast.LENGTH_SHORT);
-                        toast.show();
                     }
                 },
                 new Response.ErrorListener() {
@@ -295,18 +262,20 @@ public class Users {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            Log.d("SIGA", "pelo google: " + response);
                             token = response.get("token").toString();
+                            Users.JWTUtils.decoded(token);
+                            Preferences.saveUserToken(token);
+                            Intent homePage = new Intent(context, Homepage.class);
+                            homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(homePage);
+                            Toast toast = Toast.makeText(context, "Bem vindo Google", Toast.LENGTH_SHORT);
+                            toast.show();
                         } catch (JSONException e) {
                             e.printStackTrace();
+                        } catch (Exception e) {
+                            e.printStackTrace();
                         }
-                        Preferences.saveUserToken(token);
-                        Log.d("SIGA", "token: " + Preferences.readUserToken());
-                        Intent homePage = new Intent(context, Homepage.class);
-                        homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(homePage);
-                        Toast toast = Toast.makeText(context, "Bem vindo Google", Toast.LENGTH_SHORT);
-                        toast.show();
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -325,6 +294,31 @@ public class Users {
         requestQueue.add(jsonObjectRequest);
     }
 
+    //DECODE BEARER TOKEN------------------------------------------------------------------------------------------------
+    public static class JWTUtils {
+        public static void decoded(String JWTEncoded) throws Exception {
+            try {
+                String[] split = JWTEncoded.split("\\.");
+                JSONObject body = new JSONObject(getJson(split[1]));
+                String data = body.getString("data");
+                JSONObject body2 = new JSONObject(data);
+                String email = body2.getString("email");
+                Preferences.saveUserEmail(email);
+                String name = body2.getString("username");
+                Preferences.saveUsername(name);
+                String picture = body2.getString("picture");
+                Preferences.saveUserImg(picture);
+            } catch (UnsupportedEncodingException e) {
+                //Error
+            }
+        }
+
+        private static String getJson(String strEncoded) throws UnsupportedEncodingException {
+            byte[] decodedBytes = Base64.decode(strEncoded, Base64.URL_SAFE);
+            return new String(decodedBytes, "UTF-8");
+        }
+    }
+
     //ERROS VOLLEY-------------------------------------------------------------------------------------------------------
     public static void handleError(VolleyError error, Context context) {
         String body = null;
@@ -336,5 +330,4 @@ public class Users {
         Toast toast = Toast.makeText(context, "Erro: " + body, Toast.LENGTH_SHORT);
         toast.show();
     }
-
 }
