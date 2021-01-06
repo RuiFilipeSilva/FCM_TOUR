@@ -4,18 +4,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class Preferences
-{
+public class Preferences {
     private static SharedPreferences mSharedPref;
 
-    private Preferences()
-    {
+    private Preferences() {
 
     }
 
-    public static void init(Context context)
-    {
-        if(mSharedPref == null)
+    public static void init(Context context) {
+        if (mSharedPref == null)
             mSharedPref = context.getSharedPreferences(context.getPackageName(), Activity.MODE_PRIVATE);
     }
 
@@ -34,6 +31,7 @@ public class Preferences
 
     public static void saveUserToken(String value) {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("token");
         prefsEditor.putString("token", value);
         prefsEditor.commit();
     }
