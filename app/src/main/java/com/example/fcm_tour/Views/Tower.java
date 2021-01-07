@@ -1,6 +1,5 @@
 package com.example.fcm_tour.Views;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -16,13 +15,9 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.example.fcm_tour.API;
-import com.example.fcm_tour.Controllers.Preferences;
-import com.example.fcm_tour.Museum;
-import com.example.fcm_tour.Music;
 import com.example.fcm_tour.R;
-import com.example.fcm_tour.SideBar;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -35,46 +30,83 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class History extends Fragment   {
+/**
+ * A simple {@link Fragment} subclass.
+ * Use the {@link Tower#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class Tower extends Fragment {
+
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_PARAM1 = "param1";
+    private static final String ARG_PARAM2 = "param2";
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+
+    public Tower() {
+        // Required empty public constructor
+    }
+
+    /**
+     * Use this factory method to create a new instance of
+     * this fragment using the provided parameters.
+     *
+     * @param param1 Parameter 1.
+     * @param param2 Parameter 2.
+     * @return A new instance of fragment Tower.
+     */
+    // TODO: Rename and change types and number of parameters
+    public static Tower newInstance(String param1, String param2) {
+        Tower fragment = new Tower();
+        Bundle args = new Bundle();
+        args.putString(ARG_PARAM1, param1);
+        args.putString(ARG_PARAM2, param2);
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_history, container, false);
-        Preferences.init(getContext());
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_tower, container, false);
 
-        new History.GetMuseu().execute(API.API_URL+"/home");
+        new GetTower().execute("https://fcm-tour.herokuapp.com/torre");
 
-        ImageButton tower = (ImageButton) v.findViewById(R.id.tower);
+        Button tower = (Button) v.findViewById(R.id.btnStart);
         tower.setOnClickListener(new View.OnClickListener()
-       {
-          @Override
-        public void onClick(View v)
         {
-            final int homeContainer = R.id.fullpage;
-            Tower towerPage = new Tower();
-            openFragment(towerPage, homeContainer);
-        }
-       });
+            @Override
+            public void onClick(View v)
+            {
+                final int homeContainer = R.id.fullpage;
+                Rooms rooms = new Rooms();
+                openFragment(rooms, homeContainer);
+            }
+        });
 
         return v;
     }
 
-    private void openFragment(Tower towerPage, int homeContainer) {
+    private void openFragment(Rooms rooms, int homeContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(homeContainer, towerPage);
+        ft.replace(homeContainer, rooms);
         ft.commit();
     }
 
-
-
-    class GetMuseu extends AsyncTask<String, String, String> {
+    class GetTower extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... fileUrl){
             StringBuilder stringBuilder = new StringBuilder();
@@ -94,28 +126,28 @@ public class History extends Fragment   {
             }
             return stringBuilder.toString();
         }
+
         @Override
         protected void onPostExecute(String result){
             super.onPostExecute(result);
             View v = getView();
+
             try {
                 JSONArray jsonResponse = new JSONArray(result);
                 JSONObject jsonObjetcs = jsonResponse.getJSONObject(0);
                 String TEMP = jsonObjetcs.getString("description");
                 String img = jsonObjetcs.getString("cover");
-
                 ImageView imgChuck = v.findViewById(R.id.cover);
                 Picasso.get()
                         .load(img)
                         .into(imgChuck);
-
-                TextView text = (TextView) v.findViewById(R.id.textview2);
+                TextView text = (TextView) v.findViewById(R.id.description);
                 text.setText(TEMP);
-
             }catch (JSONException e){
                 e.printStackTrace();
             }
         }
-    }
 
-  }
+
+    }
+}

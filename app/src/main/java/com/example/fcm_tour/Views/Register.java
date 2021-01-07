@@ -4,19 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 
-import com.example.fcm_tour.Controllers.ToastMaker;
 import com.example.fcm_tour.Controllers.Users;
-import com.example.fcm_tour.Homepage;
 import com.example.fcm_tour.MainActivity;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
+import com.example.fcm_tour.SideBar;
 
 public class Register extends AppCompatActivity {
     Intent voltar;
@@ -43,7 +40,7 @@ public class Register extends AppCompatActivity {
         btnVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                voltar = new Intent(v.getContext(), MainActivity.class);
+                voltar = new Intent(v.getContext(), SideBar.class);
                 startActivity(voltar);
             }
         });

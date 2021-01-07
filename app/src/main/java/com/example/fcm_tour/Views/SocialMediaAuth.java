@@ -10,9 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Users;
-import com.example.fcm_tour.Homepage;
 import com.example.fcm_tour.R;
+import com.example.fcm_tour.SideBar;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -72,7 +73,7 @@ public class SocialMediaAuth extends Fragment {
         }
 
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("993641904076-cca6vq2tt4e72b19pf3jqn1n8qpu8j19.apps.googleusercontent.com")
+                .requestIdToken(API.ID_TOKEN_GOOGLE)
                 .requestEmail()
                 .build();
 
@@ -127,13 +128,13 @@ public class SocialMediaAuth extends Fragment {
             @Override
             public void onCancel() {
                 // App code
-                Log.d("INFO", "CANCEL CANCEL CANCEL CANCEL CANCEL CANCEL");
+                Log.d("INFO", "CANCEL");
             }
 
             @Override
             public void onError(FacebookException exception) {
                 // App code
-                Log.d("INFO", "ERRO ERRO ERRO ERRO ERRO ERRO");
+                Log.d("INFO", String.valueOf(exception));
             }
         });
         return v;
@@ -165,7 +166,7 @@ public class SocialMediaAuth extends Fragment {
     }
 
     public void home() {
-        Intent homePage = new Intent(getContext(), Homepage.class);
+        Intent homePage = new Intent(getContext(), SideBar.class);
         startActivity(homePage);
     }
 }

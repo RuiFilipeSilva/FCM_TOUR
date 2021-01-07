@@ -20,6 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.Controllers.Users;
 import com.example.fcm_tour.Views.Authentication;
+import com.example.fcm_tour.Views.History;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void gameOver(){
-        Intent intent = new Intent(this, Homepage.class);
+        Intent intent = new Intent(this, SideBar.class);
         startActivity(intent);
         finish();
     }

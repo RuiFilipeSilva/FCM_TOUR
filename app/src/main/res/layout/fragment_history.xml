@@ -14,12 +14,12 @@
               android:layout_height="wrap_content"
               android:orientation="vertical" >
 
-              <Button
+              <!--<Button
                   android:id="@+id/auth"
                   android:layout_width="409dp"
                   android:layout_height="79dp"
                   android:text="Autenticação"
-                  tools:layout_editor_absoluteY="-5dp" />
+                  tools:layout_editor_absoluteY="-5dp" />-->
 
               <TableRow
                   android:layout_width="match_parent"

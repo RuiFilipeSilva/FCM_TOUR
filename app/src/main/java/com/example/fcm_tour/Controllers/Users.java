@@ -2,7 +2,6 @@ package com.example.fcm_tour.Controllers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
@@ -15,9 +14,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.fcm_tour.Homepage;
-import com.example.fcm_tour.MainActivity;
+import com.example.fcm_tour.SideBar;
+import com.example.fcm_tour.Views.History;
 import com.example.fcm_tour.Views.Login2;
+import com.example.fcm_tour.API;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,7 +41,7 @@ public class Users {
     public static void volleyPost(String name, String email, String password, String confPassword, Context context) {
         if (isEmailValid(email)) {
             if (isPasswordValid(password)) {
-                String postUrl = "https://fcm-tour.herokuapp.com/register";
+                String postUrl = API.API_URL+"/register";
                 RequestQueue requestQueue = Volley.newRequestQueue(context);
                 JSONObject postData = new JSONObject();
                 try {
@@ -147,7 +147,7 @@ public class Users {
 
     //LOGIN - NORMAL --------------------------------------------------------------------------------------------------------------
     public static void loginVolley(String email, String password, Context context) {
-        String postUrl = "https://fcm-tour.herokuapp.com/login";
+        String postUrl = API.API_URL+"/login";
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 
         JSONObject postData = new JSONObject();
@@ -167,7 +167,7 @@ public class Users {
                             token = response.get("token").toString();
                             Preferences.saveUserToken(token);
                             Preferences.saveUserEmail(email);
-                            Intent homePage = new Intent(context, Homepage.class);
+                            Intent homePage = new Intent(context, SideBar.class);
                             homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(homePage);
                             Toast toast = Toast.makeText(context, "Bem vindo", Toast.LENGTH_SHORT);
@@ -195,7 +195,7 @@ public class Users {
 
     //LOGIN - FACEBOOK --------------------------------------------------------------------------------------------------------------
     public static void facebookLogin(String access_token, String username, String email, Context context) {
-        String postUrl = "https://fcm-tour.herokuapp.com/facebook";
+        String postUrl = API.API_URL+"/facebook";
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 
         JSONObject postData = new JSONObject();
@@ -215,7 +215,7 @@ public class Users {
                             token = response.get("token").toString();
                             Users.JWTUtils.decoded(token);
                             Preferences.saveUserToken(token);
-                            Intent homePage = new Intent(context, Homepage.class);
+                            Intent homePage = new Intent(context, SideBar.class);
                             homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(homePage);
                             Toast toast = Toast.makeText(context, "Bem vindo Facebook", Toast.LENGTH_SHORT);
@@ -245,7 +245,7 @@ public class Users {
 
     //LOGIN - GOOGLE --------------------------------------------------------------------------------------------------------------
     public static void googleLogin(String username, String email, String picture, Context context) {
-        String postUrl = "https://fcm-tour.herokuapp.com/login/google";
+        String postUrl = API.API_URL+"/login/google";
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 
         JSONObject postData = new JSONObject();
@@ -265,7 +265,7 @@ public class Users {
                             token = response.get("token").toString();
                             Users.JWTUtils.decoded(token);
                             Preferences.saveUserToken(token);
-                            Intent homePage = new Intent(context, Homepage.class);
+                            Intent homePage = new Intent(context, SideBar.class);
                             homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(homePage);
                             Toast toast = Toast.makeText(context, "Bem vindo Google", Toast.LENGTH_SHORT);
