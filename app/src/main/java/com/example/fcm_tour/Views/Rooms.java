@@ -1,11 +1,13 @@
 package com.example.fcm_tour.Views;
 
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.R;
@@ -29,6 +32,8 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
+
+import static org.json.JSONObject.numberToString;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -88,21 +93,36 @@ public class Rooms extends Fragment {
     }
 
 
-    private void locationSort(String result) {
+    public void locationSort(JSONArray result) throws JSONException {
         View v = getView();
         Log.d("SIGA", "locationSort: "+ result);
-       LinearLayout roomsLayout = (LinearLayout) v.findViewById(R.id.roomMaker);
-       /* for (int i = 0; i <= result.length(); i++) {
+        LinearLayout roomsLayout = (LinearLayout) v.findViewById(R.id.roomMaker);
 
+       for (int i = 0; i <= result.length()- 1; i++) {
+           Log.d("SIGA", "locationSort: "+ i);
             LayoutInflater inflater = getLayoutInflater();
 
-            Button btnTag = (Button) inflater.inflate(R.layout.buttons, null,
+            Button btnTag = (Button) inflater.inflate(R.layout.btn_rooms, null,
                     false);
-            for (int j = 0; j < 4; j++) {
+            for (int j = 0; j < result.length(); j++) {
+                JSONObject room = result.getJSONObject(i);
+                JSONArray imgs = room.getJSONArray("imgs");
+                JSONObject btnimg = imgs.getJSONObject(0);
+                ImageView imgChuck = v.findViewById(R.id.cover);
 
-                btnTag.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
-                btnTag.setText("Button");
-                btnTag.setBackgroundResource(R.drawable.alpha_button_selector);
+
+                TextView number = new TextView(getContext());
+                number.setText(room.getString("number"));
+                number.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                Log.d("SIGA", "locationSort: " + number);
+                String name = room.getString("name");
+                btnTag.setLayoutParams(new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT));
+                btnTag.setText(name);
+                Picasso.get()
+                        .load(btnimg)
+                        .into(btnTag);
+
+                btnTag.setBackgroundResource(btnimg);
                 btnTag.setClickable(true);
                 btnTag.setTextColor(Color.WHITE);
                 btnTag.setGravity(Gravity.CENTER);
@@ -113,10 +133,10 @@ public class Rooms extends Fragment {
             btnTag.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Toast.makeText(context, "this is test", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "this is test", Toast.LENGTH_SHORT).show();
                 }
             });
-        } */
+        }
     }
 
 
@@ -147,19 +167,8 @@ public class Rooms extends Fragment {
             View v = getView();
             try {
                 JSONArray jsonResponse = new JSONArray(result);
-                locationSort(result);
-                JSONObject jsonObjetcs = jsonResponse.getJSONObject(0);
-                String TEMP = jsonObjetcs.getString("description");
-                String img = jsonObjetcs.getString("cover");
-
-                ImageView imgChuck = v.findViewById(R.id.cover);
-                Picasso.get()
-                        .load(img)
-                        .into(imgChuck);
-
-                TextView text = (TextView) v.findViewById(R.id.textview2);
-                text.setText(TEMP);
-
+                Log.d("SIGA", "locationSort: "+ jsonResponse);
+                locationSort(jsonResponse);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
