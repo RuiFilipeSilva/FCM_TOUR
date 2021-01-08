@@ -1,5 +1,6 @@
 package com.example.fcm_tour.Views;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -26,13 +27,20 @@ public class RoomPage extends Fragment {
         Rooms rooms = new Rooms();
         openFragment(rooms, homeContainer);
 
-        v.findViewById(R.id.qrCode).setOnClickListener(new View.OnClickListener() {
+        v.findViewById(R.id.keyBoard).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Rooms.getRoomsAccess(v);
             }
         });
 
+        v.findViewById(R.id.qrCode).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), QrScan.class);
+                startActivity(intent);
+            }
+        });
         return v;
     }
 
