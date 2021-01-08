@@ -30,51 +30,10 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link Tower#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class Tower extends Fragment {
-
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    public Tower() {
-        // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment Tower.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static Tower newInstance(String param1, String param2) {
-        Tower fragment = new Tower();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -91,7 +50,7 @@ public class Tower extends Fragment {
             public void onClick(View v)
             {
                 final int homeContainer = R.id.fullpage;
-                Rooms rooms = new Rooms();
+                RoomPage rooms = new RoomPage();
                 openFragment(rooms, homeContainer);
             }
         });
@@ -99,7 +58,7 @@ public class Tower extends Fragment {
         return v;
     }
 
-    private void openFragment(Rooms rooms, int homeContainer) {
+    private void openFragment(RoomPage rooms, int homeContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(homeContainer, rooms);

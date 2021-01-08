@@ -3,6 +3,7 @@ package com.example.fcm_tour.Controllers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 public class Preferences {
     private static SharedPreferences mSharedPref;
@@ -12,8 +13,9 @@ public class Preferences {
     }
 
     public static void init(Context context) {
-        if (mSharedPref == null)
+        if (mSharedPref == null) {
             mSharedPref = context.getSharedPreferences(context.getPackageName(), Activity.MODE_PRIVATE);
+        }
     }
 
     public static void write(String key, String value) {
@@ -57,17 +59,38 @@ public class Preferences {
         prefsEditor.commit();
     }
 
+    public static void saveRoomsAccess() {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("roomsAccess");
+        prefsEditor.putBoolean("roomsAccess", true);
+        prefsEditor.commit();
+    }
+
+    public static void removeRoomsAccess() {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("roomsAccess");
+        prefsEditor.commit();
+    }
+
+
     public static String readUserToken() {
         return mSharedPref.getString("token", null);
     }
+
     public static String readUsername() {
         return mSharedPref.getString("username", null);
     }
+
     public static String readUserEmail() {
         return mSharedPref.getString("userEmail", null);
     }
+
     public static String readUserImg() {
         return mSharedPref.getString("userImg", null);
+    }
+
+    public static Boolean readRoomsAccess() {
+        return mSharedPref.getBoolean("roomsAccess", false);
     }
 
     public static String read(String key, String defValue) {

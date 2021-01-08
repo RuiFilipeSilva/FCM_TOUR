@@ -244,15 +244,13 @@ public class Users {
     }
 
     //LOGIN - GOOGLE --------------------------------------------------------------------------------------------------------------
-    public static void googleLogin(String username, String email, String picture, Context context) {
+    public static void googleLogin(String bearer, Context context) {
         String postUrl = API.API_URL+"/login/google";
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 
         JSONObject postData = new JSONObject();
         try {
-            postData.put("username", username);
-            postData.put("email", email);
-            postData.put("picture", picture);
+            postData.put("token", bearer);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -263,6 +261,7 @@ public class Users {
                     public void onResponse(JSONObject response) {
                         try {
                             token = response.get("token").toString();
+                            Log.d("SIGA", "BEARER: " + token);
                             Users.JWTUtils.decoded(token);
                             Preferences.saveUserToken(token);
                             Intent homePage = new Intent(context, SideBar.class);
@@ -270,8 +269,6 @@ public class Users {
                             context.startActivity(homePage);
                             Toast toast = Toast.makeText(context, "Bem vindo Google", Toast.LENGTH_SHORT);
                             toast.show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }

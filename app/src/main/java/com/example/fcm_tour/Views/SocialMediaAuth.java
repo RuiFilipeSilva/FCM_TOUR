@@ -156,10 +156,8 @@ public class SocialMediaAuth extends Fragment {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            String username = account.getDisplayName();
-            String email = account.getEmail();
-            String picture = account.getPhotoUrl().toString();
-            Users.googleLogin(username, email, picture, getApplicationContext());
+            String token = account.getIdToken();
+            Users.googleLogin(token, getApplicationContext());
         } catch (ApiException e) {
             Log.w("SIGA", "signInResult:failed code=" + e.getStatusCode());
         }
