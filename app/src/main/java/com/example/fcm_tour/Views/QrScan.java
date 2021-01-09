@@ -126,7 +126,6 @@ public class QrScan extends AppCompatActivity {
             super.onPostExecute(result);
             Log.d("SIGA", "qulaquermerda: " + result);
             try {
-                Log.d("SIGA", "qulaquermerda: aqui " );
                 JSONObject jsonResponse = new JSONObject(result);
                 String state = jsonResponse.getString("state");
                 Log.d("SIGA", "onPostExecute: " + state);
@@ -141,15 +140,25 @@ public class QrScan extends AppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
-                                    finish();
+
                                 }
                             });
                     alertDialog.show();
+                    finish();
 
                 }
                 else{
-                    Log.d("SIGA", "alertDialogRefuse: AQUI");
-                    alertDialog("Sem Resultados", "Não foi encontrado nenhum bilhete com esse número");
+                    AlertDialog alertDialog = new AlertDialog.Builder(QrScan.this).create();
+                    alertDialog.setTitle("Sem Resultados");
+                    alertDialog.setMessage("Não foi encontrado nenhum bilhete com esse número");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    mCodeScanner.startPreview();
+                                }
+                            });
+                    alertDialog.show();
 
                 }
 
@@ -158,21 +167,22 @@ public class QrScan extends AppCompatActivity {
 
             }catch (JSONException e){
                 Log.d("ERRO", "onPostExecute: " + e);
+                AlertDialog alertDialog2 = new AlertDialog.Builder(QrScan.this).create();
+                alertDialog2.setTitle("Sem Resultados");
+                alertDialog2.setMessage("Não foi encontrado nenhum bilhete com esse número");
+                alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                mCodeScanner.startPreview();
+                            }
+                        });
+                alertDialog2.show();
                 e.printStackTrace();
             }
         }
         public void alertDialog(String title, String message){
-            AlertDialog alertDialog = new AlertDialog.Builder(QrScan.this).create();
-            alertDialog.setTitle(title);
-            alertDialog.setMessage(message);
-            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            mCodeScanner.startPreview();
-                        }
-                    });
-            alertDialog.show();
+
         }
     }
 }
