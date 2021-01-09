@@ -5,6 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,6 +35,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.zip.Inflater;
 
 public class QrScan extends AppCompatActivity {
     public CodeScanner mCodeScanner;
@@ -49,7 +53,6 @@ public class QrScan extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        Toast.makeText(QrScan.this, result.getText(), Toast.LENGTH_SHORT).show();
                         new TicketScan().execute(API.API_URL+"/ticket/"+result.getText());
                         Log.d("SIGA", "run: " + API.API_URL+"/ticket/"+result.getText());
                     }
@@ -123,13 +126,34 @@ public class QrScan extends AppCompatActivity {
             super.onPostExecute(result);
             Log.d("SIGA", "qulaquermerda: " + result);
             try {
-
+                Log.d("SIGA", "qulaquermerda: aqui " );
                 JSONObject jsonResponse = new JSONObject(result);
-                String TEMP = jsonResponse.getString("state");
+                String state = jsonResponse.getString("state");
+                Log.d("SIGA", "onPostExecute: " + state);
                 /* JSONObject jsonObjetcs = jsonResponse.getJSONObject(0);
-
                 String img = jsonObjetcs.getString("cover");*/
-                Log.d("SIGA", "onPostExecute: " + TEMP);
+                if (state.equals("Ticket válido")) {
+                    Rooms.getRoomsAccess(getApplicationContext());
+                    AlertDialog alertDialog = new AlertDialog.Builder(QrScan.this).create();
+                    alertDialog.setTitle("Bilhete Válido");
+                    alertDialog.setMessage("Já pode aceder a todas as salas");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    finish();
+                                }
+                            });
+                    alertDialog.show();
+
+                }
+                else{
+                    Log.d("SIGA", "alertDialogRefuse: AQUI");
+                    alertDialog("Sem Resultados", "Não foi encontrado nenhum bilhete com esse número");
+
+                }
+
+
 
 
             }catch (JSONException e){
@@ -137,10 +161,18 @@ public class QrScan extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        public void openFragment(SocialMediaAuth socialMediaAuth, int container) {
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(container, socialMediaAuth);
-            ft.commit();
+        public void alertDialog(String title, String message){
+            AlertDialog alertDialog = new AlertDialog.Builder(QrScan.this).create();
+            alertDialog.setTitle(title);
+            alertDialog.setMessage(message);
+            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                            mCodeScanner.startPreview();
+                        }
+                    });
+            alertDialog.show();
         }
     }
 }

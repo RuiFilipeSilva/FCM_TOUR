@@ -27,12 +27,12 @@ public class RoomPage extends Fragment {
         Rooms rooms = new Rooms();
         openFragment(rooms, homeContainer);
 
-        v.findViewById(R.id.keyBoard).setOnClickListener(new View.OnClickListener() {
+       /* v.findViewById(R.id.keyBoard).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Rooms.getRoomsAccess(v);
             }
-        });
+        });*/
 
         v.findViewById(R.id.qrCode).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,6 +1,8 @@
 package com.example.fcm_tour.Views;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -237,10 +239,11 @@ public class Rooms extends Fragment {
         }
     }
 
-    public static void getRoomsAccess(View v) {
+        public static void getRoomsAccess(Context v) {
         Preferences.saveRoomsAccess();
         MyAdapter adapter = new MyAdapter(actualView.getContext(), names, numbers, imgs, colors, icons);
         ListView listView = (ListView) actualView.findViewById(R.id.listCards);
         listView.setAdapter(adapter);
+
     }
 }
