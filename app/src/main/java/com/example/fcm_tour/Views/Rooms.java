@@ -11,6 +11,8 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -264,5 +266,11 @@ public class Rooms extends Fragment {
         ListView listView = (ListView) actualView.findViewById(R.id.listCards);
         listView.setAdapter(adapter);
 
+    }
+    private void openFragment(AudioPage audioPage, int homeContainer) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(homeContainer, audioPage);
+        ft.commit();
     }
 }
