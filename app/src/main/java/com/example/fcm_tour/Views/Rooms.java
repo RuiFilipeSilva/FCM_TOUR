@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -111,19 +112,23 @@ public class Rooms extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                boolean access = true;
                 for (int i = 0; i < numbers.length; i++) {
                     if(Preferences.readRoomsAccess() == false){
                         if (position == i && position == 0) {
+                            access = true;
                             //new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + numbers[i]);
+                            Log.d("SIGA", "onItemClick: "+ access);
                             Preferences.removeRoom();
                             Preferences.write("room", "00");
                             final int homeContainer = R.id.fullpage;
                             AudioPage audioPage = new AudioPage();
                             openFragment(audioPage, homeContainer);
+                            break;
                         }
                         else {
-
-                            Log.d("SIGA", "onItemClick: ");
+                            Log.d("SIGA", "onItemClick: AQUI");
+                            access = false;
                         }
                     }else {
                         if (position == i) {
@@ -134,6 +139,10 @@ public class Rooms extends Fragment {
                             openFragment(audioPage, homeContainer);
                         }
                     }
+                }
+                if (Preferences.readRoomsAccess() == false && access == false){
+                    Log.d("SIGA", "onItemClick: " + access);
+                    AlertDialogInsertTicket();
                 }
             }
         });
@@ -272,5 +281,26 @@ public class Rooms extends Fragment {
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(homeContainer, audioPage);
         ft.commit();
+    }
+    public void AlertDialogInsertTicket(){
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        alert.setTitle("Não têm acesso para entrar");
+        alert.setMessage("Digitalize o seu bilhete para ter acesso");
+        alert.setPositiveButton("Digitalize o Código", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+                dialog.dismiss();
+                Intent intent = new Intent(getContext(), QrScan.class);
+                startActivity(intent);
+            }
+        });
+        alert.setNegativeButton("Voltar",
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        return;
+                    }
+                });
+
+        alert.show();
     }
 }
