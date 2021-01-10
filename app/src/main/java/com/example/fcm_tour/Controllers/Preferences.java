@@ -72,7 +72,11 @@ public class Preferences {
         prefsEditor.commit();
     }
 
-
+    public static void removeRoom() {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("rooms");
+        prefsEditor.commit();
+    }
     public static String readUserToken() {
         return mSharedPref.getString("token", null);
     }
