@@ -35,7 +35,7 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class History extends Fragment   {
+public class History extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,23 +44,21 @@ public class History extends Fragment   {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_history, container, false);
         Preferences.init(getContext());
 
-        new History.GetMuseu().execute(API.API_URL+"/home");
+        new History.GetMuseu().execute(API.API_URL + "/home");
 
         ImageButton tower = (ImageButton) v.findViewById(R.id.tower);
-        tower.setOnClickListener(new View.OnClickListener()
-       {
-          @Override
-        public void onClick(View v)
-        {
-            final int homeContainer = R.id.fullpage;
-            Tower towerPage = new Tower();
-            openFragment(towerPage, homeContainer);
-        }
-       });
+        tower.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int homeContainer = R.id.fullpage;
+                Tower towerPage = new Tower();
+                openFragment(towerPage, homeContainer);
+            }
+        });
 
         return v;
     }
@@ -73,10 +71,9 @@ public class History extends Fragment   {
     }
 
 
-
     class GetMuseu extends AsyncTask<String, String, String> {
         @Override
-        protected String doInBackground(String... fileUrl){
+        protected String doInBackground(String... fileUrl) {
             StringBuilder stringBuilder = new StringBuilder();
             try {
                 URL url = new URL(fileUrl[0]);
@@ -86,16 +83,17 @@ public class History extends Fragment   {
                 stringBuilder = new StringBuilder();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 String line = "";
-                while ((line = reader.readLine()) !=null){
+                while ((line = reader.readLine()) != null) {
                     stringBuilder.append(line);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
             }
             return stringBuilder.toString();
         }
+
         @Override
-        protected void onPostExecute(String result){
+        protected void onPostExecute(String result) {
             super.onPostExecute(result);
             View v = getView();
             try {
@@ -105,17 +103,15 @@ public class History extends Fragment   {
                 String img = jsonObjetcs.getString("cover");
 
                 ImageView imgChuck = v.findViewById(R.id.cover);
-                Picasso.get()
-                        .load(img)
-                        .into(imgChuck);
+                Picasso.get().load(img).into(imgChuck);
 
                 TextView text = (TextView) v.findViewById(R.id.textview2);
                 text.setText(TEMP);
 
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 
-  }
+}

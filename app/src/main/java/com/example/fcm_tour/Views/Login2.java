@@ -54,7 +54,6 @@ public class Login2 extends AppCompatActivity {
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Preferences.saveloginType("Normal");
                 email = (EditText) findViewById(R.id.mail);
                 password = (EditText) findViewById(R.id.passwordTxt);
                 homePage = new Intent(v.getContext(), SideBar.class);

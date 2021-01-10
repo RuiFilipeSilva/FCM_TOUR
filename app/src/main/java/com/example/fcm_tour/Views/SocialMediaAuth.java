@@ -36,41 +36,15 @@ import java.util.Arrays;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class SocialMediaAuth extends Fragment {
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-    Intent homePage;
     LoginButton loginButton;
-    String loginType; // "Normal" / "Google" / "Facebook"
-    //Google Variables
     private static final int RC_GET_TOKEN = 9002;
     CallbackManager callbackManager;
     GoogleSignInAccount account;
     GoogleSignInClient mGoogleSignInClient;
 
-    private String mParam1;
-    private String mParam2;
-
-    public SocialMediaAuth() {
-        // Required empty public constructor
-    }
-
-    public static SocialMediaAuth newInstance(String param1, String param2) {
-        SocialMediaAuth fragment = new SocialMediaAuth();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
 
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(API.ID_TOKEN_GOOGLE)

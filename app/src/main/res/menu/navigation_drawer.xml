@@ -41,7 +41,11 @@
             <item
                 android:id="@+id/def"
                 android:icon="@drawable/ic_def_icon"
-                android:title="Defenições" />
+                android:title="Definições" />
+            <item
+                android:id="@+id/logout"
+                android:icon="@drawable/ic_logo_icon"
+                android:title="Terminar Sessão" />
         </menu>
     </item>
 </menu>

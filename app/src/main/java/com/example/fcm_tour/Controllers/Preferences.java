@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
+import android.util.Log;
+
+import com.example.fcm_tour.R;
 
 public class Preferences {
     private static SharedPreferences mSharedPref;
@@ -24,10 +27,9 @@ public class Preferences {
         prefsEditor.commit();
     }
 
-    public static void saveloginType(String value) {
+    public static void Logout() {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
-        prefsEditor.remove("loginType");
-        prefsEditor.putString("loginType", value);
+        prefsEditor.clear();
         prefsEditor.commit();
     }
 
@@ -90,6 +92,7 @@ public class Preferences {
     }
 
     public static String readUserImg() {
+        Log.d("SIGA", "readUserImg: "+ mSharedPref.getString("userImg", String.valueOf(R.mipmap.ic_launcher_round)));
         return mSharedPref.getString("userImg", null);
     }
 
