@@ -119,7 +119,7 @@ public class QrScan extends AppCompatActivity {
             }catch (Exception e){
                 Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
             }
-            return stringBuilder.toString();
+                return stringBuilder.toString();
         }
         @Override
         protected void onPostExecute(String result){
@@ -159,12 +159,7 @@ public class QrScan extends AppCompatActivity {
                                 }
                             });
                     alertDialog.show();
-
                 }
-
-
-
-
             }catch (JSONException e){
                 Log.d("ERRO", "onPostExecute: " + e);
                 AlertDialog alertDialog2 = new AlertDialog.Builder(QrScan.this).create();
@@ -180,9 +175,6 @@ public class QrScan extends AppCompatActivity {
                 alertDialog2.show();
                 e.printStackTrace();
             }
-        }
-        public void alertDialog(String title, String message){
-
         }
     }
 }
