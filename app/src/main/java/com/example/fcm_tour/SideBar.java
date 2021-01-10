@@ -24,6 +24,7 @@ import android.widget.ImageButton;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.Views.Authentication;
 import com.example.fcm_tour.Views.History;
+import com.example.fcm_tour.Views.Museum;
 import com.example.fcm_tour.Views.Tower;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
@@ -141,6 +142,9 @@ public class SideBar extends AppCompatActivity {
                 break;
             case R.id.item1:
                 fragmentClass = Tower.class;
+                break;
+            case R.id.item2:
+                fragmentClass = Museum.class;
                 break;
             default:
                 fragmentClass = History.class;

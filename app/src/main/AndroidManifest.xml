@@ -4,7 +4,8 @@
     package="com.example.fcm_tour">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera.ar" />
 
     <application
         android:allowBackup="true"
@@ -13,7 +14,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FCM_TOUR">
-        <activity android:name=".Views.QrScan"></activity>
+        <activity
+            android:name=".Views.AR_Sculptures"
+            android:label="@string/title_activity_a_r__sculptures">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".Views.QrScan" />
         <activity android:name=".SideBar" />
         <activity android:name=".Library" />
         <activity android:name=".Music" />
@@ -33,6 +44,9 @@
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/FB_APP_ID" />
+        <meta-data
+            android:name="com.google.ar.core"
+            android:value="require" />
 
         <activity
             android:name="com.facebook.FacebookActivity"
