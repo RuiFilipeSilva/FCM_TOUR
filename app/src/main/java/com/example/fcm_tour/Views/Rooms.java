@@ -110,8 +110,27 @@ public class Rooms extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 for (int i = 0; i < numbers.length; i++) {
-                    if (position == i) {
-                        new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + numbers[i]);
+                    if(Preferences.readRoomsAccess() == false){
+                        if (position == i && position == 0) {
+                            //new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + numbers[i]);
+                            Preferences.removeRoom();
+                            Preferences.write("room", "00");
+                            final int homeContainer = R.id.fullpage;
+                            AudioPage audioPage = new AudioPage();
+                            openFragment(audioPage, homeContainer);
+                        }
+                        else {
+
+                            Log.d("SIGA", "onItemClick: ");
+                        }
+                    }else {
+                        if (position == i) {
+                            Preferences.removeRoom();
+                            Preferences.write("room", numbers[i]);
+                            final int homeContainer = R.id.fullpage;
+                            AudioPage audioPage = new AudioPage();
+                            openFragment(audioPage, homeContainer);
+                        }
                     }
                 }
             }

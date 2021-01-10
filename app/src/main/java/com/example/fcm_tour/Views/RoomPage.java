@@ -152,7 +152,6 @@ public class RoomPage extends Fragment {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
                 new TicketScan().execute(API.API_URL+"/ticket/"+value);
-                Log.d("SIGA", "run: " + API.API_URL+"/ticket/"+value);
             }
         });
         alert.setNegativeButton("Cancel",
