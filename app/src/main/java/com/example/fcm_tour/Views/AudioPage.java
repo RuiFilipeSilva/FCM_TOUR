@@ -49,7 +49,12 @@ public class AudioPage extends Fragment {
 
         final int audioContainer = R.id.audioPageFrame;
         AudioPlayer audioPlayer = new AudioPlayer();
-        openFragment(audioPlayer, audioContainer);
+        new android.os.Handler().postDelayed(
+                new Runnable() {
+                    public void run() {
+                        openFragment(audioPlayer, audioContainer);
+                    }
+                }, 3000);
         return v;
     }
 
@@ -89,6 +94,7 @@ public class AudioPage extends Fragment {
                 String description = rooms.getString("description");
                 String img = rooms.getString("cover");
                 String link = rooms.getString("audio");
+                Log.d("SIGA", "onPostExecute: " + link);
                 Preferences.write("audioPlayer", link);
                 String name = rooms.getString("name");
                 ImageView imgChuck = v.findViewById(R.id.IMG);
