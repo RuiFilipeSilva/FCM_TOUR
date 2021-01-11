@@ -35,16 +35,13 @@ public class History extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_history, container, false);
         Preferences.init(getContext());
-
-        new History.GetMuseu().execute(API.API_URL + "/home");
-
+        new History.GetMuseum().execute(API.API_URL + "/home");
         ImageButton tower = (ImageButton) v.findViewById(R.id.tower);
         tower.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,7 +51,6 @@ public class History extends Fragment {
                 openFragment(towerPage, homeContainer);
             }
         });
-
         return v;
     }
 
@@ -65,8 +61,7 @@ public class History extends Fragment {
         ft.commit();
     }
 
-
-    class GetMuseu extends AsyncTask<String, String, String> {
+    class GetMuseum extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... fileUrl) {
             StringBuilder stringBuilder = new StringBuilder();
@@ -82,7 +77,6 @@ public class History extends Fragment {
                     stringBuilder.append(line);
                 }
             } catch (Exception e) {
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
             }
             return stringBuilder.toString();
         }
@@ -96,17 +90,13 @@ public class History extends Fragment {
                 JSONObject jsonObjetcs = jsonResponse.getJSONObject(0);
                 String TEMP = jsonObjetcs.getString("description");
                 String img = jsonObjetcs.getString("cover");
-
                 ImageView imgChuck = v.findViewById(R.id.cover);
                 Picasso.get().load(img).into(imgChuck);
-
                 TextView text = (TextView) v.findViewById(R.id.textview2);
                 text.setText(TEMP);
-
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
-
 }
