@@ -37,39 +37,28 @@ public class Museum extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
         View v = inflater.inflate(R.layout.fragment_museum, container, false);
-
-
         final int tempContainer = R.id.temporary;
         Temporary temporary = new Temporary();
         setFragment(temporary, tempContainer);
-
         final int permaContainer = R.id.permanet;
         Permanent permanent = new Permanent();
         setFragment2(permanent, permaContainer);
+        new GetMuseum().execute(API.API_URL + "/museu");
 
-        new GetMuseu().execute(API.API_URL+"/museu");
-
-        Button sulptures = (Button) v.findViewById(R.id.btnAR);
-        sulptures.setOnClickListener(new View.OnClickListener()
-        {
+        Button sculptures = (Button) v.findViewById(R.id.btnAR);
+        sculptures.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 final int homeContainer = R.id.fullpage;
                 SculpturePage sculpturePage = new SculpturePage();
                 openFragment(sculpturePage, homeContainer);
             }
         });
-
         return v;
     }
 
@@ -94,9 +83,9 @@ public class Museum extends Fragment {
         ft.commit();
     }
 
-    class GetMuseu extends AsyncTask<String, String, String> {
+    class GetMuseum extends AsyncTask<String, String, String> {
         @Override
-        protected String doInBackground(String... fileUrl){
+        protected String doInBackground(String... fileUrl) {
             StringBuilder stringBuilder = new StringBuilder();
             try {
                 URL url = new URL(fileUrl[0]);
@@ -106,16 +95,16 @@ public class Museum extends Fragment {
                 stringBuilder = new StringBuilder();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 String line = "";
-                while ((line = reader.readLine()) !=null){
+                while ((line = reader.readLine()) != null) {
                     stringBuilder.append(line);
                 }
-            }catch (Exception e){
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
+            } catch (Exception e) {
             }
             return stringBuilder.toString();
         }
+
         @Override
-        protected void onPostExecute(String result){
+        protected void onPostExecute(String result) {
             super.onPostExecute(result);
             View v = getView();
             try {
@@ -125,26 +114,18 @@ public class Museum extends Fragment {
                 String cover = jsonObjetcs.getString("cover");
                 JSONArray temporary = jsonObjetcs.getJSONArray("temporary");
                 JSONArray permanent = jsonObjetcs.getJSONArray("permanent");
-
                 String[] temporaryImgs = new String[temporary.length()];
                 String[] permanentImgs = new String[permanent.length()];
-
-                for(int i = 0; i < temporary.length(); i++){
+                for (int i = 0; i < temporary.length(); i++) {
                     JSONObject temp = temporary.getJSONObject(i);
                     String img = temp.getString("img");
-                    Log.d("SIGA", "onPostExecute: " + img);
-
                     temporaryImgs[i] = img;
                 }
-
-                for(int i = 0; i < permanent.length(); i++){
+                for (int i = 0; i < permanent.length(); i++) {
                     JSONObject perma = permanent.getJSONObject(i);
                     String img = perma.getString("img");
-                    Log.d("SIGA", "onPostExecute: " + img);
-
                     permanentImgs[i] = img;
                 }
-
                 ImageView imgChuck = v.findViewById(R.id.cover);
                 Picasso.get()
                         .load(cover)
@@ -175,11 +156,9 @@ public class Museum extends Fragment {
 
                 ImageButton perma4 = (ImageButton) v.findViewById(R.id.perma4);
                 Picasso.get().load(permanentImgs[3]).into(perma4);
-
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
-
 }

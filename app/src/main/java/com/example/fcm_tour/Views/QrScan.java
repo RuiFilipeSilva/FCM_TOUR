@@ -40,11 +40,11 @@ import java.util.zip.Inflater;
 public class QrScan extends AppCompatActivity {
     public CodeScanner mCodeScanner;
     public static final int MY_CAMERA_REQUEST_CODE = 100;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr_scan);
-
         CodeScannerView scannerView = findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(this, scannerView);
         mCodeScanner.setDecodeCallback(new DecodeCallback() {
@@ -53,8 +53,7 @@ public class QrScan extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        new TicketScan().execute(API.API_URL+"/ticket/"+result.getText());
-                        Log.d("SIGA", "run: " + API.API_URL+"/ticket/"+result.getText());
+                        new TicketScan().execute(API.API_URL + "/ticket/" + result.getText());
                     }
                 });
             }
@@ -67,17 +66,14 @@ public class QrScan extends AppCompatActivity {
         });
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();
         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
             requestPermissions(new String[]{Manifest.permission.CAMERA}, MY_CAMERA_REQUEST_CODE);
-        }
-        else{
+        } else {
             mCodeScanner.startPreview();
         }
-
     }
 
     @Override
@@ -93,8 +89,6 @@ public class QrScan extends AppCompatActivity {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mCodeScanner.startPreview();
                 Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
-
-
             } else {
                 Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
             }
@@ -103,7 +97,7 @@ public class QrScan extends AppCompatActivity {
 
     class TicketScan extends AsyncTask<String, String, String> {
         @Override
-        protected String doInBackground(String... fileUrl){
+        protected String doInBackground(String... fileUrl) {
             StringBuilder stringBuilder = new StringBuilder();
             try {
                 URL url = new URL(fileUrl[0]);
@@ -113,24 +107,20 @@ public class QrScan extends AppCompatActivity {
                 stringBuilder = new StringBuilder();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 String line = "";
-                while ((line = reader.readLine()) !=null){
+                while ((line = reader.readLine()) != null) {
                     stringBuilder.append(line);
                 }
-            }catch (Exception e){
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
+            } catch (Exception e) {
             }
-                return stringBuilder.toString();
+            return stringBuilder.toString();
         }
+
         @Override
-        protected void onPostExecute(String result){
+        protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Log.d("SIGA", "qulaquermerda: " + result);
             try {
                 JSONObject jsonResponse = new JSONObject(result);
                 String state = jsonResponse.getString("state");
-                Log.d("SIGA", "onPostExecute: " + state);
-                /* JSONObject jsonObjetcs = jsonResponse.getJSONObject(0);
-                String img = jsonObjetcs.getString("cover");*/
                 if (state.equals("Ticket válido")) {
                     Rooms.getRoomsAccess(getApplicationContext());
                     AlertDialog alertDialog = new AlertDialog.Builder(QrScan.this).create();
@@ -144,10 +134,7 @@ public class QrScan extends AppCompatActivity {
                                 }
                             });
                     alertDialog.show();
-
-
-                }
-                else{
+                } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(QrScan.this).create();
                     alertDialog.setTitle("Sem Resultados");
                     alertDialog.setMessage("Não foi encontrado nenhum bilhete com esse número");
@@ -160,8 +147,7 @@ public class QrScan extends AppCompatActivity {
                             });
                     alertDialog.show();
                 }
-            }catch (JSONException e){
-                Log.d("ERRO", "onPostExecute: " + e);
+            } catch (JSONException e) {
                 AlertDialog alertDialog2 = new AlertDialog.Builder(QrScan.this).create();
                 alertDialog2.setTitle("Sem Resultados");
                 alertDialog2.setMessage("Não foi encontrado nenhum bilhete com esse número");

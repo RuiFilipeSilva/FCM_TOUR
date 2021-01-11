@@ -140,7 +140,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/registar"
+        android:id="@+id/register"
         android:layout_width="170dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
@@ -166,7 +166,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registar"
+        app:layout_constraintTop_toBottomOf="@+id/register"
         tools:ignore="MissingConstraints"
         tools:layout_conversion_absoluteHeight="39dp"
         tools:layout_conversion_absoluteWidth="411dp">
@@ -190,7 +190,7 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/voltar"
+        android:id="@+id/comeBack"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
@@ -212,7 +212,7 @@
         android:layout_marginBottom="14dp"
         android:gravity="center"
         android:text="@string/iniciarSessão"
-        app:layout_constraintBottom_toTopOf="@+id/voltar"
+        app:layout_constraintBottom_toTopOf="@+id/comeBack"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -225,7 +225,7 @@
         android:text="@string/login"
         android:textColor="@color/black"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/voltar"
+        app:layout_constraintBottom_toTopOf="@+id/comeBack"
         app:layout_constraintEnd_toEndOf="parent" />
 
 

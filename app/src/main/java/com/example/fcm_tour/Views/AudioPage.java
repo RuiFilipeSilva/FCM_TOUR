@@ -33,13 +33,9 @@ import java.net.URL;
 
 public class AudioPage extends Fragment {
 
-
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -48,7 +44,6 @@ public class AudioPage extends Fragment {
         Preferences.init(getContext());
         String roomNum = Preferences.read("room", null);
         new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + roomNum);
-
         return v;
     }
 
@@ -68,7 +63,6 @@ public class AudioPage extends Fragment {
                     stringBuilder.append(line);
                 }
             } catch (Exception e) {
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
             }
             return stringBuilder.toString();
         }
@@ -79,28 +73,20 @@ public class AudioPage extends Fragment {
             View v = getView();
             try {
                 JSONObject rooms = new JSONObject(result);
-                Log.d("SIGA", "onPostExecute: "+ rooms);
                 String description = rooms.getString("description");
                 String img = rooms.getString("cover");
                 String link = rooms.getString("audio");
                 String name = rooms.getString("name");
-
-
                 ImageView imgChuck = v.findViewById(R.id.IMG);
                 Picasso.get()
                         .load(img)
                         .resize(256, 256)
                         .centerCrop()
                         .into(imgChuck);
-
-
                 TextView text = (TextView) v.findViewById(R.id.title);
                 text.setText(name);
-
                 TextView text2 = (TextView) v.findViewById(R.id.description);
                 text2.setText(description);
-
-
                 MediaPlayer mediaPlayer = new MediaPlayer();
                 mediaPlayer.setAudioAttributes(
                         new AudioAttributes.Builder()
@@ -109,11 +95,9 @@ public class AudioPage extends Fragment {
                                 .build()
                 );
                 mediaPlayer.setDataSource(link);
-                mediaPlayer.prepare(); // might take long! (for buffering, etc)
-
-
-                Button play = (Button)v.findViewById(R.id.btnStart);
-                Button pause = (Button)v.findViewById(R.id.btnAR);
+                mediaPlayer.prepare();
+                Button play = (Button) v.findViewById(R.id.btnStart);
+                Button pause = (Button) v.findViewById(R.id.btnAR);
 
                 play.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -122,16 +106,12 @@ public class AudioPage extends Fragment {
                     }
                 });
 
-
                 pause.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mediaPlayer.stop();
                     }
                 });
-
-
-
             } catch (JSONException | IOException e) {
                 e.printStackTrace();
             }

@@ -19,15 +19,16 @@ import com.google.ar.sceneform.ux.TransformableNode;
 public class AR_Sculptures extends AppCompatActivity {
     private ArFragment arFragment;
     private ModelRenderable modelRenderable;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
-        if(extras != null){
+        if (extras != null) {
             String MODEL_URL = extras.getString("link");
-            setContentView(R.layout.activity_a_r__sculptures); arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
+            setContentView(R.layout.activity_a_r__sculptures);
+            arFragment = (ArFragment) getSupportFragmentManager().findFragmentById(R.id.fragment);
             setUpModel(MODEL_URL);
             setUpPlane();
         }
@@ -49,14 +50,13 @@ public class AR_Sculptures extends AppCompatActivity {
                 .build()
                 .thenAccept(renderable -> modelRenderable = renderable)
                 .exceptionally(throwable -> {
-                    Log.i("Model","cant load");
-                    Toast.makeText(AR_Sculptures.this,"Model can't be Loaded", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AR_Sculptures.this, "Model can't be Loaded", Toast.LENGTH_SHORT).show();
                     return null;
                 });
 
     }
 
-    private void setUpPlane(){
+    private void setUpPlane() {
         arFragment.setOnTapArPlaneListener(((hitResult, plane, motionEvent) -> {
             Anchor anchor = hitResult.createAnchor();
             AnchorNode anchorNode = new AnchorNode(anchor);
@@ -65,7 +65,7 @@ public class AR_Sculptures extends AppCompatActivity {
         }));
     }
 
-    private void createModel(AnchorNode anchorNode){
+    private void createModel(AnchorNode anchorNode) {
         TransformableNode node = new TransformableNode(arFragment.getTransformationSystem());
         node.setParent(anchorNode);
         node.setRenderable(modelRenderable);

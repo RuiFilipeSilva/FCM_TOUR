@@ -16,14 +16,13 @@ import com.example.fcm_tour.SideBar;
 public class Authentication extends AppCompatActivity {
     Intent login;
     Intent register;
-    Intent voltar;
+    Intent comeBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_authentication);
         Preferences.init(getApplicationContext());
-
         final int container = R.id.fragmentAuth;
         SocialMediaAuth socialMediaAuth = new SocialMediaAuth();
         openFragment(socialMediaAuth, container);
@@ -50,8 +49,8 @@ public class Authentication extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                voltar = new Intent(v.getContext(), SideBar.class);
-                startActivity(voltar);
+                comeBack = new Intent(v.getContext(), SideBar.class);
+                startActivity(comeBack);
             }
         });
     }

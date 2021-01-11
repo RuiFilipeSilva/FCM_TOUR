@@ -58,5 +58,4 @@ dependencies {
     implementation 'com.google.ar.sceneform.ux:sceneform-ux:1.15.0'
     implementation 'com.google.ar.sceneform:assets:1.15.0'
     implementation 'com.google.zxing:core:3.3.2'
-
 }
