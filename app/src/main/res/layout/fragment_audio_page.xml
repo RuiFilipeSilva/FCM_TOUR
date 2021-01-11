@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Views.AudioPage">
 
     <ScrollView
@@ -22,7 +22,7 @@
                 android:layout_height="match_parent">
 
                 <Button
-                    android:id="@+id/btnStart"
+                    android:id="@+id/btnAudio"
                     android:layout_width="150dp"
                     android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
@@ -30,13 +30,13 @@
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/rounded_museum"
                     android:elevation="40dp"
-                    android:text="play"
+                    android:text="Audio"
                     android:textColor="@color/white"
                     android:textSize="13dp"
                     app:backgroundTint="@null" />
 
                 <Button
-                    android:id="@+id/btnAR"
+                    android:id="@+id/btnText"
                     android:layout_width="150dp"
                     android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
@@ -44,7 +44,21 @@
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/rounded_museum"
                     android:elevation="40dp"
-                    android:text="stop"
+                    android:text="Texto"
+                    android:textColor="@color/white"
+                    android:textSize="13dp"
+                    app:backgroundTint="@null" />
+
+                <Button
+                    android:id="@+id/btnGallery"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="130dp"
+                    android:layout_marginEnd="20dp"
+                    android:background="@drawable/rounded_museum"
+                    android:elevation="40dp"
+                    android:text="Galeria"
                     android:textColor="@color/white"
                     android:textSize="13dp"
                     app:backgroundTint="@null" />
@@ -80,6 +94,10 @@
                 android:textSize="16dp"
                 tools:layout_editor_absoluteX="0dp" />
 
+            <FrameLayout
+                android:id="@+id/audioPageFrame"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 

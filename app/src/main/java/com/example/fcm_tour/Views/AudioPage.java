@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,7 +46,18 @@ public class AudioPage extends Fragment {
         Preferences.init(getContext());
         String roomNum = Preferences.read("room", null);
         new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + roomNum);
+
+        final int audioContainer = R.id.audioPageFrame;
+        AudioPlayer audioPlayer = new AudioPlayer();
+        openFragment(audioPlayer, audioContainer);
         return v;
+    }
+
+    private void openFragment(AudioPlayer audioPlayer, int audioContainer) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(audioContainer, audioPlayer);
+        ft.commit();
     }
 
     class GetRoomsByNumber extends AsyncTask<String, String, String> {
@@ -76,6 +89,7 @@ public class AudioPage extends Fragment {
                 String description = rooms.getString("description");
                 String img = rooms.getString("cover");
                 String link = rooms.getString("audio");
+                Preferences.write("audioPlayer", link);
                 String name = rooms.getString("name");
                 ImageView imgChuck = v.findViewById(R.id.IMG);
                 Picasso.get()
@@ -87,7 +101,7 @@ public class AudioPage extends Fragment {
                 text.setText(name);
                 TextView text2 = (TextView) v.findViewById(R.id.description);
                 text2.setText(description);
-                MediaPlayer mediaPlayer = new MediaPlayer();
+                /* MediaPlayer mediaPlayer = new MediaPlayer();
                 mediaPlayer.setAudioAttributes(
                         new AudioAttributes.Builder()
                                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -110,8 +124,8 @@ public class AudioPage extends Fragment {
                     public void onClick(View v) {
                         mediaPlayer.pause();
                     }
-                });
-            } catch (JSONException | IOException e) {
+                }); */
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
