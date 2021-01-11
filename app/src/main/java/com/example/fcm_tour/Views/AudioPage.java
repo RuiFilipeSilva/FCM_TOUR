@@ -101,15 +101,14 @@ public class AudioPage extends Fragment {
 
                 play.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-                        mediaPlayer.start();
+                    public void onClick(View v) { mediaPlayer.start();
                     }
                 });
 
                 pause.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mediaPlayer.stop();
+                        mediaPlayer.pause();
                     }
                 });
             } catch (JSONException | IOException e) {
