@@ -23,11 +23,9 @@
         <activity android:name=".SideBar" />
         <activity android:name=".Library" />
         <activity android:name=".Music" />
-        <activity android:name=".Museum" />
         <activity android:name=".Views.Login2" />
         <activity android:name=".Views.Register" />
         <activity android:name=".Views.Authentication" />
-        <activity android:name=".SampleHTTP" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

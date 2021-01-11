@@ -1,6 +1,5 @@
 package com.example.fcm_tour.Views;
 
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -12,17 +11,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
-import com.example.fcm_tour.Museum;
-import com.example.fcm_tour.Music;
 import com.example.fcm_tour.R;
-import com.example.fcm_tour.SideBar;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;

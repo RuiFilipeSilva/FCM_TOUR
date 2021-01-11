@@ -16,7 +16,7 @@ import com.example.fcm_tour.R;
 import com.example.fcm_tour.SideBar;
 
 public class Login2 extends AppCompatActivity {
-    Intent voltar;
+    Intent comeBack;
     Intent register;
     Intent homePage;
     EditText email;
@@ -27,20 +27,17 @@ public class Login2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login2);
         Preferences.init(getApplicationContext());
-
         final int container = R.id.fragmentAuth;
         SocialMediaAuth socialMediaAuth = new SocialMediaAuth();
         openFragment(socialMediaAuth, container);
-
         Button btnVoltar = (Button) findViewById(R.id.voltar);
         btnVoltar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                voltar = new Intent(v.getContext(), SideBar.class);
-                startActivity(voltar);
+                comeBack = new Intent(v.getContext(), SideBar.class);
+                startActivity(comeBack);
             }
         });
-
         Button btnRegister = (Button) findViewById(R.id.register);
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +46,6 @@ public class Login2 extends AppCompatActivity {
                 startActivity(register);
             }
         });
-
         Button loginBtn = (Button) findViewById(R.id.loginBtn);
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override

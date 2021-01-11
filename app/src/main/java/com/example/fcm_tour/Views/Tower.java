@@ -40,21 +40,16 @@ public class Tower extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tower, container, false);
-
         new GetTower().execute("https://fcm-tour.herokuapp.com/torre");
-
         Button tower = (Button) v.findViewById(R.id.btnStart);
-        tower.setOnClickListener(new View.OnClickListener()
-        {
+        tower.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 final int homeContainer = R.id.fullpage;
                 RoomPage rooms = new RoomPage();
                 openFragment(rooms, homeContainer);
             }
         });
-
         return v;
     }
 
@@ -67,7 +62,7 @@ public class Tower extends Fragment {
 
     class GetTower extends AsyncTask<String, String, String> {
         @Override
-        protected String doInBackground(String... fileUrl){
+        protected String doInBackground(String... fileUrl) {
             StringBuilder stringBuilder = new StringBuilder();
             try {
                 URL url = new URL(fileUrl[0]);
@@ -77,20 +72,19 @@ public class Tower extends Fragment {
                 stringBuilder = new StringBuilder();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 String line = "";
-                while ((line = reader.readLine()) !=null){
+                while ((line = reader.readLine()) != null) {
                     stringBuilder.append(line);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
             }
             return stringBuilder.toString();
         }
 
         @Override
-        protected void onPostExecute(String result){
+        protected void onPostExecute(String result) {
             super.onPostExecute(result);
             View v = getView();
-
             try {
                 JSONArray jsonResponse = new JSONArray(result);
                 JSONObject jsonObjetcs = jsonResponse.getJSONObject(0);
@@ -102,11 +96,9 @@ public class Tower extends Fragment {
                         .into(imgChuck);
                 TextView text = (TextView) v.findViewById(R.id.description);
                 text.setText(TEMP);
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
-
-
     }
 }

@@ -51,10 +51,9 @@ public class Sculptures extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        actualView =  inflater.inflate(R.layout.fragment_sculptures, container, false);
+        actualView = inflater.inflate(R.layout.fragment_sculptures, container, false);
         Preferences.removeRoomsAccess();
         new GetSculptures().execute(API.API_URL + "/museu/esculturas");
-
         return actualView;
     }
 
@@ -62,15 +61,11 @@ public class Sculptures extends Fragment {
     private void locationSort(JSONArray result) throws JSONException {
         View v = getView();
         ListView listView = (ListView) v.findViewById(R.id.listCardsSculpture);
-
         names = new String[result.length()];
         imgs = new String[result.length()];
         links = new String[result.length()];
-
-
         for (int i = 0; i <= result.length() - 1; i++) {
             JSONObject sculpture = result.getJSONObject(i);
-            Log.d("SIGA", "JSONObject " + result);;
             String img = sculpture.getString("img");
             String name = sculpture.getString("name");
             String link = sculpture.getString("link");
@@ -78,16 +73,13 @@ public class Sculptures extends Fragment {
             links[i] = link;
             imgs[i] = img;
         }
-
         Sculptures.MyAdapter adapter = new Sculptures.MyAdapter(getContext(), names, links, imgs);
         listView.setAdapter(adapter);
-
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 for (int i = 0; i < links.length; i++) {
                     if (position == i) {
-                        Log.d("SIGA", "link " + links[i]);
                         Intent intent = new Intent(v.getContext(), AR_Sculptures.class);
                         intent.putExtra("link", links[i]);
                         startActivity(intent);
@@ -116,7 +108,6 @@ public class Sculptures extends Fragment {
         public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
             LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View row = layoutInflater.inflate(R.layout.sculpture, parent, false);
-
             TextView names = row.findViewById(R.id.sculptureName);
             ImageView imgs = row.findViewById(R.id.sculptureImg);
             names.setText(rName[position]);
@@ -185,7 +176,6 @@ public class Sculptures extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-
             try {
                 JSONObject body = new JSONObject(result);
                 JSONObject rooms = new JSONObject(body.getString("rooms"));

@@ -14,6 +14,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.fcm_tour.R;
 import com.example.fcm_tour.SideBar;
 import com.example.fcm_tour.Views.History;
 import com.example.fcm_tour.Views.Login2;
@@ -46,7 +47,6 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class Users {
     private static String token;
 
-    //VALIDATE USER------------------------------------------------------------------------------------------------
     public static void volleyPost(String name, String email, String password, String confPassword, Context context) {
         if (isEmailValid(email)) {
             if (isPasswordValid(password)) {
@@ -62,9 +62,7 @@ public class Users {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData, new Response.Listener<JSONObject>() {
-
                     @Override
                     public void onResponse(JSONObject response) {
                         Intent login = new Intent(context, Login2.class);
@@ -88,12 +86,12 @@ public class Users {
         }
     }
 
-    //VALIDATE EMAIL------------------------------------------------------------------------------------------------------
+
     static boolean isEmailValid(CharSequence email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    //VALIDATE PASSWORD---------------------------------------------------------------------------------------------------
+
     static boolean isPasswordValid(String password) {
         Boolean value = false;
         Pattern pattern = Pattern.compile("(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,}).*$");
@@ -104,11 +102,9 @@ public class Users {
         return value;
     }
 
-    //LOGIN - NORMAL --------------------------------------------------------------------------------------------------------------
     public static void loginVolley(String email, String password, Context context) {
         String postUrl = API.API_URL + "/login";
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-
         JSONObject postData = new JSONObject();
         try {
             postData.put("email", email);
@@ -117,7 +113,6 @@ public class Users {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -152,11 +147,10 @@ public class Users {
         requestQueue.add(jsonObjectRequest);
     }
 
-    //LOGIN - FACEBOOK --------------------------------------------------------------------------------------------------------------
+
     public static void facebookLogin(String access_token, String username, String email, Context context) {
         String postUrl = API.API_URL + "/facebook";
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-
         JSONObject postData = new JSONObject();
         try {
             postData.put("access_token", access_token);
@@ -200,7 +194,6 @@ public class Users {
         requestQueue.add(jsonObjectRequest);
     }
 
-    //LOGIN - GOOGLE --------------------------------------------------------------------------------------------------------------
     public static void googleLogin(String bearer, Context context) {
         String postUrl = API.API_URL + "/login/google";
         RequestQueue requestQueue = Volley.newRequestQueue(context);
@@ -211,7 +204,6 @@ public class Users {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -247,7 +239,6 @@ public class Users {
         requestQueue.add(jsonObjectRequest);
     }
 
-    //DECODE BEARER TOKEN------------------------------------------------------------------------------------------------
     public static class JWTUtils {
         public static void decoded(String JWTEncoded) throws Exception {
             try {
@@ -272,31 +263,17 @@ public class Users {
         }
     }
 
-    //LOGOUT USER ------------------------------------------------------------------------------------------------------
     public static void Logout() {
         //logout - google or default account
         Preferences.Logout();
         if (AccessToken.getCurrentAccessToken() == null) {
-            Log.d("SIGA", "ENTROU 1 ");
             return;
         } else {
-            Log.d("SIGA", "ENTROU 2 ");
             LoginManager.getInstance().logOut();
         }
-
-        //logout - Facebook Account
-        /* new GraphRequest(AccessToken.getCurrentAccessToken(), "/me/permissions/", null, HttpMethod.DELETE, new GraphRequest
-                .Callback() {
-            @Override
-            public void onCompleted(GraphResponse graphResponse) {
-            }
-        }).executeAsync(); */
-
-
-        Toast.makeText(getApplicationContext(), "teste", Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), R.string.logout, Toast.LENGTH_SHORT).show();
     }
 
-    //ERROS VOLLEY-------------------------------------------------------------------------------------------------------
     public static void handleError(VolleyError error, Context context) {
         String body = null;
         try {
@@ -304,7 +281,7 @@ public class Users {
         } catch (UnsupportedEncodingException e) {
             // exception
         }
-        Toast toast = Toast.makeText(context, "Erro: " + body, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(context, R.string.error + body, Toast.LENGTH_SHORT);
         toast.show();
     }
 }

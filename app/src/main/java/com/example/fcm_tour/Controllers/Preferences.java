@@ -92,7 +92,6 @@ public class Preferences {
     }
 
     public static String readUserImg() {
-        Log.d("SIGA", "readUserImg: "+ mSharedPref.getString("userImg", String.valueOf(R.mipmap.ic_launcher_round)));
         return mSharedPref.getString("userImg", null);
     }
 

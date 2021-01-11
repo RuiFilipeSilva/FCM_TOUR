@@ -35,32 +35,25 @@ import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Preferences.init(getApplicationContext());
-
-
-        ImageView img = (ImageView)findViewById(R.id.FCM);
-        Animation aniFade = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_in);
+        ImageView img = (ImageView) findViewById(R.id.FCM);
+        Animation aniFade = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
         img.startAnimation(aniFade);
-
-
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        gameOver();
+                        loading();
                     }
                 }, 3000);
     }
 
-    public void gameOver(){
+    public void loading() {
         Intent intent = new Intent(this, SideBar.class);
         startActivity(intent);
         finish();
     }
-
-
 }

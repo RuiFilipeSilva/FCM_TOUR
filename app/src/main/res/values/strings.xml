@@ -16,6 +16,9 @@
     <string name="helper_text">Palavra passe tem de conter no minimo 6 caracteres</string>
     <string name="navigation_drawer_open">Open Navigation</string>
     <string name="navigation_drawer_close">Close Navigation</string>
+    <string name="logout">Sessão Terminada</string>
+    <string name="error">Erro:</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="large_text">

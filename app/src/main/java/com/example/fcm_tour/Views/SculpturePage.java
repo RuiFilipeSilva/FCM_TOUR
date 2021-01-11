@@ -14,7 +14,6 @@ import com.example.fcm_tour.R;
 
 public class SculpturePage extends Fragment {
 
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,12 +22,9 @@ public class SculpturePage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_sculpture_page, container, false);
-
         final int homeContainer = R.id.listSculptures;
         Sculptures sculptures = new Sculptures();
         openFragment(sculptures, homeContainer);
-
-
         return v;
     }
 

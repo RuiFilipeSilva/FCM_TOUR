@@ -53,11 +53,9 @@ public class SideBar extends AppCompatActivity {
         Preferences.init(getApplicationContext());
         loadUserPicture();
         drawerLayout = findViewById(R.id.draweLayout);
-
         final int homeContainer = R.id.fullpage;
         History history = new History();
         openFragment(history, homeContainer);
-
         final DrawerLayout drawerLayout = findViewById(R.id.draweLayout);
         findViewById(R.id.menu).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,16 +65,12 @@ public class SideBar extends AppCompatActivity {
         });
         NavigationView navigationView = findViewById(R.id.navigationView);
         navigationView.setItemIconTintList(null);
-
         if (Preferences.readUserToken() == null) {
             Menu menu = navigationView.getMenu();
             MenuItem nav_dashboard = menu.findItem(R.id.logout);
             nav_dashboard.setVisible(false);
         }
-
         setupDrawerContent(navigationView);
-
-        //Opens Auth
         ImageButton auth = (ImageButton) navigationView.getHeaderView(0).findViewById(R.id.iconProfile);
         auth.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +83,6 @@ public class SideBar extends AppCompatActivity {
 
     public void loadUserPicture() {
         String userPicture = Preferences.readUserImg();
-        Log.d("SIGA", "loadUserPicture: "+ userPicture);
         NavigationView navigationView = findViewById(R.id.navigationView);
         ImageButton auth = (ImageButton) navigationView.getHeaderView(0).findViewById(R.id.iconProfile);
         ImageButton picture = (ImageButton) findViewById(R.id.profilePicture);
@@ -106,27 +99,21 @@ public class SideBar extends AppCompatActivity {
         @Override
         public Bitmap transform(Bitmap source) {
             int size = Math.min(source.getWidth(), source.getHeight());
-
             int x = (source.getWidth() - size) / 2;
             int y = (source.getHeight() - size) / 2;
-
             Bitmap squaredBitmap = Bitmap.createBitmap(source, x, y, size, size);
             if (squaredBitmap != source) {
                 source.recycle();
             }
-
             Bitmap bitmap = Bitmap.createBitmap(size, size, source.getConfig());
-
             Canvas canvas = new Canvas(bitmap);
             Paint paint = new Paint();
             BitmapShader shader = new BitmapShader(squaredBitmap,
                     Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
             paint.setShader(shader);
             paint.setAntiAlias(true);
-
             float r = size / 2f;
             canvas.drawCircle(r, r, r, paint);
-
             Paint paint1 = new Paint();
             paint1.setColor(Color.BLACK);
             paint1.setStyle(Paint.Style.STROKE);
@@ -156,7 +143,6 @@ public class SideBar extends AppCompatActivity {
     }
 
     public void selectDrawerItem(MenuItem menuItem) {
-        // Create a new fragment and specify the fragment to show based on nav item clicked
         Fragment fragment = null;
         Class fragmentClass;
         switch (menuItem.getItemId()) {
@@ -178,22 +164,15 @@ public class SideBar extends AppCompatActivity {
             default:
                 fragmentClass = History.class;
         }
-
         try {
             fragment = (Fragment) fragmentClass.newInstance();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fullpage, fragment).commit();
-
-        // Highlight the selected item has been done by NavigationView
         menuItem.setChecked(true);
-        // Set action bar title
         setTitle(menuItem.getTitle());
-        // Close the navigation drawer
         drawerLayout.closeDrawers();
     }
 

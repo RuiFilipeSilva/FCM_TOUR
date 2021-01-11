@@ -27,62 +27,47 @@ public class Music extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music);
-
         new Music.GetMusic().execute("https://fcm-tour.herokuapp.com/torre");
-
     }
+
     class GetMusic extends AsyncTask<String, String, String> {
         @Override
-        protected String doInBackground(String... fileUrl){
+        protected String doInBackground(String... fileUrl) {
             StringBuilder stringBuilder = new StringBuilder();
             try {
                 URL url = new URL(fileUrl[0]);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
                 connection.connect();
                 InputStream in = connection.getInputStream();
-
                 stringBuilder = new StringBuilder();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 String line = "";
-                while ((line = reader.readLine()) !=null){
+                while ((line = reader.readLine()) != null) {
                     stringBuilder.append(line);
                 }
-            }catch (Exception e){
+            } catch (Exception e) {
                 Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
             }
             return stringBuilder.toString();
         }
 
         @Override
-        protected void onPostExecute(String result){
+        protected void onPostExecute(String result) {
             super.onPostExecute(result);
             try {
                 JSONArray jsonResponse = new JSONArray(result);
                 JSONObject jsonObjetcs = jsonResponse.getJSONObject(0);
-
                 String TEMP = jsonObjetcs.getString("description");
                 String img = jsonObjetcs.getString("cover");
-
-
-
-
                 ImageView imgChuck = findViewById(R.id.cover);
                 Picasso.get()
                         .load(img)
                         .into(imgChuck);
-
-
                 TextView text = (TextView) findViewById(R.id.description);
                 text.setText(TEMP);
-
-
-            }catch (JSONException e){
+            } catch (JSONException e) {
                 e.printStackTrace();
             }
-            Toast.makeText(getApplicationContext(), "REQUEST DONE", Toast.LENGTH_LONG).show();
         }
-
-
     }
 }

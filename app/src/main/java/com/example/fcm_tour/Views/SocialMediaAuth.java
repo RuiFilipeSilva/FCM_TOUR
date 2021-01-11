@@ -45,12 +45,10 @@ public class SocialMediaAuth extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(API.ID_TOKEN_GOOGLE)
                 .requestEmail()
                 .build();
-
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), googleSignInOptions);
         account = GoogleSignIn.getLastSignedInAccount(getContext());
         callbackManager = CallbackManager.Factory.create();
@@ -59,7 +57,6 @@ public class SocialMediaAuth extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_social_media_auth, container, false);
         v.findViewById(R.id.sign_in_button).setOnClickListener((new View.OnClickListener() {
             @Override
@@ -68,14 +65,12 @@ public class SocialMediaAuth extends Fragment {
                 startActivityForResult(signInIntent, RC_GET_TOKEN);
             }
         }));
-
         loginButton = (LoginButton) v.findViewById(R.id.login_button);
         loginButton.setFragment(this);
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                // App code
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {
@@ -117,12 +112,10 @@ public class SocialMediaAuth extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == RC_GET_TOKEN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
         } else {
-            //Facebook Login
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
     }

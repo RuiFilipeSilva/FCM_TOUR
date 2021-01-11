@@ -70,21 +70,17 @@ public class Rooms extends Fragment {
         actualView = inflater.inflate(R.layout.fragment_rooms, container, false);
         Preferences.removeRoomsAccess();
         new GetRooms().execute(API.API_URL + "/torre/salas");
-
         return actualView;
     }
 
     private void locationSort(JSONArray result) throws JSONException {
         View v = getView();
         ListView listView = (ListView) v.findViewById(R.id.listCards);
-
         numbers = new String[result.length()];
         names = new String[result.length()];
         imgs = new String[result.length()];
         colors = new int[result.length()];
         icons = new int[result.length()];
-
-
         for (int i = 0; i <= result.length() - 1; i++) {
             JSONObject room = result.getJSONObject(i);
             String img = room.getString("cover");

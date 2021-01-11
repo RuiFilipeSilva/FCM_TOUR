@@ -31,28 +31,26 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class RoomPage extends Fragment {
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
+
     boolean access = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_room_page, container, false);
-
-
         final int homeContainer = R.id.listRooms;
         Rooms rooms = new Rooms();
         openFragment(rooms, homeContainer);
-
         v.findViewById(R.id.keyBoard).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AlertDialogInsertTicket();
             }
         });
-
         v.findViewById(R.id.qrCode).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,15 +92,11 @@ public class RoomPage extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            Log.d("SIGA", "qualquermerda: " + result);
             try {
                 JSONObject jsonResponse = new JSONObject(result);
                 String state = jsonResponse.getString("state");
-                Log.d("SIGA", "onPostExecute: " + state);
                 if (state.equals("Ticket válido")) {
                     Rooms.getRoomsAccess(getContext());
-
-
                 } else {
                     AlertDialog alertDialog2 = new AlertDialog.Builder(getContext()).create();
                     alertDialog2.setTitle("Sem Resultados");
@@ -116,10 +110,7 @@ public class RoomPage extends Fragment {
                             });
                     alertDialog2.show();
                 }
-
-
             } catch (JSONException e) {
-                Log.d("ERRO", "onPostExecute: " + e);
                 AlertDialog alertDialog2 = new AlertDialog.Builder(getContext()).create();
                 alertDialog2.setTitle("Sem Resultados");
                 alertDialog2.setMessage("Não foi encontrado nenhum bilhete com esse número");
@@ -135,7 +126,8 @@ public class RoomPage extends Fragment {
             }
         }
     }
-    public void AlertDialogInsertTicket(){
+
+    public void AlertDialogInsertTicket() {
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
         alert.setTitle("Código do Bilhete");
         alert.setMessage("Insira o código que se encontra no bilhete");
@@ -151,8 +143,7 @@ public class RoomPage extends Fragment {
         alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
-                new TicketScan().execute(API.API_URL+"/ticket/"+value);
-                Log.d("SIGA", "run: " + API.API_URL+"/ticket/"+value);
+                new TicketScan().execute(API.API_URL + "/ticket/" + value);
             }
         });
         alert.setNegativeButton("Cancel",
@@ -162,7 +153,6 @@ public class RoomPage extends Fragment {
                         return;
                     }
                 });
-
         alert.show();
     }
 }
