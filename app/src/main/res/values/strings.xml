@@ -1,3 +1,21 @@
 <resources>
+    <string name="FB_APP_ID">3302524869853214</string>
+    <string name="fb_login_protocol_scheme">fb3302524869853214</string>
     <string name="app_name">FCM_TOUR</string>
+    <string name="registar">Registar</string>
+    <string name="login">Iniciar Sessão</string>
+    <string name="voltar">Voltar V</string>
+    <string name="criarConta">Ainda não tem uma conta?</string>
+    <string name="iniciarSessão">Já possui uma conta?</string>
+    <string name="email">E-mail</string>
+    <string name="palavraPasse">Palavra-Passe</string>
+    <string name="nome">Nome</string>
+    <string name="confPalavraPasse">Confirmar Palavra-Passe</string>
+    <string name="title_activity_tour">ScrollingActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="helper_text">Palavra passe tem de conter no minimo 6 caracteres</string>
+    <string name="navigation_drawer_open">Open Navigation</string>
+    <string name="navigation_drawer_close">Close Navigation</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
