@@ -4,50 +4,41 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 
-import com.example.fcm_tour.Controllers.ToastMaker;
 import com.example.fcm_tour.Controllers.Users;
-import com.example.fcm_tour.Homepage;
 import com.example.fcm_tour.MainActivity;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
+import com.example.fcm_tour.SideBar;
 
 public class Register extends AppCompatActivity {
-    Intent voltar;
+    Intent comeBack;
     Intent login;
-    Intent homePage;
     EditText name;
     EditText email;
     EditText password;
     EditText confPassword;
-    String loginType; // "Normal" / "Google" / "Facebook"
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         Preferences.init(getApplicationContext());
-
         final int container = R.id.fragmentAuth;
         SocialMediaAuth socialMediaAuth = new SocialMediaAuth();
         openFragment(socialMediaAuth, container);
-
-        Button btnVoltar = (Button) findViewById(R.id.voltar);
-        btnVoltar.setOnClickListener(new View.OnClickListener() {
+        Button btnComeBack = (Button) findViewById(R.id.comeBack);
+        btnComeBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                voltar = new Intent(v.getContext(), MainActivity.class);
-                startActivity(voltar);
+                comeBack = new Intent(v.getContext(), SideBar.class);
+                startActivity(comeBack);
             }
         });
-
         Button btnLogin = (Button) findViewById(R.id.login);
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,9 +47,8 @@ public class Register extends AppCompatActivity {
                 startActivity(login);
             }
         });
-
-        Button btnRegistar = (Button) findViewById(R.id.registar);
-        btnRegistar.setOnClickListener(new View.OnClickListener() {
+        Button btnRegister = (Button) findViewById(R.id.register);
+        btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 name = (EditText) findViewById(R.id.nametxt);

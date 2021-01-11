@@ -2,7 +2,6 @@ package com.example.fcm_tour.Controllers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Base64;
 import android.util.Log;
@@ -15,9 +14,18 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.example.fcm_tour.Homepage;
-import com.example.fcm_tour.MainActivity;
+import com.example.fcm_tour.R;
+import com.example.fcm_tour.SideBar;
+import com.example.fcm_tour.Views.History;
 import com.example.fcm_tour.Views.Login2;
+import com.example.fcm_tour.API;
+import com.facebook.AccessToken;
+import com.facebook.FacebookRequestError;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
+import com.facebook.login.LoginManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,14 +42,15 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.facebook.FacebookSdk.getApplicationContext;
+
 public class Users {
     private static String token;
 
-    //VALIDATE USER------------------------------------------------------------------------------------------------
     public static void volleyPost(String name, String email, String password, String confPassword, Context context) {
         if (isEmailValid(email)) {
             if (isPasswordValid(password)) {
-                String postUrl = "https://fcm-tour.herokuapp.com/register";
+                String postUrl = API.API_URL + "/register";
                 RequestQueue requestQueue = Volley.newRequestQueue(context);
                 JSONObject postData = new JSONObject();
                 try {
@@ -53,22 +62,13 @@ public class Users {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
-
                 JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData, new Response.Listener<JSONObject>() {
-
                     @Override
                     public void onResponse(JSONObject response) {
-                        String message = "";
-                        try {
-                            message = response.get("res").toString();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
                         Intent login = new Intent(context, Login2.class);
                         login.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(login);
-                        ToastMaker.sampleToast("! Inicie Sessão");
+                        Toast.makeText(context, "Registado com sucesso", Toast.LENGTH_SHORT).show();
                     }
                 }, new Response.ErrorListener() {
                     @Override
@@ -79,77 +79,32 @@ public class Users {
                 });
                 requestQueue.add(jsonObjectRequest);
             } else {
-                ToastMaker.sampleToast("Password não é válida");
+                Toast.makeText(context, "Erro: Palavra-Passe não cumpre os requisitos!", Toast.LENGTH_SHORT).show();
             }
         } else {
-
+            Toast.makeText(context, "Erro: E-mail inválido!", Toast.LENGTH_SHORT).show();
         }
     }
 
-    //VALIDATE EMAIL------------------------------------------------------------------------------------------------------
+
     static boolean isEmailValid(CharSequence email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-    //VALIDATE PASSWORD---------------------------------------------------------------------------------------------------
+
     static boolean isPasswordValid(String password) {
         Boolean value = false;
         Pattern pattern = Pattern.compile("(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,}).*$");
         Matcher matcher = pattern.matcher(password);
-        Log.d("TESTE", "isPasswordValid: " + matcher.matches());
         if (matcher.matches()) {
-            Log.d("CHAR", "isPasswordValid: string " + password + " contains special character");
             value = true;
-        } else {
-            Log.d("CHAR", "isPasswordValid: string " + password + " does not contains special character");
         }
-        Log.d("VALUE", "isPasswordValid: " + value);
         return value;
     }
 
-    //LOGIN  GOOGLE & FACEBOOK-------------------------------------------------------------------------------------------
-    public static class authSocialNetworks extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... fileUrl) {
-            StringBuilder stringBuilder = new StringBuilder();
-            try {
-                URL url = new URL(fileUrl[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                InputStream in = connection.getInputStream();
-                stringBuilder = new StringBuilder();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-            } catch (Exception e) {
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
-            }
-            return stringBuilder.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                JSONArray jsonResponse = new JSONArray(result);
-                JSONObject jsonObjects = jsonResponse.getJSONObject(0);
-                String bearer = jsonObjects.getString("bearer");
-                Users.JWTUtils.decoded(bearer);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    //LOGIN - NORMAL --------------------------------------------------------------------------------------------------------------
     public static void loginVolley(String email, String password, Context context) {
-        String postUrl = "https://fcm-tour.herokuapp.com/login";
+        String postUrl = API.API_URL + "/login";
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-
         JSONObject postData = new JSONObject();
         try {
             postData.put("email", email);
@@ -158,7 +113,6 @@ public class Users {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -167,7 +121,7 @@ public class Users {
                             token = response.get("token").toString();
                             Preferences.saveUserToken(token);
                             Preferences.saveUserEmail(email);
-                            Intent homePage = new Intent(context, Homepage.class);
+                            Intent homePage = new Intent(context, SideBar.class);
                             homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(homePage);
                             Toast toast = Toast.makeText(context, "Bem vindo", Toast.LENGTH_SHORT);
@@ -193,11 +147,10 @@ public class Users {
         requestQueue.add(jsonObjectRequest);
     }
 
-    //LOGIN - FACEBOOK --------------------------------------------------------------------------------------------------------------
-    public static void facebookLogin(String access_token, String username, String email, Context context) {
-        String postUrl = "https://fcm-tour.herokuapp.com/facebook";
-        RequestQueue requestQueue = Volley.newRequestQueue(context);
 
+    public static void facebookLogin(String access_token, String username, String email, Context context) {
+        String postUrl = API.API_URL + "/facebook";
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
         JSONObject postData = new JSONObject();
         try {
             postData.put("access_token", access_token);
@@ -215,13 +168,11 @@ public class Users {
                             token = response.get("token").toString();
                             Users.JWTUtils.decoded(token);
                             Preferences.saveUserToken(token);
-                            Intent homePage = new Intent(context, Homepage.class);
+                            Intent homePage = new Intent(context, SideBar.class);
                             homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(homePage);
                             Toast toast = Toast.makeText(context, "Bem vindo Facebook", Toast.LENGTH_SHORT);
                             toast.show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -243,20 +194,16 @@ public class Users {
         requestQueue.add(jsonObjectRequest);
     }
 
-    //LOGIN - GOOGLE --------------------------------------------------------------------------------------------------------------
-    public static void googleLogin(String username, String email, String picture, Context context) {
-        String postUrl = "https://fcm-tour.herokuapp.com/login/google";
+    public static void googleLogin(String bearer, Context context) {
+        String postUrl = API.API_URL + "/login/google";
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 
         JSONObject postData = new JSONObject();
         try {
-            postData.put("username", username);
-            postData.put("email", email);
-            postData.put("picture", picture);
+            postData.put("token", bearer);
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -265,13 +212,11 @@ public class Users {
                             token = response.get("token").toString();
                             Users.JWTUtils.decoded(token);
                             Preferences.saveUserToken(token);
-                            Intent homePage = new Intent(context, Homepage.class);
+                            Intent homePage = new Intent(context, SideBar.class);
                             homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(homePage);
                             Toast toast = Toast.makeText(context, "Bem vindo Google", Toast.LENGTH_SHORT);
                             toast.show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
@@ -294,7 +239,6 @@ public class Users {
         requestQueue.add(jsonObjectRequest);
     }
 
-    //DECODE BEARER TOKEN------------------------------------------------------------------------------------------------
     public static class JWTUtils {
         public static void decoded(String JWTEncoded) throws Exception {
             try {
@@ -319,7 +263,17 @@ public class Users {
         }
     }
 
-    //ERROS VOLLEY-------------------------------------------------------------------------------------------------------
+    public static void Logout() {
+        //logout - google or default account
+        Preferences.Logout();
+        if (AccessToken.getCurrentAccessToken() == null) {
+            return;
+        } else {
+            LoginManager.getInstance().logOut();
+        }
+        Toast.makeText(getApplicationContext(), R.string.logout, Toast.LENGTH_SHORT).show();
+    }
+
     public static void handleError(VolleyError error, Context context) {
         String body = null;
         try {
@@ -327,7 +281,7 @@ public class Users {
         } catch (UnsupportedEncodingException e) {
             // exception
         }
-        Toast toast = Toast.makeText(context, "Erro: " + body, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(context, R.string.error + body, Toast.LENGTH_SHORT);
         toast.show();
     }
 }

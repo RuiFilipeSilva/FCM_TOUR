@@ -1,14 +1,23 @@
-package com.example.fcm_tour;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.fcm_tour.Views;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.fcm_tour.API;
+import com.example.fcm_tour.Controllers.Preferences;
+import com.example.fcm_tour.R;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -21,16 +30,38 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Music extends AppCompatActivity {
+public class History extends Fragment {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_music);
-        new Music.GetMusic().execute("https://fcm-tour.herokuapp.com/torre");
     }
 
-    class GetMusic extends AsyncTask<String, String, String> {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_history, container, false);
+        Preferences.init(getContext());
+        new History.GetMuseum().execute(API.API_URL + "/home");
+        ImageButton tower = (ImageButton) v.findViewById(R.id.tower);
+        tower.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int homeContainer = R.id.fullpage;
+                Tower towerPage = new Tower();
+                openFragment(towerPage, homeContainer);
+            }
+        });
+        return v;
+    }
+
+    private void openFragment(Tower towerPage, int homeContainer) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(homeContainer, towerPage);
+        ft.commit();
+    }
+
+    class GetMuseum extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... fileUrl) {
             StringBuilder stringBuilder = new StringBuilder();
@@ -46,7 +77,6 @@ public class Music extends AppCompatActivity {
                     stringBuilder.append(line);
                 }
             } catch (Exception e) {
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
             }
             return stringBuilder.toString();
         }
@@ -54,16 +84,15 @@ public class Music extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            View v = getView();
             try {
                 JSONArray jsonResponse = new JSONArray(result);
                 JSONObject jsonObjetcs = jsonResponse.getJSONObject(0);
                 String TEMP = jsonObjetcs.getString("description");
                 String img = jsonObjetcs.getString("cover");
-                ImageView imgChuck = findViewById(R.id.cover);
-                Picasso.get()
-                        .load(img)
-                        .into(imgChuck);
-                TextView text = (TextView) findViewById(R.id.description);
+                ImageView imgChuck = v.findViewById(R.id.cover);
+                Picasso.get().load(img).into(imgChuck);
+                TextView text = (TextView) v.findViewById(R.id.textview2);
                 text.setText(TEMP);
             } catch (JSONException e) {
                 e.printStackTrace();
