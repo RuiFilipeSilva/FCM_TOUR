@@ -44,17 +44,21 @@ public class AudioPage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_audio_page, container, false);
         Preferences.init(getContext());
+        Button btnTxt = (Button) v.findViewById(R.id.txtBtn);
+        Button btnAudio = (Button) v.findViewById(R.id.audio);
+        Button btnImages = (Button) v.findViewById(R.id.images);
+        btnAudio.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int audioContainer = R.id.audioPageFrame;
+                AudioPlayer audioPlayer = new AudioPlayer();
+                openFragment(audioPlayer, audioContainer);
+            }
+        });
         String roomNum = Preferences.read("room", null);
         new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + roomNum);
 
-        final int audioContainer = R.id.audioPageFrame;
-        AudioPlayer audioPlayer = new AudioPlayer();
-        new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        openFragment(audioPlayer, audioContainer);
-                    }
-                }, 3000);
+
         return v;
     }
 
