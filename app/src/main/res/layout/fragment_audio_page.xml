@@ -40,28 +40,10 @@
                 android:layout_height="wrap_content"
                 android:weightSum="10">
 
-                <TextView
-                    android:id="@+id/description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_weight="6"
-                    android:fontFamily="@font/barlow_light"
-                    android:paddingLeft="20dp"
-                    android:paddingRight="20dp"
-                    android:textColor="@color/black"
-                    android:textSize="16dp"
-                    tools:layout_editor_absoluteX="0dp" />
-
                 <LinearLayout
                     android:layout_width="95dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="4">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
-                </LinearLayout>
+                    android:layout_weight="4"></LinearLayout>
             </LinearLayout>
 
             <FrameLayout
@@ -85,6 +67,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/audio"
             android:background="@drawable/rounded__left_btn_grey_ligth"
+            android:clickable="true"
             android:text="IMG"
             android:textColor="@color/white"
             app:backgroundTint="@null" />
@@ -96,8 +79,9 @@
             android:layout_below="@+id/txtBtn"
             android:layout_marginBottom="-10dp"
             android:background="@drawable/rounded__left_btn_grey"
-            app:backgroundTint="@null"
-            android:text="Mp3"/>
+            android:clickable="true"
+            android:text="Mp3"
+            app:backgroundTint="@null" />
 
         <Button
             android:id="@+id/txtBtn"
@@ -107,8 +91,9 @@
             android:layout_marginTop="400dp"
             android:layout_marginBottom="-10dp"
             android:background="@drawable/rounded__left_btn"
-            app:backgroundTint="@null"
-            android:text="TxT"/>
+            android:clickable="false"
+            android:text="TxT"
+            app:backgroundTint="@null" />
     </RelativeLayout>
 
 </FrameLayout>

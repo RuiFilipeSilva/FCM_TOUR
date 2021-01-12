@@ -113,17 +113,14 @@ public class Rooms extends Fragment {
                     if(Preferences.readRoomsAccess() == false){
                         if (position == i && position == 0) {
                             access = true;
-                            //new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + numbers[i]);
-                            Log.d("SIGA", "onItemClick: "+ access);
                             Preferences.removeRoom();
-                            Preferences.write("room", "00");
+                            Preferences.write("room", numbers[i]);
                             final int homeContainer = R.id.fullpage;
                             AudioPage audioPage = new AudioPage();
                             openFragment(audioPage, homeContainer);
                             break;
                         }
                         else {
-                            Log.d("SIGA", "onItemClick: AQUI");
                             access = false;
                         }
                     }else {
@@ -137,7 +134,6 @@ public class Rooms extends Fragment {
                     }
                 }
                 if (Preferences.readRoomsAccess() == false && access == false){
-                    Log.d("SIGA", "onItemClick: " + access);
                     AlertDialogInsertTicket();
                 }
             }

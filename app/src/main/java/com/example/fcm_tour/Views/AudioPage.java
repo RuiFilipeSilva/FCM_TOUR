@@ -34,38 +34,101 @@ import java.net.URL;
 
 
 public class AudioPage extends Fragment {
+    Bundle extras;
+    String title;
+    String description;
+    String link;
+    String img;
+    Button btnTxt;
+    Button btnAudio;
+    Button btnImages;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Preferences.init(getContext());
+        String roomNum = Preferences.read("room", null);
+        new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + roomNum);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_audio_page, container, false);
-        Preferences.init(getContext());
-        Button btnTxt = (Button) v.findViewById(R.id.txtBtn);
-        Button btnAudio = (Button) v.findViewById(R.id.audio);
-        Button btnImages = (Button) v.findViewById(R.id.images);
+        extras = new Bundle();
+        btnTxt = (Button) v.findViewById(R.id.txtBtn);
+        btnAudio = (Button) v.findViewById(R.id.audio);
+        btnImages = (Button) v.findViewById(R.id.images);
+
+        btnTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               openDescFragment();
+            }
+        });
         btnAudio.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final int audioContainer = R.id.audioPageFrame;
-                AudioPlayer audioPlayer = new AudioPlayer();
-                openFragment(audioPlayer, audioContainer);
+                openAudioFragment();
             }
         });
-        String roomNum = Preferences.read("room", null);
-        new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + roomNum);
-
-
+        btnImages.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openGalleryFragment();
+            }
+        });
         return v;
     }
 
-    private void openFragment(AudioPlayer audioPlayer, int audioContainer) {
+
+    public void openDescFragment() {
+        extras.putString("description", description);
+        btnTxt.setClickable(false);
+        btnAudio.setClickable(true);
+        btnImages.setClickable(true);
+        btnTxt.setBackgroundResource(R.drawable.rounded__left_btn);
+        btnAudio.setBackgroundResource(R.drawable.rounded__left_btn_grey);
+        btnImages.setBackgroundResource(R.drawable.rounded__left_btn_grey_ligth);
+        final int descriptionContainer = R.id.audioPageFrame;
+        Description description = new Description();
+        description.setArguments(extras);
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(descriptionContainer, description);
+        ft.commit();
+    }
+
+    public void openAudioFragment() {
+        extras.putString("link", link);
+        btnTxt.setClickable(true);
+        btnAudio.setClickable(false);
+        btnImages.setClickable(true);
+        btnTxt.setBackgroundResource(R.drawable.rounded__left_btn_grey);
+        btnAudio.setBackgroundResource(R.drawable.rounded__left_btn);
+        btnImages.setBackgroundResource(R.drawable.rounded__left_btn_grey_ligth);
+        final int audioContainer = R.id.audioPageFrame;
+        AudioPlayer audioPlayer = new AudioPlayer();
+        audioPlayer.setArguments(extras);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(audioContainer, audioPlayer);
+        ft.commit();
+    }
+
+    public void openGalleryFragment() {
+        extras.putString("img", img);
+        btnTxt.setClickable(true);
+        btnAudio.setClickable(true);
+        btnImages.setClickable(false);
+        btnTxt.setBackgroundResource(R.drawable.rounded__left_btn_grey);
+        btnAudio.setBackgroundResource(R.drawable.rounded__left_btn_grey_ligth);
+        btnImages.setBackgroundResource(R.drawable.rounded__left_btn);
+        final int galleryContainer = R.id.audioPageFrame;
+        Gallery gallery = new Gallery();
+        gallery.setArguments(extras);
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(galleryContainer, gallery);
         ft.commit();
     }
 
@@ -95,12 +158,10 @@ public class AudioPage extends Fragment {
             View v = getView();
             try {
                 JSONObject rooms = new JSONObject(result);
-                String description = rooms.getString("description");
-                String img = rooms.getString("cover");
-                String link = rooms.getString("audio");
-                Log.d("SIGA", "onPostExecute: " + link);
-                Preferences.write("audioPlayer", link);
-                String name = rooms.getString("name");
+                img = rooms.getString("cover");
+                description = rooms.getString("description");
+                link = rooms.getString("audio");
+                title = rooms.getString("name");
                 ImageView imgChuck = v.findViewById(R.id.IMG);
                 Picasso.get()
                         .load(img)
@@ -108,33 +169,8 @@ public class AudioPage extends Fragment {
                         .centerCrop()
                         .into(imgChuck);
                 TextView text = (TextView) v.findViewById(R.id.title);
-                text.setText(name);
-                TextView text2 = (TextView) v.findViewById(R.id.description);
-                text2.setText(description);
-                /* MediaPlayer mediaPlayer = new MediaPlayer();
-                mediaPlayer.setAudioAttributes(
-                        new AudioAttributes.Builder()
-                                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                                .setUsage(AudioAttributes.USAGE_MEDIA)
-                                .build()
-                );
-                mediaPlayer.setDataSource(link);
-                mediaPlayer.prepare();
-                Button play = (Button) v.findViewById(R.id.btnStart);
-                Button pause = (Button) v.findViewById(R.id.btnAR);
-
-                play.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) { mediaPlayer.start();
-                    }
-                });
-
-                pause.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        mediaPlayer.pause();
-                    }
-                }); */
+                text.setText(title);
+                openDescFragment();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
