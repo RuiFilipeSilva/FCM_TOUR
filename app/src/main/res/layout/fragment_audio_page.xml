@@ -6,11 +6,13 @@
     android:layout_height="match_parent"
     tools:context=".Views.AudioPage">
 
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="185dp"
         tools:layout_editor_absoluteY="271dp">
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -63,36 +65,30 @@
 
         <Button
             android:id="@+id/images"
-            android:layout_width="70dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/audio"
-            android:background="@drawable/rounded__left_btn_grey_ligth"
-            android:clickable="true"
-            android:text="IMG"
+            android:background="@drawable/botao_da_galeria_grey"
             android:textColor="@color/white"
             app:backgroundTint="@null" />
 
         <Button
             android:id="@+id/audio"
-            android:layout_width="70dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/txtBtn"
             android:layout_marginBottom="-10dp"
-            android:background="@drawable/rounded__left_btn_grey"
-            android:clickable="true"
-            android:text="Mp3"
+            android:background="@drawable/botao_audio_dgrey"
             app:backgroundTint="@null" />
 
         <Button
             android:id="@+id/txtBtn"
-            android:layout_width="70dp"
+            android:layout_width="55dp"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginTop="400dp"
             android:layout_marginBottom="-10dp"
-            android:background="@drawable/rounded__left_btn"
-            android:clickable="false"
-            android:text="TxT"
+            android:background="@drawable/botao_descricao_amarelo"
             app:backgroundTint="@null" />
     </RelativeLayout>
 

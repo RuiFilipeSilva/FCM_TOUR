@@ -9,12 +9,16 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.example.fcm_tour.API;
@@ -22,6 +26,7 @@ import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -31,6 +36,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class AudioPage extends Fragment {
@@ -39,9 +47,11 @@ public class AudioPage extends Fragment {
     String description;
     String link;
     String img;
+    ArrayList imgsList;
     Button btnTxt;
     Button btnAudio;
     Button btnImages;
+    LayoutParams params;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -58,11 +68,16 @@ public class AudioPage extends Fragment {
         btnTxt = (Button) v.findViewById(R.id.txtBtn);
         btnAudio = (Button) v.findViewById(R.id.audio);
         btnImages = (Button) v.findViewById(R.id.images);
+        params = new LayoutParams(
+                LayoutParams.MATCH_PARENT,
+                LayoutParams.MATCH_PARENT
+        );
+
 
         btnTxt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               openDescFragment();
+                openDescFragment();
             }
         });
         btnAudio.setOnClickListener(new View.OnClickListener() {
@@ -86,16 +101,19 @@ public class AudioPage extends Fragment {
         btnTxt.setClickable(false);
         btnAudio.setClickable(true);
         btnImages.setClickable(true);
-        btnTxt.setBackgroundResource(R.drawable.rounded__left_btn);
-        btnAudio.setBackgroundResource(R.drawable.rounded__left_btn_grey);
-        btnImages.setBackgroundResource(R.drawable.rounded__left_btn_grey_ligth);
+        btnTxt.setBackgroundResource(R.drawable.botao_descricao_amarelo);
+        btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
+        btnImages.setBackgroundResource(R.drawable.botao_da_galeria_grey);
+        btnTxt.setWidth(btnTxt.getWidth() + 20);
         final int descriptionContainer = R.id.audioPageFrame;
         Description description = new Description();
         description.setArguments(extras);
+        /*
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(descriptionContainer, description);
         ft.commit();
+         */
     }
 
     public void openAudioFragment() {
@@ -103,33 +121,39 @@ public class AudioPage extends Fragment {
         btnTxt.setClickable(true);
         btnAudio.setClickable(false);
         btnImages.setClickable(true);
-        btnTxt.setBackgroundResource(R.drawable.rounded__left_btn_grey);
-        btnAudio.setBackgroundResource(R.drawable.rounded__left_btn);
-        btnImages.setBackgroundResource(R.drawable.rounded__left_btn_grey_ligth);
+        btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
+        btnAudio.setBackgroundResource(R.drawable.botao_do_audio_amarelo);
+        btnImages.setBackgroundResource(R.drawable.botao_da_galeria_grey);
+        btnAudio.setWidth(btnAudio.getWidth() + 20);
         final int audioContainer = R.id.audioPageFrame;
         AudioPlayer audioPlayer = new AudioPlayer();
         audioPlayer.setArguments(extras);
+        /*
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(audioContainer, audioPlayer);
         ft.commit();
+         */
     }
 
     public void openGalleryFragment() {
-        extras.putString("img", img);
+        extras.putStringArrayList("imgsList", imgsList);
         btnTxt.setClickable(true);
         btnAudio.setClickable(true);
         btnImages.setClickable(false);
-        btnTxt.setBackgroundResource(R.drawable.rounded__left_btn_grey);
-        btnAudio.setBackgroundResource(R.drawable.rounded__left_btn_grey_ligth);
-        btnImages.setBackgroundResource(R.drawable.rounded__left_btn);
+        btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
+        btnAudio.setBackgroundResource(R.drawable.botao_audio_grey);
+        btnImages.setBackgroundResource(R.drawable.botao_da_galeria_amarelo);
+        btnImages.setWidth(btnImages.getWidth() + 20);
         final int galleryContainer = R.id.audioPageFrame;
         Gallery gallery = new Gallery();
         gallery.setArguments(extras);
+        /*
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(galleryContainer, gallery);
         ft.commit();
+         */
     }
 
     class GetRoomsByNumber extends AsyncTask<String, String, String> {
@@ -158,6 +182,11 @@ public class AudioPage extends Fragment {
             View v = getView();
             try {
                 JSONObject rooms = new JSONObject(result);
+                JSONArray imgsResult = new JSONArray(rooms.getString("imgs"));
+                imgsList = new ArrayList<String>();
+                for (int i = 0; i < imgsResult.length(); i++) {
+                    imgsList.add(imgsResult.getString(i));
+                }
                 img = rooms.getString("cover");
                 description = rooms.getString("description");
                 link = rooms.getString("audio");
