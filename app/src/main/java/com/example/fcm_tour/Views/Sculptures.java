@@ -75,15 +75,12 @@ public class Sculptures extends Fragment {
         }
         Sculptures.MyAdapter adapter = new Sculptures.MyAdapter(getContext(), names, links, imgs);
         listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                for (int i = 0; i < links.length; i++) {
-                    if (position == i) {
-                        Intent intent = new Intent(v.getContext(), AR_Sculptures.class);
-                        intent.putExtra("link", links[i]);
-                        startActivity(intent);
-                    }
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+            for (int i = 0; i < links.length; i++) {
+                if (position == i) {
+                    Intent intent = new Intent(v.getContext(), AR_Sculptures.class);
+                    intent.putExtra("link", links[i]);
+                    startActivity(intent);
                 }
             }
         });

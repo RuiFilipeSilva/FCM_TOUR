@@ -58,12 +58,9 @@ public class SocialMediaAuth extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_social_media_auth, container, false);
-        v.findViewById(R.id.sign_in_button).setOnClickListener((new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent signInIntent = mGoogleSignInClient.getSignInIntent();
-                startActivityForResult(signInIntent, RC_GET_TOKEN);
-            }
+        v.findViewById(R.id.sign_in_button).setOnClickListener((v1 -> {
+            Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+            startActivityForResult(signInIntent, RC_GET_TOKEN);
         }));
         loginButton = (LoginButton) v.findViewById(R.id.login_button);
         loginButton.setFragment(this);
@@ -73,18 +70,14 @@ public class SocialMediaAuth extends Fragment {
             public void onSuccess(LoginResult loginResult) {
                 GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
-                        new GraphRequest.GraphJSONObjectCallback() {
-                            @Override
-                            public void onCompleted(JSONObject object, GraphResponse response) {
-                                // Insert your code here
-                                try {
-                                    String token = loginResult.getAccessToken().getToken();
-                                    String name = object.getString("name");
-                                    String email = object.getString("email");
-                                    Users.facebookLogin(token, name, email, getApplicationContext());
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
+                        (object, response) -> {
+                            try {
+                                String token = loginResult.getAccessToken().getToken();
+                                String name = object.getString("name");
+                                String email = object.getString("email");
+                                Users.facebookLogin(token, name, email, getApplicationContext());
+                            } catch (JSONException e) {
+                                e.printStackTrace();
                             }
                         });
 
@@ -96,14 +89,9 @@ public class SocialMediaAuth extends Fragment {
 
             @Override
             public void onCancel() {
-                // App code
-                Log.d("INFO", "CANCEL");
             }
-
             @Override
             public void onError(FacebookException exception) {
-                // App code
-                Log.d("INFO", String.valueOf(exception));
             }
         });
         return v;
@@ -126,12 +114,6 @@ public class SocialMediaAuth extends Fragment {
             String token = account.getIdToken();
             Users.googleLogin(token, getApplicationContext());
         } catch (ApiException e) {
-            Log.w("SIGA", "signInResult:failed code=" + e.getStatusCode());
         }
-    }
-
-    public void home() {
-        Intent homePage = new Intent(getContext(), SideBar.class);
-        startActivity(homePage);
     }
 }

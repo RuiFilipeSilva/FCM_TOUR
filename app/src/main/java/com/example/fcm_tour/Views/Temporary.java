@@ -38,7 +38,6 @@ public class Temporary extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_temporary, container, false);
     }
 
@@ -58,7 +57,6 @@ public class Temporary extends Fragment {
                     stringBuilder.append(line);
                 }
             }catch (Exception e){
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
             }
             return stringBuilder.toString();
         }

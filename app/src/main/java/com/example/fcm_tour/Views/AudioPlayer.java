@@ -1,6 +1,8 @@
 package com.example.fcm_tour.Views;
 
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -9,11 +11,16 @@ import androidx.fragment.app.Fragment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -30,6 +37,9 @@ public class AudioPlayer extends Fragment {
     MediaPlayer mp;
     int totalTime;
     String link;
+    String title;
+    AlertDialog dialog;
+    View v;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,53 +49,46 @@ public class AudioPlayer extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Preferences.init(getContext());
-        View v = inflater.inflate(R.layout.fragment_audio_player, container, false);
+        v = inflater.inflate(R.layout.fragment_audio_player, container, false);
         Bundle bundle = this.getArguments();
         link = bundle.getString("link");
-        ProgressDialog progressDialog = ProgressDialog.show(getContext(),
-                "Loading Title", "Loading Message");
         playBtn = v.findViewById(R.id.playBtn);
         elapsedTimeLabel = v.findViewById(R.id.elapsedTimeLabel);
         remainingTimeLabel = v.findViewById(R.id.remainingTimeLabel);
-        playBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!mp.isPlaying()) {
-                    mp.start();
-                    playBtn.setBackgroundResource(R.drawable.biblio);
+        playBtn.setOnClickListener(v1 -> {
+            if (!mp.isPlaying()) {
+                mp.start();
+                playBtn.setBackgroundResource(R.drawable.biblio);
 
-                } else {
-                    mp.pause();
-                    playBtn.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24);
-                }
+            } else {
+                mp.pause();
+                playBtn.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24);
             }
         });
+        setProgressDialog();
         mp = new MediaPlayer();
         try {
             mp.setDataSource(link);
-            Log.d("SIGA", "onCreateView: ");
-            mp.prepare();
+            mp.prepareAsync();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        /* mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                Log.d("SIGA", "onCreateView: ");
+        mp.setOnPreparedListener(mp -> {
+            prepareAudioLayout();
+            if (dialog != null && dialog.isShowing()) {
+                dialog.dismiss();
             }
         });
+        return v;
+    }
 
-         */
-
-        mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
-            @Override
-            public void onPrepared(MediaPlayer mp) {
-                if (progressDialog != null && progressDialog.isShowing()){
-                    progressDialog.dismiss();
-                }
-                mp.start();
-            }
-        });
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        mp.pause();
+    }
+    
+    public void prepareAudioLayout() {
         mp.seekTo(0);
         mp.setVolume(0.5f, 0.5f);
         totalTime = mp.getDuration();
@@ -109,21 +112,63 @@ public class AudioPlayer extends Fragment {
                     }
                 }
         );
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while (mp != null) {
-                    try {
-                        Message msg = new Message();
-                        msg.what = mp.getCurrentPosition();
-                        handler.sendMessage(msg);
-                        Thread.sleep(0);
-                    } catch (InterruptedException ignored) {
-                    }
+        new Thread(() -> {
+            while (mp != null) {
+                try {
+                    Message msg = new Message();
+                    msg.what = mp.getCurrentPosition();
+                    handler.sendMessage(msg);
+                    Thread.sleep(0);
+                } catch (InterruptedException ignored) {
                 }
             }
         }).start();
-        return v;
+    }
+
+    public void setProgressDialog() {
+        int llPadding = 30;
+        LinearLayout ll = new LinearLayout(getContext());
+        ll.setOrientation(LinearLayout.HORIZONTAL);
+        ll.setPadding(llPadding, llPadding, llPadding, llPadding);
+        ll.setGravity(Gravity.CENTER);
+        LinearLayout.LayoutParams llParam = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT);
+        llParam.gravity = Gravity.CENTER;
+        ll.setLayoutParams(llParam);
+
+        ProgressBar progressBar = new ProgressBar(getContext());
+        progressBar.setIndeterminate(true);
+        progressBar.setPadding(0, 0, llPadding, 0);
+        progressBar.setLayoutParams(llParam);
+
+        llParam = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        llParam.gravity = Gravity.CENTER;
+        TextView tvText = new TextView(getContext());
+        tvText.setText("A carregar áudio...");
+        tvText.setTextColor(Color.parseColor("#000000"));
+        tvText.setTextSize(20);
+        tvText.setLayoutParams(llParam);
+
+        ll.addView(progressBar);
+        ll.addView(tvText);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setCancelable(true);
+        builder.setView(ll);
+
+        dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(true);
+        dialog.show();
+        Window window = dialog.getWindow();
+        if (window != null) {
+            WindowManager.LayoutParams layoutParams = new WindowManager.LayoutParams();
+            layoutParams.copyFrom(dialog.getWindow().getAttributes());
+            layoutParams.width = LinearLayout.LayoutParams.WRAP_CONTENT;
+            layoutParams.height = LinearLayout.LayoutParams.WRAP_CONTENT;
+            dialog.getWindow().setAttributes(layoutParams);
+        }
     }
 
     private Handler handler = new Handler(new Handler.Callback() {
@@ -148,4 +193,6 @@ public class AudioPlayer extends Fragment {
         timeLabel += sec;
         return timeLabel;
     }
+
+
 }

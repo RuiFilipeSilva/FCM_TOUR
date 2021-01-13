@@ -50,20 +50,10 @@ public class QrScan extends AppCompatActivity {
         mCodeScanner.setDecodeCallback(new DecodeCallback() {
             @Override
             public void onDecoded(@NonNull final Result result) {
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        new TicketScan().execute(API.API_URL + "/ticket/" + result.getText());
-                    }
-                });
+                runOnUiThread(() -> new TicketScan().execute(API.API_URL + "/ticket/" + result.getText()));
             }
         });
-        scannerView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mCodeScanner.startPreview();
-            }
-        });
+        scannerView.setOnClickListener(view -> mCodeScanner.startPreview());
     }
 
     @Override
@@ -127,11 +117,9 @@ public class QrScan extends AppCompatActivity {
                     alertDialog.setTitle("Bilhete Válido");
                     alertDialog.setMessage("Já pode aceder a todas as salas");
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    finish();
-                                }
+                            (dialog, which) -> {
+                                dialog.dismiss();
+                                finish();
                             });
                     alertDialog.show();
                 } else {
@@ -139,11 +127,9 @@ public class QrScan extends AppCompatActivity {
                     alertDialog.setTitle("Sem Resultados");
                     alertDialog.setMessage("Não foi encontrado nenhum bilhete com esse número");
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    mCodeScanner.startPreview();
-                                }
+                            (dialog, which) -> {
+                                dialog.dismiss();
+                                mCodeScanner.startPreview();
                             });
                     alertDialog.show();
                 }
@@ -152,11 +138,9 @@ public class QrScan extends AppCompatActivity {
                 alertDialog2.setTitle("Sem Resultados");
                 alertDialog2.setMessage("Não foi encontrado nenhum bilhete com esse número");
                 alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                mCodeScanner.startPreview();
-                            }
+                        (dialog, which) -> {
+                            dialog.dismiss();
+                            mCodeScanner.startPreview();
                         });
                 alertDialog2.show();
                 e.printStackTrace();

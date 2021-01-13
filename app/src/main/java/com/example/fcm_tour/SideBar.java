@@ -57,12 +57,7 @@ public class SideBar extends AppCompatActivity {
         History history = new History();
         openFragment(history, homeContainer);
         final DrawerLayout drawerLayout = findViewById(R.id.draweLayout);
-        findViewById(R.id.menu).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-            }
-        });
+        findViewById(R.id.menu).setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
         NavigationView navigationView = findViewById(R.id.navigationView);
         navigationView.setItemIconTintList(null);
         if (Preferences.readUserToken() == null) {
@@ -72,12 +67,9 @@ public class SideBar extends AppCompatActivity {
         }
         setupDrawerContent(navigationView);
         ImageButton auth = (ImageButton) navigationView.getHeaderView(0).findViewById(R.id.iconProfile);
-        auth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), Authentication.class);
-                startActivity(intent);
-            }
+        auth.setOnClickListener(view -> {
+            Intent intent = new Intent(view.getContext(), Authentication.class);
+            startActivity(intent);
         });
     }
 
@@ -133,12 +125,9 @@ public class SideBar extends AppCompatActivity {
 
     private void setupDrawerContent(NavigationView navigationView) {
         navigationView.setNavigationItemSelectedListener(
-                new NavigationView.OnNavigationItemSelectedListener() {
-                    @Override
-                    public boolean onNavigationItemSelected(MenuItem menuItem) {
-                        selectDrawerItem(menuItem);
-                        return true;
-                    }
+                menuItem -> {
+                    selectDrawerItem(menuItem);
+                    return true;
                 });
     }
 

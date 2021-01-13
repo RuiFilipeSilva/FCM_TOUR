@@ -45,18 +45,10 @@ public class RoomPage extends Fragment {
         final int homeContainer = R.id.listRooms;
         Rooms rooms = new Rooms();
         openFragment(rooms, homeContainer);
-        v.findViewById(R.id.keyBoard).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialogInsertTicket();
-            }
-        });
-        v.findViewById(R.id.qrCode).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), QrScan.class);
-                startActivity(intent);
-            }
+        v.findViewById(R.id.keyBoard).setOnClickListener(v1 -> AlertDialogInsertTicket());
+        v.findViewById(R.id.qrCode).setOnClickListener(v12 -> {
+            Intent intent = new Intent(v12.getContext(), QrScan.class);
+            startActivity(intent);
         });
         return v;
     }
@@ -102,11 +94,9 @@ public class RoomPage extends Fragment {
                     alertDialog2.setTitle("Sem Resultados");
                     alertDialog2.setMessage("Não foi encontrado nenhum bilhete com esse número");
                     alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    AlertDialogInsertTicket();
-                                }
+                            (dialog, which) -> {
+                                dialog.dismiss();
+                                AlertDialogInsertTicket();
                             });
                     alertDialog2.show();
                 }
@@ -115,11 +105,9 @@ public class RoomPage extends Fragment {
                 alertDialog2.setTitle("Sem Resultados");
                 alertDialog2.setMessage("Não foi encontrado nenhum bilhete com esse número");
                 alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                                AlertDialogInsertTicket();
-                            }
+                        (dialog, which) -> {
+                            dialog.dismiss();
+                            AlertDialogInsertTicket();
                         });
                 alertDialog2.show();
                 e.printStackTrace();
@@ -136,22 +124,16 @@ public class RoomPage extends Fragment {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         params.setMargins(60, 0, 60, 0);
-        // Set an EditText view to get ticket input
         final EditText input = new EditText(getContext());
         layout.addView(input, params);
         alert.setView(layout);
-        alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                String value = input.getText().toString();
-                new TicketScan().execute(API.API_URL + "/ticket/" + value);
-            }
+        alert.setPositiveButton("Ok", (dialog, whichButton) -> {
+            String value = input.getText().toString();
+            new TicketScan().execute(API.API_URL + "/ticket/" + value);
         });
         alert.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // TODO Auto-generated method stub
-                        return;
-                    }
+                (dialog, which) -> {
+                    return;
                 });
         alert.show();
     }

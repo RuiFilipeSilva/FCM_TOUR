@@ -43,13 +43,10 @@ public class History extends Fragment {
         Preferences.init(getContext());
         new History.GetMuseum().execute(API.API_URL + "/home");
         ImageButton tower = (ImageButton) v.findViewById(R.id.tower);
-        tower.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int homeContainer = R.id.fullpage;
-                Tower towerPage = new Tower();
-                openFragment(towerPage, homeContainer);
-            }
+        tower.setOnClickListener(v1 -> {
+            final int homeContainer = R.id.fullpage;
+            Tower towerPage = new Tower();
+            openFragment(towerPage, homeContainer);
         });
         return v;
     }

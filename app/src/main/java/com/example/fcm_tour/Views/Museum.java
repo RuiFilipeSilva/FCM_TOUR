@@ -51,13 +51,10 @@ public class Museum extends Fragment {
         new GetMuseum().execute(API.API_URL + "/museu");
 
         Button sculptures = (Button) v.findViewById(R.id.btnAR);
-        sculptures.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int homeContainer = R.id.fullpage;
-                SculpturePage sculpturePage = new SculpturePage();
-                openFragment(sculpturePage, homeContainer);
-            }
+        sculptures.setOnClickListener(v1 -> {
+            final int homeContainer = R.id.fullpage;
+            SculpturePage sculpturePage = new SculpturePage();
+            openFragment(sculpturePage, homeContainer);
         });
         return v;
     }
