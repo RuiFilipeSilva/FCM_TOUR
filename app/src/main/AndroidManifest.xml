@@ -5,6 +5,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
+
     <uses-feature android:name="android.hardware.camera.ar" />
 
     <application
@@ -16,17 +17,34 @@
         android:theme="@style/Theme.FCM_TOUR">
         <activity
             android:name=".Views.AR_Sculptures"
-            android:label="@string/title_activity_a_r__sculptures">
-        </activity>
+            android:label="@string/title_activity_a_r__sculptures"
+            android:screenOrientation="portrait" />
 
-        <activity android:name=".Views.QrScan" />
-        <activity android:name=".SideBar" />
-        <activity android:name=".Library" />
-        <activity android:name=".Music" />
-        <activity android:name=".Views.Login2" />
-        <activity android:name=".Views.Register" />
-        <activity android:name=".Views.Authentication" />
-        <activity android:name=".MainActivity">
+
+        <activity
+            android:name=".Views.QrScan"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".SideBar"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Library"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Music"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Views.Login2"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Views.Register"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Views.Authentication"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -44,7 +62,7 @@
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-            android:label="@string/app_name" />
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" />
     </application>
-
 </manifest>
