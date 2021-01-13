@@ -1,5 +1,6 @@
 package com.example.fcm_tour.Views;
 
+import android.app.ProgressDialog;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -41,6 +42,8 @@ public class AudioPlayer extends Fragment {
         View v = inflater.inflate(R.layout.fragment_audio_player, container, false);
         Bundle bundle = this.getArguments();
         link = bundle.getString("link");
+        ProgressDialog progressDialog = ProgressDialog.show(getContext(),
+                "Loading Title", "Loading Message");
         playBtn = v.findViewById(R.id.playBtn);
         elapsedTimeLabel = v.findViewById(R.id.elapsedTimeLabel);
         remainingTimeLabel = v.findViewById(R.id.remainingTimeLabel);
@@ -60,10 +63,29 @@ public class AudioPlayer extends Fragment {
         mp = new MediaPlayer();
         try {
             mp.setDataSource(link);
+            Log.d("SIGA", "onCreateView: ");
             mp.prepare();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        /* mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                Log.d("SIGA", "onCreateView: ");
+            }
+        });
+
+         */
+
+        mp.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+            @Override
+            public void onPrepared(MediaPlayer mp) {
+                if (progressDialog != null && progressDialog.isShowing()){
+                    progressDialog.dismiss();
+                }
+                mp.start();
+            }
+        });
         mp.seekTo(0);
         mp.setVolume(0.5f, 0.5f);
         totalTime = mp.getDuration();
