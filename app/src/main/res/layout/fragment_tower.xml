@@ -54,6 +54,13 @@
                 android:textColor="@color/black"
                 android:textSize="26dp" />
 
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:layout_width="140dp"
+                android:layout_height="3dp"
+                android:background="@drawable/rec"
+                android:backgroundTint="@color/tower"/>
+
             <TextView
                 android:id="@+id/description"
                 android:layout_width="match_parent"

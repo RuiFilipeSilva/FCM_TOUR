@@ -6,111 +6,139 @@
     android:layout_height="match_parent"
     tools:context=".Views.History">
 
-      <ScrollView
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-          <LinearLayout
-              android:layout_width="match_parent"
-              android:layout_height="wrap_content"
-              android:orientation="vertical" >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-              <!--<Button
-                  android:id="@+id/auth"
-                  android:layout_width="409dp"
-                  android:layout_height="79dp"
-                  android:text="Autenticação"
-                  tools:layout_editor_absoluteY="-5dp" />-->
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/nome_da_fcm" />
 
-              <ImageView
-                  android:id="@+id/imageView"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginLeft="20dp"
-                  android:layout_marginBottom="20dp"
-                  android:layout_marginTop="10dp"
-                  android:src="@drawable/nome_da_fcm" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:elevation="40dp">
 
-              <TableRow
-                  android:layout_width="match_parent"
-                  android:layout_height="match_parent"
-                  android:layout_gravity="center_vertical"
-                  android:layout_marginTop="20dp"
-                  android:elevation="40dp">
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardTower"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="3dp">
 
-                  <ImageButton
-                      android:id="@+id/tower"
-                      android:layout_width="80dp"
-                      android:layout_height="80dp"
-                      android:layout_gravity="center_horizontal"
-                      android:layout_marginLeft="20dp"
-                      android:layout_marginRight="5dp"
-                      android:elevation="2dp"
-                      android:scaleType="center"
-                      android:src="@drawable/torre"></ImageButton>
+                    <ImageButton
+                        android:id="@+id/tower"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bot_o_torre_liter_ria"
+                        android:backgroundTint="@null" />
+                </androidx.cardview.widget.CardView>
 
-                  <ImageButton
-                      android:id="@+id/museum"
-                      android:layout_width="80dp"
-                      android:layout_height="80dp"
-                      android:layout_gravity="center_horizontal"
-                      android:layout_marginLeft="5dp"
-                      android:layout_marginRight="5dp"
-                      android:scaleType="center"
-                      android:src="@drawable/museu"></ImageButton>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardMuseum"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="3dp">
 
-                  <ImageButton
-                      android:id="@+id/library"
-                      android:layout_width="80dp"
-                      android:layout_height="80dp"
-                      android:layout_gravity="center_horizontal"
-                      android:layout_marginLeft="5dp"
-                      android:layout_marginRight="5dp"
-                      android:scaleType="center"
-                      android:src="@drawable/biblio"></ImageButton>
+                    <ImageButton
+                        android:id="@+id/museum"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bot_o_museu"
+                        android:backgroundTint="@null" />
+                </androidx.cardview.widget.CardView>
 
-                  <ImageButton
-                      android:id="@+id/music"
-                      android:layout_width="80dp"
-                      android:layout_height="80dp"
-                      android:layout_gravity="center_horizontal"
-                      android:layout_marginLeft="5dp"
-                      android:layout_marginRight="30dp"
-                      android:scaleType="center"
-                      android:src="@drawable/musica"></ImageButton>
-              </TableRow>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardLibrary"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="3dp">
 
-              <ImageView
-                  android:id="@+id/cover"
-                  android:layout_width="match_parent"
-                  android:layout_height="250dp"
-                  android:layout_marginTop="30dp"
-                  android:scaleType="fitXY"
-                  tools:layout_editor_absoluteX="-16dp"></ImageView>
+                    <ImageButton
+                        android:id="@+id/library"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bot_o_biblioteca"
+                        android:backgroundTint="@null" />
+                </androidx.cardview.widget.CardView>
 
-              <TextView
-                  android:id="@+id/textview"
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="20dp"
-                  android:paddingLeft="20dp"
-                  android:text="HISTÓRIA"
-                  android:textColor="@color/black"
-                  android:fontFamily="@font/stratum1_black"
-                  android:textSize="26dp"/>
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/cardMusic"
+                    android:layout_width="0dp"
+                    android:layout_height="80dp"
+                    android:layout_margin="4dp"
+                    android:layout_weight="1"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="3dp">
 
-              <TextView
-                  android:id="@+id/textview2"
-                  android:layout_width="match_parent"
-                  android:layout_height="wrap_content"
-                  android:layout_marginTop="10dp"
-                  android:textColor="@color/black"
-                  android:textSize="16dp"
-                  android:fontFamily="@font/barlow_light"
-                  android:paddingLeft="20dp"
-                  android:paddingRight="20dp"
-                  tools:layout_editor_absoluteX="0dp" />
-          </LinearLayout>
+                    <ImageButton
+                        android:id="@+id/music"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bot_o_m_sica"
+                        android:backgroundTint="@null" />
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/cover"
+                android:layout_width="match_parent"
+                android:layout_height="280dp"
+                android:layout_marginTop="30dp"
+                android:scaleType="fitXY"
+                tools:layout_editor_absoluteX="-16dp"></ImageView>
+
+            <TextView
+                android:id="@+id/textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/stratum1_black"
+                android:paddingLeft="20dp"
+                android:text="HISTÓRIA"
+                android:textColor="@color/black"
+                android:textSize="26dp" />
+
+            <ImageView
+                android:layout_marginLeft="20dp"
+                android:layout_width="70dp"
+                android:layout_height="3dp"
+                android:background="@drawable/rec">
+
+            </ImageView>
+
+            <TextView
+                android:id="@+id/textview2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/barlow_light"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:textColor="@color/black"
+                android:textSize="16dp"
+                tools:layout_editor_absoluteX="0dp" />
+        </LinearLayout>
     </ScrollView>
-
 </FrameLayout>

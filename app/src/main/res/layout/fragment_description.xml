@@ -10,5 +10,8 @@
         android:id="@+id/txt"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:textColor="@color/black"
+        android:textSize="16dp"
+        android:fontFamily="@font/barlow_light"
         android:text="DESCRIPTION DESCRIPTION DESCRIPTION"/>
 </FrameLayout>

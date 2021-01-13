@@ -39,10 +39,17 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/stratum1_black"
                 android:paddingLeft="20dp"
-                android:text="MUSEU"
+                android:text="1900"
                 android:textColor="@color/black"
-                android:textSize="26dp" />
+                android:textSize="30dp" />
 
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="3dp"
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/rec"
+                android:backgroundTint="@color/tower" />
 
             <FrameLayout
                 android:id="@+id/audioPageFrame"
