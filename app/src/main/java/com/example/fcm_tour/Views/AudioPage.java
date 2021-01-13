@@ -21,6 +21,8 @@ import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
 
+import com.denzcoskun.imageslider.ImageSlider;
+import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
@@ -46,12 +48,9 @@ public class AudioPage extends Fragment {
     String title;
     String description;
     String link;
-    String img;
-    ArrayList imgsList;
     Button btnTxt;
     Button btnAudio;
-    Button btnImages;
-    LayoutParams params;
+    ImageSlider imageSlider;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,15 +63,10 @@ public class AudioPage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_audio_page, container, false);
+        imageSlider = v.findViewById(R.id.slider);
         extras = new Bundle();
         btnTxt = (Button) v.findViewById(R.id.txtBtn);
         btnAudio = (Button) v.findViewById(R.id.audio);
-        btnImages = (Button) v.findViewById(R.id.images);
-        params = new LayoutParams(
-                LayoutParams.MATCH_PARENT,
-                LayoutParams.MATCH_PARENT
-        );
-
 
         btnTxt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,12 +80,6 @@ public class AudioPage extends Fragment {
                 openAudioFragment();
             }
         });
-        btnImages.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openGalleryFragment();
-            }
-        });
         return v;
     }
 
@@ -100,61 +88,32 @@ public class AudioPage extends Fragment {
         extras.putString("description", description);
         btnTxt.setClickable(false);
         btnAudio.setClickable(true);
-        btnImages.setClickable(true);
         btnTxt.setBackgroundResource(R.drawable.botao_descricao_amarelo);
         btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
-        btnImages.setBackgroundResource(R.drawable.botao_da_galeria_grey);
-        btnTxt.setWidth(btnTxt.getWidth() + 20);
         final int descriptionContainer = R.id.audioPageFrame;
         Description description = new Description();
         description.setArguments(extras);
-        /*
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(descriptionContainer, description);
         ft.commit();
-         */
     }
 
     public void openAudioFragment() {
         extras.putString("link", link);
         btnTxt.setClickable(true);
         btnAudio.setClickable(false);
-        btnImages.setClickable(true);
         btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
         btnAudio.setBackgroundResource(R.drawable.botao_do_audio_amarelo);
-        btnImages.setBackgroundResource(R.drawable.botao_da_galeria_grey);
-        btnAudio.setWidth(btnAudio.getWidth() + 20);
         final int audioContainer = R.id.audioPageFrame;
         AudioPlayer audioPlayer = new AudioPlayer();
         audioPlayer.setArguments(extras);
-        /*
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(audioContainer, audioPlayer);
         ft.commit();
-         */
     }
 
-    public void openGalleryFragment() {
-        extras.putStringArrayList("imgsList", imgsList);
-        btnTxt.setClickable(true);
-        btnAudio.setClickable(true);
-        btnImages.setClickable(false);
-        btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
-        btnAudio.setBackgroundResource(R.drawable.botao_audio_grey);
-        btnImages.setBackgroundResource(R.drawable.botao_da_galeria_amarelo);
-        btnImages.setWidth(btnImages.getWidth() + 20);
-        final int galleryContainer = R.id.audioPageFrame;
-        Gallery gallery = new Gallery();
-        gallery.setArguments(extras);
-        /*
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(galleryContainer, gallery);
-        ft.commit();
-         */
-    }
 
     class GetRoomsByNumber extends AsyncTask<String, String, String> {
         @Override
@@ -183,20 +142,14 @@ public class AudioPage extends Fragment {
             try {
                 JSONObject rooms = new JSONObject(result);
                 JSONArray imgsResult = new JSONArray(rooms.getString("imgs"));
-                imgsList = new ArrayList<String>();
+                List<SlideModel> imgsList = new ArrayList<>();
                 for (int i = 0; i < imgsResult.length(); i++) {
-                    imgsList.add(imgsResult.getString(i));
+                    imgsList.add(new SlideModel(imgsResult.getString(i)));
                 }
-                img = rooms.getString("cover");
+                imageSlider.setImageList(imgsList, true);
                 description = rooms.getString("description");
                 link = rooms.getString("audio");
                 title = rooms.getString("name");
-                ImageView imgChuck = v.findViewById(R.id.IMG);
-                Picasso.get()
-                        .load(img)
-                        .resize(256, 256)
-                        .centerCrop()
-                        .into(imgChuck);
                 TextView text = (TextView) v.findViewById(R.id.title);
                 text.setText(title);
                 openDescFragment();

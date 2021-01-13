@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
@@ -21,7 +22,7 @@ import com.example.fcm_tour.R;
 import java.io.IOException;
 
 public class AudioPlayer extends Fragment {
-    Button playBtn;
+    ImageButton playBtn;
     SeekBar positionBar;
     TextView elapsedTimeLabel;
     TextView remainingTimeLabel;
