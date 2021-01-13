@@ -37,7 +37,6 @@ public class AudioPlayer extends Fragment {
     MediaPlayer mp;
     int totalTime;
     String link;
-    String title;
     AlertDialog dialog;
     View v;
 
@@ -85,9 +84,10 @@ public class AudioPlayer extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mp.pause();
+        mp.stop();
+        mp = null;
     }
-    
+
     public void prepareAudioLayout() {
         mp.seekTo(0);
         mp.setVolume(0.5f, 0.5f);
@@ -98,7 +98,7 @@ public class AudioPlayer extends Fragment {
         positionBar.setOnSeekBarChangeListener(
                 new SeekBar.OnSeekBarChangeListener() {
                     @Override
-                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                    public void onProgressChanged(SeekBar seekBar,  int progress, boolean fromUser) {
                         if (fromUser) {
                             mp.seekTo(progress);
                             positionBar.setProgress(progress);
@@ -107,6 +107,7 @@ public class AudioPlayer extends Fragment {
                     @Override
                     public void onStartTrackingTouch(SeekBar seekBar) {
                     }
+
                     @Override
                     public void onStopTrackingTouch(SeekBar seekBar) {
                     }
@@ -146,8 +147,8 @@ public class AudioPlayer extends Fragment {
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         llParam.gravity = Gravity.CENTER;
         TextView tvText = new TextView(getContext());
-        tvText.setText("A carregar áudio...");
-        tvText.setTextColor(Color.parseColor("#000000"));
+        tvText.setText(R.string.dialogAudioText);
+        tvText.setTextColor(Color.parseColor(String.valueOf(R.color.white)));
         tvText.setTextSize(20);
         tvText.setLayoutParams(llParam);
 
@@ -193,6 +194,5 @@ public class AudioPlayer extends Fragment {
         timeLabel += sec;
         return timeLabel;
     }
-
 
 }

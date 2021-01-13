@@ -46,7 +46,6 @@ import java.util.List;
 
 
 public class AudioPage extends Fragment {
-    private static final String TAG = "SIGA";
     View v;
     Bundle extras;
     String title;
@@ -76,13 +75,11 @@ public class AudioPage extends Fragment {
         v = inflater.inflate(R.layout.fragment_audio_page, container, false);
         nextRoomBtn = (Button) v.findViewById(R.id.nextBtn);
         nextRoomBtn.setOnClickListener(v -> {
-            Log.d(TAG, "setOnClickListener: ");
             new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + nextRoomNum);
         });
         beforeRoomBtn = (Button) v.findViewById(R.id.beforeBtn);
         beforeRoomBtn.setOnClickListener(v -> {
             new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + beforeRoomNum);
-
         });
         btnTxt = (Button) v.findViewById(R.id.txtBtn);
         btnAudio = (Button) v.findViewById(R.id.audio);
@@ -95,7 +92,6 @@ public class AudioPage extends Fragment {
         }
         return v;
     }
-
 
     public void openDescFragment() {
         extras.putString("description", description);
@@ -147,7 +143,6 @@ public class AudioPage extends Fragment {
     }
 
     class GetRoomsByNumber extends AsyncTask<String, String, String> {
-
         @Override
         protected String doInBackground(String... fileUrl) {
             StringBuilder stringBuilder = new StringBuilder();

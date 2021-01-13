@@ -29,7 +29,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
                     android:scaleType="fitXY"
-                    app:auto_cycle="true"
+                    app:auto_cycle="false"
                     app:delay="0"
                     app:error_image="@drawable/ic_logo_icon"
                     app:period="1000"
