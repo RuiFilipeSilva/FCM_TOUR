@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Views.AudioPage">
+
 
     <ScrollView
         android:layout_width="match_parent"
@@ -12,50 +13,24 @@
         tools:layout_editor_absoluteX="185dp"
         tools:layout_editor_absoluteY="271dp">
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <RelativeLayout
+            <com.denzcoskun.imageslider.ImageSlider
+                android:id="@+id/slider"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="350dp"
+                android:scaleType="fitXY"
+                app:auto_cycle="true"
+                app:delay="0"
+                app:error_image="@drawable/ic_logo_icon"
+                app:period="1000"
+                app:placeholder="@color/white"
+                tools:layout_editor_absoluteX="-16dp" />
 
-                <Button
-                    android:id="@+id/btnStart"
-                    android:layout_width="150dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/rounded_museum"
-                    android:elevation="40dp"
-                    android:text="play"
-                    android:textColor="@color/white"
-                    android:textSize="13dp"
-                    app:backgroundTint="@null" />
-
-                <Button
-                    android:id="@+id/btnAR"
-                    android:layout_width="150dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginTop="70dp"
-                    android:layout_marginEnd="20dp"
-                    android:background="@drawable/rounded_museum"
-                    android:elevation="40dp"
-                    android:text="stop"
-                    android:textColor="@color/white"
-                    android:textSize="13dp"
-                    app:backgroundTint="@null" />
-
-                <ImageView
-                    android:id="@+id/IMG"
-                    android:layout_width="match_parent"
-                    android:layout_height="350dp"
-                    android:scaleType="fitXY"
-                    tools:layout_editor_absoluteX="-16dp"></ImageView>
-            </RelativeLayout>
 
             <TextView
                 android:id="@+id/title"
@@ -68,19 +43,45 @@
                 android:textColor="@color/black"
                 android:textSize="26dp" />
 
-            <TextView
-                android:id="@+id/description"
+
+            <FrameLayout
+                android:id="@+id/audioPageFrame"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="76dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:fontFamily="@font/barlow_light"
-                android:paddingLeft="20dp"
-                android:paddingRight="20dp"
-                android:textColor="@color/black"
-                android:textSize="16dp"
-                tools:layout_editor_absoluteX="0dp" />
+                android:layout_weight="6" />
+
 
         </LinearLayout>
     </ScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:elevation="40dp"
+        android:gravity="end"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/audio"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtBtn"
+            android:layout_marginBottom="-10dp"
+            android:background="@drawable/botao_audio_dgrey"
+            app:backgroundTint="@null" />
+
+        <Button
+            android:id="@+id/txtBtn"
+            android:layout_width="45dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="400dp"
+            android:layout_marginBottom="-10dp"
+            android:background="@drawable/botao_descricao_amarelo"
+            app:backgroundTint="@null" />
+    </RelativeLayout>
 
 </FrameLayout>
