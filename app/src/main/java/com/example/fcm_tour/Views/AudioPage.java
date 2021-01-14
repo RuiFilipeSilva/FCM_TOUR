@@ -95,12 +95,19 @@ public class AudioPage extends Fragment {
         extras.putString("description", description);
         btnTxt.setClickable(false);
         btnAudio.setClickable(true);
-        if (pageType == 0) {
-            btnTxt.setBackgroundResource(R.drawable.botao_descricao_amarelo);
-            btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
-        } else {
-            btnTxt.setBackgroundResource(R.drawable.botao_descricao_museu);
-            btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
+        switch (pageType) {
+            case 0:
+                btnTxt.setBackgroundResource(R.drawable.botao_descricao_amarelo);
+                btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
+                break;
+            case 1:
+                btnTxt.setBackgroundResource(R.drawable.botao_descricao_museu);
+                btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
+                break;
+            case 2:
+                btnTxt.setBackgroundResource(R.drawable.bot_o_descri__o_biblioteca);
+                btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
+                break;
         }
         final int descriptionContainer = R.id.audioPageFrame;
         Description description = new Description();
@@ -115,12 +122,19 @@ public class AudioPage extends Fragment {
         extras.putString("link", link);
         btnTxt.setClickable(true);
         btnAudio.setClickable(false);
-        if (pageType == 0) {
-            btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
-            btnAudio.setBackgroundResource(R.drawable.botao_do_audio_amarelo);
-        } else {
-            btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
-            btnAudio.setBackgroundResource(R.drawable.botao_audio_museu);
+        switch (pageType) {
+            case 0:
+                btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
+                btnAudio.setBackgroundResource(R.drawable.botao_do_audio_amarelo);
+                break;
+            case 1:
+                btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
+                btnAudio.setBackgroundResource(R.drawable.botao_audio_museu);
+                break;
+            case 2:
+                btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
+                btnAudio.setBackgroundResource(R.drawable.bot_o__udio_biblioteca);
+                break;
         }
         final int audioContainer = R.id.audioPageFrame;
         AudioPlayer audioPlayer = new AudioPlayer();
@@ -161,6 +175,12 @@ public class AudioPage extends Fragment {
                 getImgs = bundle.getString("img");
                 Picasso.get().load(getImgs).into(imgView);
                 break;
+            case 2:
+                underline.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.library)));
+                imgView.setVisibility(View.VISIBLE);
+                imageSlider.setVisibility(View.INVISIBLE);
+                getImgs = bundle.getString("img");
+                Picasso.get().load(getImgs).into(imgView);
             default:
                 break;
         }
