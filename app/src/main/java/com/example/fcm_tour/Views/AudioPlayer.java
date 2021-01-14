@@ -36,7 +36,7 @@ public class AudioPlayer extends Fragment {
     ImageButton playBtn;
     SeekBar positionBar;
     TextView elapsedTimeLabel, remainingTimeLabel;
-    MediaPlayer mp;
+    static MediaPlayer mp;
     int totalTime;
     String link;
     AlertDialog dialog;

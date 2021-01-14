@@ -71,6 +71,7 @@ public class AudioPage extends Fragment {
         Preferences.removeQR();
         goBackBtn = v.findViewById(R.id.goBackBtn);
         goBackBtn.setOnClickListener(v -> {
+            openDescFragment();
             goBackFragment();
         });
         nextRoomBtn = (Button) v.findViewById(R.id.nextBtn);
@@ -291,6 +292,9 @@ public class AudioPage extends Fragment {
         FragmentTransaction ft;
         switch (pageType) {
             case 0:
+                if(roomsAccess == true) {
+                    Preferences.saveRoomsAccess();
+                }
                 final int roomContainer = R.id.fullpage;
                 RoomPage rooms = new RoomPage();
                 rooms.setArguments(extras);
