@@ -82,9 +82,16 @@ public class Preferences {
         prefsEditor.remove("rooms");
         prefsEditor.commit();
     }
-    public static String readUserToken() {
-        return mSharedPref.getString("token", null);
+
+    public static void removeQR() {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("qrPaint");
+        prefsEditor.commit();
     }
+
+    public static String readUserToken() { return mSharedPref.getString("token", null); }
+
+    public static String readQrPaint() { return mSharedPref.getString("qrPaint", null); }
 
     public static String readUsername() {
         return mSharedPref.getString("username", null);

@@ -59,6 +59,7 @@ public class Museum extends Fragment {
             SculpturePage sculpturePage = new SculpturePage();
             openFragment(sculpturePage, homeContainer);
         });
+
         return v;
     }
 

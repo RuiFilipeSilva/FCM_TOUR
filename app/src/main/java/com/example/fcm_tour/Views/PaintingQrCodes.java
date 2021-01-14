@@ -37,11 +37,12 @@ public class PaintingQrCodes extends AppCompatActivity {
     public static final int MY_CAMERA_REQUEST_CODE = 100;
     String numberResult;
     Bundle extras;
-    String name, description, img, link;
+    String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Preferences.init(getApplicationContext());
         setContentView(R.layout.activity_painting_qr_codes);
         extras = new Bundle();
         CodeScannerView scannerView = findViewById(R.id.scanner_view);
@@ -109,21 +110,21 @@ public class PaintingQrCodes extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(result);
                 String state = jsonObject.getString("number");
                 if (state.equals(numberResult)) {
-                    name = jsonObject.getString("name");
-                    description = jsonObject.getString("description");
-                    img = jsonObject.getString("img");
-                    link = jsonObject.getString("audio");
-                    extras.putString("title", name);
-                    extras.putString("description", description);
-                    extras.putString("img", img);
-                    extras.putString("link", link);
-                    extras.putBoolean("paitingQr", true);
-                    Preferences.saveAudioPageType(1);
-                    //openTemporaryPage(extras);
+                    AlertDialog alertDialog = new AlertDialog.Builder(PaintingQrCodes.this).create();
+                    alertDialog.setTitle("Válido");
+                    alertDialog.setMessage("Quadro encontrado vai ser redirecionado para a página");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            (dialog, which) -> {
+                                Preferences.write("qrPaint", numberResult);
+                                dialog.dismiss();
+                                Intent i = new Intent(getApplicationContext(), SideBar.class);
+                                startActivity(i);
+                            });
+                    alertDialog.show();
                 } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(PaintingQrCodes.this).create();
                     alertDialog.setTitle(R.string.noResultsDialog);
-                    alertDialog.setMessage("Não foi encontrado nenhum bilhete com esse número");
+                    alertDialog.setMessage("Não foi encontrado nenhum código com esse número");
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             (dialog, which) -> {
                                 dialog.dismiss();
@@ -134,7 +135,7 @@ public class PaintingQrCodes extends AppCompatActivity {
             } catch (JSONException e) {
                 AlertDialog alertDialog2 = new AlertDialog.Builder(PaintingQrCodes.this).create();
                 alertDialog2.setTitle(R.string.noResultsDialog);
-                alertDialog2.setMessage("Não foi encontrado nenhum bilhete com esse número");
+                alertDialog2.setMessage("Não foi encontrado nenhum código com esse número");
                 alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         (dialog, which) -> {
                             dialog.dismiss();
@@ -145,11 +146,4 @@ public class PaintingQrCodes extends AppCompatActivity {
             }
         }
     }
-
-   /* public void openTemporaryPage(Bundle extras) {
-        Intent i = new Intent(this, SideBar.class);
-        i.putExtras(extras);
-        startActivity(i);
-    }*/
-
 }

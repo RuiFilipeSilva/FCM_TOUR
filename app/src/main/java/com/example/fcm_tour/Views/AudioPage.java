@@ -68,6 +68,7 @@ public class AudioPage extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_audio_page, container, false);
+        Preferences.removeQR();
         nextRoomBtn = (Button) v.findViewById(R.id.nextBtn);
         nextRoomBtn.setOnClickListener(v -> {
             new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + nextRoomNum);

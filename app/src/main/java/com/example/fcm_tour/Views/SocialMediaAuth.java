@@ -103,6 +103,7 @@ public class SocialMediaAuth extends Fragment {
         if (requestCode == RC_GET_TOKEN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
+
         } else {
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }
