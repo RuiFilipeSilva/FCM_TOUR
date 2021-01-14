@@ -74,12 +74,12 @@ public class History extends Fragment {
             Library library = new Library();
             openLibraryFragment(library, homeContainer);
         });
-        /*musicBtn = (ImageButton) v.findViewById(R.id.music);
+        musicBtn = (ImageButton) v.findViewById(R.id.music);
         musicBtn.setOnClickListener(v1 -> {
             final int homeContainer = R.id.fullpage;
             Music musicPage = new Music();
-            openMuseumFragment(musicPage, homeContainer);
-        });*/
+            openMusicFragment(musicPage, homeContainer);
+        });
         return v;
     }
 
@@ -104,12 +104,12 @@ public class History extends Fragment {
         ft.commit();
     }
 
-   /* private void openMusicFragment(Music musicPage, int homeContainer) {
+   private void openMusicFragment(Music musicPage, int homeContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(homeContainer, musicPage);
         ft.commit();
-    }*/
+    }
 
     class GetMuseum extends AsyncTask<String, String, String> {
         @Override

@@ -108,6 +108,10 @@ public class AudioPage extends Fragment {
                 btnTxt.setBackgroundResource(R.drawable.bot_o_descri__o_biblioteca);
                 btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
                 break;
+            case 3:
+                btnTxt.setBackgroundResource(R.drawable.bot_o_descri__o_musica);
+                btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
+                break;
         }
         final int descriptionContainer = R.id.audioPageFrame;
         Description description = new Description();
@@ -135,6 +139,10 @@ public class AudioPage extends Fragment {
                 btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
                 btnAudio.setBackgroundResource(R.drawable.bot_o__udio_biblioteca);
                 break;
+            case 3:
+                btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
+                btnAudio.setBackgroundResource(R.drawable.bot_o__udio_musica);
+                break;
         }
         final int audioContainer = R.id.audioPageFrame;
         AudioPlayer audioPlayer = new AudioPlayer();
@@ -158,7 +166,6 @@ public class AudioPage extends Fragment {
         imageSlider = v.findViewById(R.id.slider);
         switch (pageType) {
             case 0:
-                Log.d("SIGA", "entrou no 2: ");
                 JSONArray imgsResult = new JSONArray(getImgs);
                 List<SlideModel> imgsList = new ArrayList<>();
                 for (int i = 0; i < imgsResult.length(); i++) {
@@ -177,6 +184,12 @@ public class AudioPage extends Fragment {
                 break;
             case 2:
                 underline.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.library)));
+                imgView.setVisibility(View.VISIBLE);
+                imageSlider.setVisibility(View.INVISIBLE);
+                getImgs = bundle.getString("img");
+                Picasso.get().load(getImgs).into(imgView);
+            case 3:
+                underline.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.music)));
                 imgView.setVisibility(View.VISIBLE);
                 imageSlider.setVisibility(View.INVISIBLE);
                 getImgs = bundle.getString("img");

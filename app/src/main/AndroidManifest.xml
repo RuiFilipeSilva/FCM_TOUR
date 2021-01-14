@@ -32,9 +32,6 @@
             android:name=".Library"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Music"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Views.Login2"
             android:screenOrientation="portrait" />
         <activity

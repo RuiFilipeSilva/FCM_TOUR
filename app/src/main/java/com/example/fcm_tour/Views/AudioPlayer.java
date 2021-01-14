@@ -69,6 +69,11 @@ public class AudioPlayer extends Fragment {
                 positionBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.library), PorterDuff.Mode.SRC_ATOP);
                 positionBar.getThumb().setColorFilter(getResources().getColor(R.color.library), PorterDuff.Mode.SRC_ATOP);
                 break;
+            case 3:
+                playBtn.setBackgroundResource(R.drawable.bot_o_play_musica);
+                positionBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.music), PorterDuff.Mode.SRC_ATOP);
+                positionBar.getThumb().setColorFilter(getResources().getColor(R.color.music), PorterDuff.Mode.SRC_ATOP);
+                break;
             default:
                 break;
         }
@@ -90,6 +95,9 @@ public class AudioPlayer extends Fragment {
                         break;
                     case 2:
                         playBtn.setBackgroundResource(R.drawable.bot_o_play_biblioteca);
+                        break;
+                    case 3:
+                        playBtn.setBackgroundResource(R.drawable.bot_o_play_musica);
                         break;
                     default:
                         break;
@@ -121,6 +129,9 @@ public class AudioPlayer extends Fragment {
                     break;
                 case 2:
                     playBtn.setBackgroundResource(R.drawable.bot_o_play_biblioteca);
+                    break;
+                case 3:
+                    playBtn.setBackgroundResource(R.drawable.bot_o_play_musica);
                     break;
                 default:
                     break;

@@ -27,6 +27,9 @@
     <string name="alertDialogTitle">Bilhete Válido</string>
     <string name="noResultsDialog">Sem Resultados</string>
     <string name="messageTwo">Não foi encontrado nenhum bilhete com esse número</string>
+    <string name="cupertinosTxt">OS CUPERTINOS</string>
+    <string name="ciclosTxt">CICLOS DE MÚSICA E POESIA</string>
+    <string name="musicPageTitle">MÚSICA</string>
 
 
     <!--

@@ -57,7 +57,7 @@
 
             <ImageView
                 android:layout_marginLeft="20dp"
-                android:layout_width="140dp"
+                android:layout_width="80dp"
                 android:layout_height="3dp"
                 android:background="@drawable/rec"
                 android:backgroundTint="@color/library"/>
