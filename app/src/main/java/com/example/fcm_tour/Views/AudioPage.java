@@ -50,7 +50,7 @@ import java.util.List;
 public class AudioPage extends Fragment {
     View v;
     String title, description, link, getImgs, nextRoomNum, beforeRoomNum;
-    Button btnTxt, btnAudio, nextRoomBtn, beforeRoomBtn;
+    Button btnTxt, btnAudio, nextRoomBtn, beforeRoomBtn, goBackBtn;
     ImageSlider imageSlider;
     Boolean roomsAccess;
     Integer pageType;
@@ -69,6 +69,11 @@ public class AudioPage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_audio_page, container, false);
         Preferences.removeQR();
+        goBackBtn = v.findViewById(R.id.goBackBtn);
+        goBackBtn.setOnClickListener(v -> {
+            openDescFragment();
+            goBackFragment();
+        });
         nextRoomBtn = (Button) v.findViewById(R.id.nextBtn);
         nextRoomBtn.setOnClickListener(v -> {
             new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + nextRoomNum);
@@ -95,12 +100,23 @@ public class AudioPage extends Fragment {
         extras.putString("description", description);
         btnTxt.setClickable(false);
         btnAudio.setClickable(true);
-        if (pageType == 0) {
-            btnTxt.setBackgroundResource(R.drawable.botao_descricao_amarelo);
-            btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
-        } else {
-            btnTxt.setBackgroundResource(R.drawable.botao_descricao_museu);
-            btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
+        switch (pageType) {
+            case 0:
+                btnTxt.setBackgroundResource(R.drawable.botao_descricao_amarelo);
+                btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
+                break;
+            case 1:
+                btnTxt.setBackgroundResource(R.drawable.botao_descricao_museu);
+                btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
+                break;
+            case 2:
+                btnTxt.setBackgroundResource(R.drawable.bot_o_descri__o_biblioteca);
+                btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
+                break;
+            case 3:
+                btnTxt.setBackgroundResource(R.drawable.bot_o_descri__o_musica);
+                btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
+                break;
         }
         final int descriptionContainer = R.id.audioPageFrame;
         Description description = new Description();
@@ -115,12 +131,23 @@ public class AudioPage extends Fragment {
         extras.putString("link", link);
         btnTxt.setClickable(true);
         btnAudio.setClickable(false);
-        if (pageType == 0) {
-            btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
-            btnAudio.setBackgroundResource(R.drawable.botao_do_audio_amarelo);
-        } else {
-            btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
-            btnAudio.setBackgroundResource(R.drawable.botao_audio_museu);
+        switch (pageType) {
+            case 0:
+                btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
+                btnAudio.setBackgroundResource(R.drawable.botao_do_audio_amarelo);
+                break;
+            case 1:
+                btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
+                btnAudio.setBackgroundResource(R.drawable.botao_audio_museu);
+                break;
+            case 2:
+                btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
+                btnAudio.setBackgroundResource(R.drawable.bot_o__udio_biblioteca);
+                break;
+            case 3:
+                btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
+                btnAudio.setBackgroundResource(R.drawable.bot_o__udio_musica);
+                break;
         }
         final int audioContainer = R.id.audioPageFrame;
         AudioPlayer audioPlayer = new AudioPlayer();
@@ -144,7 +171,6 @@ public class AudioPage extends Fragment {
         imageSlider = v.findViewById(R.id.slider);
         switch (pageType) {
             case 0:
-                Log.d("SIGA", "entrou no 2: ");
                 JSONArray imgsResult = new JSONArray(getImgs);
                 List<SlideModel> imgsList = new ArrayList<>();
                 for (int i = 0; i < imgsResult.length(); i++) {
@@ -153,9 +179,31 @@ public class AudioPage extends Fragment {
                 imgView.setVisibility(View.INVISIBLE);
                 imageSlider.setVisibility(View.VISIBLE);
                 imageSlider.setImageList(imgsList, true);
+                goBackBtn.setVisibility(View.VISIBLE);
+                goBackBtn.setText(R.string.goBackRooms);
                 break;
             case 1:
+                goBackBtn.setVisibility(View.VISIBLE);
+                goBackBtn.setText(R.string.gobackPaintings);
                 underline.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.museum)));
+                imgView.setVisibility(View.VISIBLE);
+                imageSlider.setVisibility(View.INVISIBLE);
+                getImgs = bundle.getString("img");
+                Picasso.get().load(getImgs).into(imgView);
+                break;
+            case 2:
+                goBackBtn.setVisibility(View.VISIBLE);
+                goBackBtn.setText(R.string.goBackCollections);
+                underline.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.library)));
+                imgView.setVisibility(View.VISIBLE);
+                imageSlider.setVisibility(View.INVISIBLE);
+                getImgs = bundle.getString("img");
+                Picasso.get().load(getImgs).into(imgView);
+                break;
+            case 3:
+                goBackBtn.setVisibility(View.VISIBLE);
+                goBackBtn.setText(R.string.goBackMusic);
+                underline.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.music)));
                 imgView.setVisibility(View.VISIBLE);
                 imageSlider.setVisibility(View.INVISIBLE);
                 getImgs = bundle.getString("img");
@@ -237,5 +285,54 @@ public class AudioPage extends Fragment {
                 nextRoomBtn.setVisibility(View.INVISIBLE);
             }
         }
+    }
+
+    public void goBackFragment() {
+        FragmentManager fragmentManager;
+        FragmentTransaction ft;
+        switch (pageType) {
+            case 0:
+                if(roomsAccess == true) {
+                    Preferences.saveRoomsAccess();
+                }
+                final int roomContainer = R.id.fullpage;
+                RoomPage rooms = new RoomPage();
+                rooms.setArguments(extras);
+                fragmentManager = getFragmentManager();
+                ft = fragmentManager.beginTransaction();
+                ft.replace(roomContainer, rooms);
+                ft.commit();
+                break;
+            case 1:
+                final int museumContainer = R.id.fullpage;
+                Museum museum = new Museum();
+                museum.setArguments(extras);
+                fragmentManager = getFragmentManager();
+                ft = fragmentManager.beginTransaction();
+                ft.replace(museumContainer, museum);
+                ft.commit();
+                break;
+            case 2:
+                final int collectionsContainer = R.id.fullpage;
+                CollectionsPage collectionsPage = new CollectionsPage();
+                collectionsPage.setArguments(extras);
+                fragmentManager = getFragmentManager();
+                ft = fragmentManager.beginTransaction();
+                ft.replace(collectionsContainer, collectionsPage);
+                ft.commit();
+                break;
+            case 3:
+                final int musicContainer = R.id.fullpage;
+                Music music = new Music();
+                music.setArguments(extras);
+                fragmentManager = getFragmentManager();
+                ft = fragmentManager.beginTransaction();
+                ft.replace(musicContainer, music);
+                ft.commit();
+                break;
+            default:
+                break;
+        }
+
     }
 }

@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
-import com.example.fcm_tour.Library;
+import com.example.fcm_tour.Views.Library;
 import com.example.fcm_tour.R;
 import com.example.fcm_tour.SideBar;
 import com.squareup.picasso.Picasso;
@@ -68,18 +68,18 @@ public class History extends Fragment {
         if (Preferences.readQrPaint() != null) {
             new History.TicketScan().execute(API.API_URL + "/museu/quadros/" + Preferences.readQrPaint());
         }
-        /*libraryBtn = (ImageButton) v.findViewById(R.id.library);
+        libraryBtn = (ImageButton) v.findViewById(R.id.library);
         libraryBtn.setOnClickListener(v1 -> {
             final int homeContainer = R.id.fullpage;
-            Library libraryPage = new Library();
-            openMuseumFragment(libraryPage, homeContainer);
+            Library library = new Library();
+            openLibraryFragment(library, homeContainer);
         });
         musicBtn = (ImageButton) v.findViewById(R.id.music);
         musicBtn.setOnClickListener(v1 -> {
             final int homeContainer = R.id.fullpage;
             Music musicPage = new Music();
-            openMuseumFragment(musicPage, homeContainer);
-        });*/
+            openMusicFragment(musicPage, homeContainer);
+        });
         return v;
     }
 
@@ -97,19 +97,19 @@ public class History extends Fragment {
         ft.commit();
     }
 
-    /*private void openLibraryFragment(Library libraryPage, int homeContainer) {
+    private void openLibraryFragment(Library library, int homeContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(homeContainer, libraryPage);
+        ft.replace(homeContainer, library);
         ft.commit();
     }
 
-    private void openMusicFragment(Music musicPage, int homeContainer) {
+   private void openMusicFragment(Music musicPage, int homeContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(homeContainer, musicPage);
         ft.commit();
-    }*/
+    }
 
     class GetMuseum extends AsyncTask<String, String, String> {
         @Override

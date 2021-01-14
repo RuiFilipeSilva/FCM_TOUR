@@ -25,19 +25,19 @@
                 android:layout_height="match_parent">
 
                 <ImageView
-                    android:visibility="invisible"
                     android:id="@+id/imgView"
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
                     android:scaleType="fitXY"
-                    tools:layout_editor_absoluteX="-16dp"/>
+                    android:visibility="invisible"
+                    tools:layout_editor_absoluteX="-16dp" />
 
                 <com.denzcoskun.imageslider.ImageSlider
-                    android:visibility="invisible"
                     android:id="@+id/slider"
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
                     android:scaleType="fitXY"
+                    android:visibility="invisible"
                     app:auto_cycle="false"
                     app:delay="0"
                     app:error_image="@drawable/ic_logo_icon"
@@ -46,13 +46,30 @@
                     tools:layout_editor_absoluteX="-16dp" />
 
                 <Button
+                    android:id="@+id/goBackBtn"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/rounded_tower"
+                    android:elevation="40dp"
+                    android:text="Acervos"
+                    android:textColor="@color/black"
+                    android:textSize="13dp"
+                    app:backgroundTint="@color/white" />
+
+                <Button
                     android:id="@+id/nextBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginRight="20dp"
-                    android:visibility="invisible" />
+                    android:background="@drawable/rounded_tower"
+                    android:textColor="@color/white"
+                    android:visibility="invisible"
+                    app:backgroundTint="@color/tower" />
 
                 <Button
                     android:id="@+id/beforeBtn"
@@ -61,7 +78,10 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginLeft="20dp"
-                    android:visibility="invisible" />
+                    android:background="@drawable/rounded_tower"
+                    android:textColor="@color/white"
+                    android:visibility="invisible"
+                    app:backgroundTint="@color/tower" />
 
             </RelativeLayout>
 

@@ -27,6 +27,13 @@
     <string name="alertDialogTitle">Bilhete Válido</string>
     <string name="noResultsDialog">Sem Resultados</string>
     <string name="messageTwo">Não foi encontrado nenhum bilhete com esse número</string>
+    <string name="cupertinosTxt">OS CUPERTINOS</string>
+    <string name="ciclosTxt">CICLOS DE MÚSICA E POESIA</string>
+    <string name="musicPageTitle">MÚSICA</string>
+    <string name="goBackMusic">Música</string>
+    <string name="gobackPaintings">Exposições</string>
+    <string name="goBackRooms">Salas</string>
+    <string name="goBackCollections">Acervos</string>
 
 
     <!--
@@ -34,4 +41,6 @@
     values-round/strings.xml for round devices.
     -->
     <string name="hello_world">Hello Square World!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

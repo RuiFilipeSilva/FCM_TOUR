@@ -1,14 +1,22 @@
-package com.example.fcm_tour;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.fcm_tour.Views;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.example.fcm_tour.R;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -21,16 +29,39 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class Music extends AppCompatActivity {
+
+public class Library extends Fragment {
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_music);
-        new Music.GetMusic().execute("https://fcm-tour.herokuapp.com/torre");
+
     }
 
-    class GetMusic extends AsyncTask<String, String, String> {
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        View v =  inflater.inflate(R.layout.fragment_library, container, false);
+        new Library.GetLibrary().execute("https://fcm-tour.herokuapp.com/biblioteca");
+
+        Button libraryBtn = (Button) v.findViewById(R.id.btnCollections);
+        libraryBtn.setOnClickListener(v1 -> {
+            final int homeContainer = R.id.fullpage;
+            CollectionsPage collectionsPage = new CollectionsPage();
+            openCollectionsFragment(collectionsPage, homeContainer);
+        });
+        return v;
+    }
+
+    private void openCollectionsFragment(CollectionsPage collectionsPage, int homeContainer) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(homeContainer, collectionsPage);
+        ft.commit();
+    }
+
+    class GetLibrary extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... fileUrl) {
             StringBuilder stringBuilder = new StringBuilder();
@@ -54,16 +85,17 @@ public class Music extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
+            View v = getView();
             try {
                 JSONArray jsonResponse = new JSONArray(result);
                 JSONObject jsonObjetcs = jsonResponse.getJSONObject(0);
                 String TEMP = jsonObjetcs.getString("description");
                 String img = jsonObjetcs.getString("cover");
-                ImageView imgChuck = findViewById(R.id.cover);
+                ImageView imgChuck = v.findViewById(R.id.cover);
                 Picasso.get()
                         .load(img)
                         .into(imgChuck);
-                TextView text = (TextView) findViewById(R.id.description);
+                TextView text = (TextView) v.findViewById(R.id.description);
                 text.setText(TEMP);
             } catch (JSONException e) {
                 e.printStackTrace();

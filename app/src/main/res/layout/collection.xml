@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardElevation="2dp"
+    app:cardCornerRadius="10dp">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants"
+        android:orientation="horizontal">
+
+
+
+        <ImageView
+            android:id="@+id/authorImg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/rounded_museum"
+            android:gravity="center"
+            android:text="00"
+            android:textColor="@color/white"
+            android:textSize="30dp"
+            android:scaleType="centerCrop"/>
+
+        <TextView
+            android:id="@+id/authorName"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center|start"
+            android:text="00"
+            android:textColor="@color/white"
+            android:textSize="25dp"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/barlow_light"
+            />
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
