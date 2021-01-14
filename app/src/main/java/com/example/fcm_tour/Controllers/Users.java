@@ -70,12 +70,9 @@ public class Users {
                         context.startActivity(login);
                         Toast.makeText(context, "Registado com sucesso", Toast.LENGTH_SHORT).show();
                     }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        handleError(error, context);
-                        error.printStackTrace();
-                    }
+                }, error -> {
+                    handleError(error, context);
+                    error.printStackTrace();
                 });
                 requestQueue.add(jsonObjectRequest);
             } else {
@@ -114,29 +111,21 @@ public class Users {
             e.printStackTrace();
         }
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            token = response.get("token").toString();
-                            Preferences.saveUserToken(token);
-                            Preferences.saveUserEmail(email);
-                            Intent homePage = new Intent(context, SideBar.class);
-                            homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(homePage);
-                            Toast toast = Toast.makeText(context, "Bem vindo", Toast.LENGTH_SHORT);
-                            toast.show();
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                response -> {
+                    try {
+                        token = response.get("token").toString();
+                        Preferences.saveUserToken(token);
+                        Preferences.saveUserEmail(email);
+                        Intent homePage = new Intent(context, SideBar.class);
+                        homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(homePage);
+                        Toast toast = Toast.makeText(context, "Bem vindo", Toast.LENGTH_SHORT);
+                        toast.show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        handleError(error, context);
-                    }
-                }) {
+                error -> handleError(error, context)) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -161,29 +150,21 @@ public class Users {
         }
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            token = response.get("token").toString();
-                            Users.JWTUtils.decoded(token);
-                            Preferences.saveUserToken(token);
-                            Intent homePage = new Intent(context, SideBar.class);
-                            homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(homePage);
-                            Toast toast = Toast.makeText(context, "Bem vindo Facebook", Toast.LENGTH_SHORT);
-                            toast.show();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                response -> {
+                    try {
+                        token = response.get("token").toString();
+                        JWTUtils.decoded(token);
+                        Preferences.saveUserToken(token);
+                        Intent homePage = new Intent(context, SideBar.class);
+                        homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(homePage);
+                        Toast toast = Toast.makeText(context, "Bem vindo Facebook", Toast.LENGTH_SHORT);
+                        toast.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        handleError(error, context);
-                    }
-                }) {
+                error -> handleError(error, context)) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
@@ -205,30 +186,22 @@ public class Users {
             e.printStackTrace();
         }
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData,
-                new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        try {
-                            token = response.get("token").toString();
-                            Users.JWTUtils.decoded(token);
-                            Preferences.saveUserToken(token);
-                            Intent homePage = new Intent(context, SideBar.class);
-                            homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            context.startActivity(homePage);
-                            Toast toast = Toast.makeText(context, "Bem vindo Google", Toast.LENGTH_SHORT);
-                            toast.show();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
+                response -> {
+                    try {
+                        token = response.get("token").toString();
+                        JWTUtils.decoded(token);
+                        Preferences.saveUserToken(token);
+                        Intent homePage = new Intent(context, SideBar.class);
+                        homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        context.startActivity(homePage);
+                        Toast toast = Toast.makeText(context, "Bem vindo Google", Toast.LENGTH_SHORT);
+                        toast.show();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
 
-                    }
                 },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        handleError(error, context);
-                    }
-                }) {
+                error -> handleError(error, context)) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();

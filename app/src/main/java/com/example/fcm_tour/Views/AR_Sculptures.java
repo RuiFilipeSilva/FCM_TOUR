@@ -50,7 +50,7 @@ public class AR_Sculptures extends AppCompatActivity {
                 .build()
                 .thenAccept(renderable -> modelRenderable = renderable)
                 .exceptionally(throwable -> {
-                    Toast.makeText(AR_Sculptures.this, "Model can't be Loaded", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AR_Sculptures.this, R.string.ARexception, Toast.LENGTH_SHORT).show();
                     return null;
                 });
 

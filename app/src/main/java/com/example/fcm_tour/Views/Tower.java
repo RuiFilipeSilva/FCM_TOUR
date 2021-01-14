@@ -42,13 +42,10 @@ public class Tower extends Fragment {
         View v = inflater.inflate(R.layout.fragment_tower, container, false);
         new GetTower().execute("https://fcm-tour.herokuapp.com/torre");
         Button tower = (Button) v.findViewById(R.id.btnStart);
-        tower.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int homeContainer = R.id.fullpage;
-                RoomPage rooms = new RoomPage();
-                openFragment(rooms, homeContainer);
-            }
+        tower.setOnClickListener(v1 -> {
+            final int homeContainer = R.id.fullpage;
+            RoomPage rooms = new RoomPage();
+            openFragment(rooms, homeContainer);
         });
         return v;
     }

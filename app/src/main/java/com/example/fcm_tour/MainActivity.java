@@ -44,11 +44,7 @@ public class MainActivity extends AppCompatActivity {
         Animation aniFade = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
         img.startAnimation(aniFade);
         new android.os.Handler().postDelayed(
-                new Runnable() {
-                    public void run() {
-                        loading();
-                    }
-                }, 3000);
+                () -> loading(), 3000);
     }
 
     public void loading() {

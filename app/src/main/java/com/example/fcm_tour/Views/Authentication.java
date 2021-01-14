@@ -28,30 +28,21 @@ public class Authentication extends AppCompatActivity {
         openFragment(socialMediaAuth, container);
 
         Button btnLogin = (Button) findViewById(R.id.login);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                login = new Intent(v.getContext(), Login2.class);
-                startActivity(login);
-            }
+        btnLogin.setOnClickListener(v -> {
+            login = new Intent(v.getContext(), Login2.class);
+            startActivity(login);
         });
 
         Button btnRegister = (Button) findViewById(R.id.register);
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                register = new Intent(v.getContext(), Register.class);
-                startActivity(register);
-            }
+        btnRegister.setOnClickListener(v -> {
+            register = new Intent(v.getContext(), Register.class);
+            startActivity(register);
         });
 
         Button btnBack = (Button) findViewById(R.id.voltar);
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                comeBack = new Intent(v.getContext(), SideBar.class);
-                startActivity(comeBack);
-            }
+        btnBack.setOnClickListener(v -> {
+            comeBack = new Intent(v.getContext(), SideBar.class);
+            startActivity(comeBack);
         });
     }
 

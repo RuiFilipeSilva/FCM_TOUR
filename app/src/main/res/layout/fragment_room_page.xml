@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,30 +10,49 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <ImageButton
-                android:id="@+id/qrCode"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardQR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_marginTop="50dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginRight="30dp"
-                android:background="@drawable/ic_baseline_qr_code_24"
-                android:backgroundTint="@color/black" />
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="3dp">
 
-            <ImageButton
-                android:id="@+id/keyBoard"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                <ImageButton
+                    android:id="@+id/qrCode"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+
+                    android:background="@drawable/ic_baseline_qr_code_24"
+                    android:backgroundTint="@color/black" />
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
-                android:layout_marginEnd="20dp"
-                android:layout_toStartOf="@+id/qrCode"
-                android:background="@drawable/ic_baseline_keyboard_24"
-                android:backgroundTint="@color/black" />
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_toStartOf="@+id/cardQR"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="3dp">
+
+                <ImageButton
+                    android:id="@+id/keyBoard"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:background="@drawable/ic_baseline_keyboard_24"
+                    android:backgroundTint="@color/black" />
+            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -45,15 +65,13 @@
                 android:text="SALAS"
                 android:textColor="@color/black"
                 android:textSize="40dp"></TextView>
-
         </RelativeLayout>
-
 
         <ImageView
             android:layout_width="78dp"
             android:layout_height="3dp"
-            android:layout_marginTop="-8dp"
             android:layout_marginLeft="20dp"
+            android:layout_marginTop="-25dp"
             android:background="@drawable/rec"
             android:backgroundTint="@color/tower" />
 
@@ -62,6 +80,4 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"></FrameLayout>
     </LinearLayout>
-
-
 </FrameLayout>

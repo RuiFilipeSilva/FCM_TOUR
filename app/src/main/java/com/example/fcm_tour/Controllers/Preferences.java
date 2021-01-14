@@ -3,10 +3,6 @@ package com.example.fcm_tour.Controllers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
-
-import com.example.fcm_tour.R;
 
 public class Preferences {
     private static SharedPreferences mSharedPref;
@@ -68,6 +64,13 @@ public class Preferences {
         prefsEditor.commit();
     }
 
+    public static void saveAudioPageType(int value) {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("pageType");
+        prefsEditor.putInt("pageType", value);
+        prefsEditor.commit();
+    }
+
     public static void removeRoomsAccess() {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
         prefsEditor.remove("roomsAccess");
@@ -79,9 +82,16 @@ public class Preferences {
         prefsEditor.remove("rooms");
         prefsEditor.commit();
     }
-    public static String readUserToken() {
-        return mSharedPref.getString("token", null);
+
+    public static void removeQR() {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("qrPaint");
+        prefsEditor.commit();
     }
+
+    public static String readUserToken() { return mSharedPref.getString("token", null); }
+
+    public static String readQrPaint() { return mSharedPref.getString("qrPaint", null); }
 
     public static String readUsername() {
         return mSharedPref.getString("username", null);
@@ -93,6 +103,10 @@ public class Preferences {
 
     public static String readUserImg() {
         return mSharedPref.getString("userImg", null);
+    }
+
+    public static Integer readPageType() {
+        return mSharedPref.getInt("pageType", 0);
     }
 
     public static Boolean readRoomsAccess() {

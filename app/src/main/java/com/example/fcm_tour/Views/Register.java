@@ -32,32 +32,23 @@ public class Register extends AppCompatActivity {
         SocialMediaAuth socialMediaAuth = new SocialMediaAuth();
         openFragment(socialMediaAuth, container);
         Button btnComeBack = (Button) findViewById(R.id.comeBack);
-        btnComeBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                comeBack = new Intent(v.getContext(), SideBar.class);
-                startActivity(comeBack);
-            }
+        btnComeBack.setOnClickListener(v -> {
+            comeBack = new Intent(v.getContext(), SideBar.class);
+            startActivity(comeBack);
         });
         Button btnLogin = (Button) findViewById(R.id.login);
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                login = new Intent(v.getContext(), Login2.class);
-                startActivity(login);
-            }
+        btnLogin.setOnClickListener(v -> {
+            login = new Intent(v.getContext(), Login2.class);
+            startActivity(login);
         });
         Button btnRegister = (Button) findViewById(R.id.register);
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                name = (EditText) findViewById(R.id.nametxt);
-                email = (EditText) findViewById(R.id.mail);
-                password = (EditText) findViewById(R.id.passtxt);
-                confPassword = (EditText) findViewById(R.id.confpassTxt);
-                login = new Intent(v.getContext(), Login2.class);
-                Users.volleyPost(name.getText().toString(), email.getText().toString(), password.getText().toString(), confPassword.getText().toString(), getApplicationContext());
-            }
+        btnRegister.setOnClickListener((View.OnClickListener) v -> {
+            name = (EditText) findViewById(R.id.nametxt);
+            email = (EditText) findViewById(R.id.mail);
+            password = (EditText) findViewById(R.id.passtxt);
+            confPassword = (EditText) findViewById(R.id.confpassTxt);
+            login = new Intent(v.getContext(), Login2.class);
+            Users.volleyPost(name.getText().toString(), email.getText().toString(), password.getText().toString(), confPassword.getText().toString(), getApplicationContext());
         });
     }
 

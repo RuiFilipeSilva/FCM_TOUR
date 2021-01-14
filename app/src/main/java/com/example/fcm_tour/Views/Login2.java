@@ -31,30 +31,21 @@ public class Login2 extends AppCompatActivity {
         SocialMediaAuth socialMediaAuth = new SocialMediaAuth();
         openFragment(socialMediaAuth, container);
         Button btnVoltar = (Button) findViewById(R.id.voltar);
-        btnVoltar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                comeBack = new Intent(v.getContext(), SideBar.class);
-                startActivity(comeBack);
-            }
+        btnVoltar.setOnClickListener(v -> {
+            comeBack = new Intent(v.getContext(), SideBar.class);
+            startActivity(comeBack);
         });
         Button btnRegister = (Button) findViewById(R.id.register);
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                register = new Intent(v.getContext(), Register.class);
-                startActivity(register);
-            }
+        btnRegister.setOnClickListener(v -> {
+            register = new Intent(v.getContext(), Register.class);
+            startActivity(register);
         });
         Button loginBtn = (Button) findViewById(R.id.loginBtn);
-        loginBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                email = (EditText) findViewById(R.id.mail);
-                password = (EditText) findViewById(R.id.passwordTxt);
-                homePage = new Intent(v.getContext(), SideBar.class);
-                Users.loginVolley(email.getText().toString(), password.getText().toString(), getApplicationContext());
-            }
+        loginBtn.setOnClickListener((View.OnClickListener) v -> {
+            email = (EditText) findViewById(R.id.mail);
+            password = (EditText) findViewById(R.id.passwordTxt);
+            homePage = new Intent(v.getContext(), SideBar.class);
+            Users.loginVolley(email.getText().toString(), password.getText().toString(), getApplicationContext());
         });
     }
 

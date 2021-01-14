@@ -12,129 +12,96 @@
         android:orientation="vertical"
         android:weightSum="10">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:fontFamily="@font/stratum1_bold"
-                android:text="TEMPORÁRIAS"
-                android:textColor="@color/black"
-                android:textSize="26dp"></TextView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:fontFamily="@font/stratum1_bold"
+            android:text="@string/temporaryTitle"
+            android:textColor="@color/black"
+            android:textSize="26dp"></TextView>
 
+        <GridLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:alignmentMode="alignMargins"
+            android:columnCount="2"
+            android:columnOrderPreserved="false"
+            android:padding="4dp"
+            android:rowCount="2">
 
-            <GridLayout
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:alignmentMode="alignMargins"
-                android:columnCount="2"
-                android:columnOrderPreserved="false"
-                android:padding="4dp"
-                android:rowCount="2">
+            <androidx.cardview.widget.CardView
+                android:layout_width="40dp"
+                android:layout_height="150dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="8dp">
 
-                <!--Row1-->
-                <!--col1-->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="40dp"
-                    android:layout_height="150dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="16dp"
-                    app:cardCornerRadius="6dp"
-                    app:cardElevation="8dp"
-                    >
+                <ImageButton
+                    android:id="@+id/temp1"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_museum"></ImageButton>
+            </androidx.cardview.widget.CardView>
 
-                    <ImageButton
-                        android:id="@+id/card1"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/rounded_museum"
-                        >
+            <androidx.cardview.widget.CardView
+                android:layout_width="40dp"
+                android:layout_height="150dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="8dp">
 
-                    </ImageButton>
+                <ImageButton
+                    android:id="@+id/temp2"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_museum"></ImageButton>
+            </androidx.cardview.widget.CardView>
 
+            <androidx.cardview.widget.CardView
+                android:layout_width="40dp"
+                android:layout_height="150dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="8dp">
 
-                </androidx.cardview.widget.CardView>
+                <ImageButton
+                    android:id="@+id/temp3"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_museum"></ImageButton>
+            </androidx.cardview.widget.CardView>
 
-                <!--Row1-->
-                <!--col2-->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="40dp"
-                    android:layout_height="150dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="16dp"
-                    app:cardCornerRadius="6dp"
-                    app:cardElevation="8dp"
-                    >
+            <androidx.cardview.widget.CardView
+                android:layout_width="40dp"
+                android:layout_height="150dp"
+                android:layout_rowWeight="1"
+                android:layout_columnWeight="1"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="6dp"
+                app:cardElevation="8dp">
 
-                    <ImageButton
-                        android:id="@+id/card2"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/rounded_museum">
-
-                    </ImageButton>
-
-
-                </androidx.cardview.widget.CardView>
-
-                <!--Row2-->
-                <!--col1-->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="40dp"
-                    android:layout_height="150dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="16dp"
-                    app:cardCornerRadius="6dp"
-                    app:cardElevation="8dp"
-                    >
-
-                    <ImageButton
-                        android:id="@+id/card3"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/rounded_museum">
-
-                    </ImageButton>
-
-
-                </androidx.cardview.widget.CardView>
-
-                <!--Row2-->
-                <!--col2-->
-                <androidx.cardview.widget.CardView
-                    android:layout_width="40dp"
-                    android:layout_height="150dp"
-                    android:layout_rowWeight="1"
-                    android:layout_columnWeight="1"
-                    android:layout_marginLeft="16dp"
-                    android:layout_marginRight="16dp"
-                    android:layout_marginBottom="16dp"
-                    app:cardCornerRadius="6dp"
-                    app:cardElevation="8dp"
-                    >
-
-                    <ImageButton
-                        android:id="@+id/card4"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:background="@drawable/rounded_museum">
-
-                    </ImageButton>
-
-
-                </androidx.cardview.widget.CardView>
-
-            </GridLayout>
-
-
+                <ImageButton
+                    android:id="@+id/temp4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/rounded_museum"></ImageButton>
+            </androidx.cardview.widget.CardView>
+        </GridLayout>
     </LinearLayout>
 </FrameLayout>

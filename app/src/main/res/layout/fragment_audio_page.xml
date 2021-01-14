@@ -19,18 +19,51 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.denzcoskun.imageslider.ImageSlider
-                android:id="@+id/slider"
-                android:layout_width="match_parent"
-                android:layout_height="350dp"
-                android:scaleType="fitXY"
-                app:auto_cycle="true"
-                app:delay="0"
-                app:error_image="@drawable/ic_logo_icon"
-                app:period="1000"
-                app:placeholder="@color/white"
-                tools:layout_editor_absoluteX="-16dp" />
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:visibility="invisible"
+                    android:id="@+id/imgView"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:scaleType="fitXY"
+                    tools:layout_editor_absoluteX="-16dp"/>
+
+                <com.denzcoskun.imageslider.ImageSlider
+                    android:visibility="invisible"
+                    android:id="@+id/slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:scaleType="fitXY"
+                    app:auto_cycle="false"
+                    app:delay="0"
+                    app:error_image="@drawable/ic_logo_icon"
+                    app:period="1000"
+                    app:placeholder="@color/white"
+                    tools:layout_editor_absoluteX="-16dp" />
+
+                <Button
+                    android:id="@+id/nextBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="20dp"
+                    android:visibility="invisible" />
+
+                <Button
+                    android:id="@+id/beforeBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginLeft="20dp"
+                    android:visibility="invisible" />
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/title"
@@ -45,6 +78,7 @@
 
 
             <ImageView
+                android:id="@+id/underline"
                 android:layout_width="40dp"
                 android:layout_height="3dp"
                 android:layout_marginLeft="20dp"
@@ -53,11 +87,13 @@
 
             <FrameLayout
                 android:id="@+id/audioPageFrame"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="76dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="6" />
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="76dp"
+                android:layout_weight="6">
+
+            </FrameLayout>
 
 
         </LinearLayout>
