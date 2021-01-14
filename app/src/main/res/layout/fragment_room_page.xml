@@ -30,11 +30,9 @@
                     android:id="@+id/qrCode"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-
                     android:background="@drawable/ic_baseline_qr_code_24"
                     android:backgroundTint="@color/black" />
             </androidx.cardview.widget.CardView>
-
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
@@ -62,7 +60,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginTop="50dp"
                 android:fontFamily="@font/stratum1_black"
-                android:text="SALAS"
+                android:text="@string/roomPageTitle"
                 android:textColor="@color/black"
                 android:textSize="40dp"></TextView>
         </RelativeLayout>

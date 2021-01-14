@@ -27,19 +27,19 @@ public class Authentication extends AppCompatActivity {
         SocialMediaAuth socialMediaAuth = new SocialMediaAuth();
         openFragment(socialMediaAuth, container);
 
-        Button btnLogin = (Button) findViewById(R.id.login);
+        Button btnLogin = findViewById(R.id.login);
         btnLogin.setOnClickListener(v -> {
             login = new Intent(v.getContext(), Login2.class);
             startActivity(login);
         });
 
-        Button btnRegister = (Button) findViewById(R.id.register);
+        Button btnRegister = findViewById(R.id.register);
         btnRegister.setOnClickListener(v -> {
             register = new Intent(v.getContext(), Register.class);
             startActivity(register);
         });
 
-        Button btnBack = (Button) findViewById(R.id.voltar);
+        Button btnBack = findViewById(R.id.voltar);
         btnBack.setOnClickListener(v -> {
             comeBack = new Intent(v.getContext(), SideBar.class);
             startActivity(comeBack);

@@ -69,7 +69,7 @@ public class SideBar extends AppCompatActivity {
             nav_dashboard.setVisible(false);
         }
         setupDrawerContent(navigationView);
-        ImageButton auth = (ImageButton) navigationView.getHeaderView(0).findViewById(R.id.iconProfile);
+        ImageButton auth = navigationView.getHeaderView(0).findViewById(R.id.iconProfile);
         auth.setOnClickListener(view -> {
             Intent intent = new Intent(view.getContext(), Authentication.class);
             startActivity(intent);
@@ -79,8 +79,8 @@ public class SideBar extends AppCompatActivity {
     public void loadUserPicture() {
         String userPicture = Preferences.readUserImg();
         NavigationView navigationView = findViewById(R.id.navigationView);
-        ImageButton auth = (ImageButton) navigationView.getHeaderView(0).findViewById(R.id.iconProfile);
-        ImageButton picture = (ImageButton) findViewById(R.id.profilePicture);
+        ImageButton auth = navigationView.getHeaderView(0).findViewById(R.id.iconProfile);
+        ImageButton picture = findViewById(R.id.profilePicture);
         if (userPicture != null && !userPicture.equals("")) {
             Picasso.get().load(userPicture).transform(new CircleTransform()).into(picture);
             Picasso.get().load(userPicture).transform(new CircleTransform()).into(auth);
@@ -115,7 +115,6 @@ public class SideBar extends AppCompatActivity {
             paint1.setAntiAlias(true);
             paint1.setStrokeWidth(3);
             canvas.drawCircle(r, r, r, paint1);
-
             squaredBitmap.recycle();
             return bitmap;
         }
@@ -161,6 +160,7 @@ public class SideBar extends AppCompatActivity {
                 break;
             default:
                 fragmentClass = History.class;
+                break;
         }
         try {
             fragment = (Fragment) fragmentClass.newInstance();

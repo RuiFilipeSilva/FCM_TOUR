@@ -73,9 +73,9 @@ public class QrScan extends AppCompatActivity {
         if (requestCode == MY_CAMERA_REQUEST_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mCodeScanner.startPreview();
-                Toast.makeText(this, "camera permission granted", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.permissionGranted, Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(this, "camera permission denied", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.permissionDenied, Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -109,7 +109,7 @@ public class QrScan extends AppCompatActivity {
                 if (state.equals("Ticket válido")) {
                     Rooms.getRoomsAccess(getApplicationContext());
                     AlertDialog alertDialog = new AlertDialog.Builder(QrScan.this).create();
-                    alertDialog.setTitle("Bilhete Válido");
+                    alertDialog.setTitle(R.string.validTicketMsg);
                     alertDialog.setMessage("Já pode aceder a todas as salas");
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             (dialog, which) -> {
@@ -119,7 +119,7 @@ public class QrScan extends AppCompatActivity {
                     alertDialog.show();
                 } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(QrScan.this).create();
-                    alertDialog.setTitle("Sem Resultados");
+                    alertDialog.setTitle(R.string.noResultsDialog);
                     alertDialog.setMessage("Não foi encontrado nenhum bilhete com esse número");
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             (dialog, which) -> {
@@ -130,7 +130,7 @@ public class QrScan extends AppCompatActivity {
                 }
             } catch (JSONException e) {
                 AlertDialog alertDialog2 = new AlertDialog.Builder(QrScan.this).create();
-                alertDialog2.setTitle("Sem Resultados");
+                alertDialog2.setTitle(R.string.noResultsDialog);
                 alertDialog2.setMessage("Não foi encontrado nenhum bilhete com esse número");
                 alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         (dialog, which) -> {

@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Views.Music">
 
     <ScrollView
@@ -44,7 +43,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/stratum1_black"
                 android:paddingLeft="20dp"
-                android:text="@string/cupertinosTxt"
+                android:text="@string/cupertinosTitle"
                 android:textColor="@color/black"
                 android:textSize="26dp" />
 
@@ -56,7 +55,6 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/rec"
                 android:backgroundTint="@color/music" />
-
 
             <ImageButton
                 android:id="@+id/secondImg"
@@ -73,7 +71,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/stratum1_black"
                 android:paddingLeft="20dp"
-                android:text="@string/ciclosTxt"
+                android:text="@string/ciclosTitle"
                 android:textColor="@color/black"
                 android:textSize="26dp" />
 
@@ -85,9 +83,6 @@
                 android:layout_marginBottom="10dp"
                 android:background="@drawable/rec"
                 android:backgroundTint="@color/music" />
-
-
         </LinearLayout>
     </ScrollView>
-
 </FrameLayout>

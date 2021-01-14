@@ -116,17 +116,15 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/stratum1_black"
                 android:paddingLeft="20dp"
-                android:text="HISTÓRIA"
+                android:text="@string/historyPageTitle"
                 android:textColor="@color/black"
                 android:textSize="26dp" />
 
             <ImageView
-                android:layout_marginLeft="20dp"
                 android:layout_width="70dp"
                 android:layout_height="3dp"
-                android:background="@drawable/rec">
-
-            </ImageView>
+                android:layout_marginLeft="20dp"
+                android:background="@drawable/rec"></ImageView>
 
             <TextView
                 android:id="@+id/textview2"

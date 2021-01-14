@@ -20,7 +20,7 @@ public class SculpturePage extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_sculpture_page, container, false);
         final int homeContainer = R.id.listSculptures;
         Sculptures sculptures = new Sculptures();

@@ -36,7 +36,6 @@ public class Music extends Fragment {
     Integer musicGroupSelected;
     Bundle extras;
     String title, description, img, link;
-    String TAG = "SIGA";
 
 
     @Override
@@ -52,10 +51,8 @@ public class Music extends Fragment {
         v = inflater.inflate(R.layout.fragment_music, container, false);
         firstMusicGroup = v.findViewById(R.id.firstImg);
         secondMusicGroup = v.findViewById(R.id.secondImg);
-
         firstMusicGroup.setOnClickListener(v -> {
             new GetMusicGroup(0).execute(API.API_URL + "/musica/cupertinos/");
-
         });
         secondMusicGroup.setOnClickListener(v -> {
             new GetMusicGroup(1).execute(API.API_URL + "/musica/ciclos/");
@@ -99,7 +96,7 @@ public class Music extends Fragment {
                 } else if (musicGroupSelected == 1) {
                     JSONObject jsonCiclos = new JSONObject(result2.getString("ciclos"));
                     openFragment(jsonCiclos);
-                } else if (musicGroupSelected == -1){
+                } else if (musicGroupSelected == -1) {
                     loadLayoutPage(result2);
                 }
             } catch (JSONException e) {

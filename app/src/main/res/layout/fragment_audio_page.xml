@@ -6,19 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".Views.AudioPage">
 
-
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout_editor_absoluteX="185dp"
         tools:layout_editor_absoluteY="271dp">
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -54,7 +51,7 @@
                     android:layout_marginTop="20dp"
                     android:background="@drawable/rounded_tower"
                     android:elevation="40dp"
-                    android:text="Acervos"
+                    android:text="@string/collectionsBtn"
                     android:textColor="@color/black"
                     android:textSize="13dp"
                     app:backgroundTint="@color/white" />
@@ -82,7 +79,6 @@
                     android:textColor="@color/white"
                     android:visibility="invisible"
                     app:backgroundTint="@color/tower" />
-
             </RelativeLayout>
 
             <TextView
@@ -92,7 +88,7 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/stratum1_black"
                 android:paddingLeft="20dp"
-                android:text="1900"
+                android:text="@string/titleTextView"
                 android:textColor="@color/black"
                 android:textSize="30dp" />
 
@@ -111,11 +107,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="76dp"
-                android:layout_weight="6">
-
-            </FrameLayout>
-
-
+                android:layout_weight="6"></FrameLayout>
         </LinearLayout>
     </ScrollView>
 
@@ -146,5 +138,4 @@
             android:background="@drawable/botao_descricao_amarelo"
             app:backgroundTint="@null" />
     </RelativeLayout>
-
 </FrameLayout>

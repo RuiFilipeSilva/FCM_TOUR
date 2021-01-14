@@ -38,9 +38,7 @@ import java.net.URL;
 
 public class Sculptures extends Fragment {
 
-    private static String[] names;
-    private static String[] imgs;
-    private static String[] links;
+    private static String[] names, imgs, links;
     private static View actualView;
 
     @Override
@@ -49,8 +47,7 @@ public class Sculptures extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         actualView = inflater.inflate(R.layout.fragment_sculptures, container, false);
         Preferences.removeRoomsAccess();
         new GetSculptures().execute(API.API_URL + "/museu/esculturas");
@@ -60,7 +57,7 @@ public class Sculptures extends Fragment {
 
     private void locationSort(JSONArray result) throws JSONException {
         View v = getView();
-        ListView listView = (ListView) v.findViewById(R.id.listCardsSculpture);
+        ListView listView = v.findViewById(R.id.listCardsSculpture);
         names = new String[result.length()];
         imgs = new String[result.length()];
         links = new String[result.length()];
@@ -143,39 +140,6 @@ public class Sculptures extends Fragment {
             try {
                 JSONArray jsonResponse = new JSONArray(result);
                 locationSort(jsonResponse);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    class GetRoomsByNumber extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... fileUrl) {
-            StringBuilder stringBuilder = new StringBuilder();
-            try {
-                URL url = new URL(fileUrl[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                InputStream in = connection.getInputStream();
-                stringBuilder = new StringBuilder();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-            } catch (Exception e) {
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
-            }
-            return stringBuilder.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                JSONObject body = new JSONObject(result);
-                JSONObject rooms = new JSONObject(body.getString("rooms"));
             } catch (JSONException e) {
                 e.printStackTrace();
             }

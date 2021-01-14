@@ -1,7 +1,5 @@
 package com.example.fcm_tour.Views;
 
-import android.app.AlertDialog;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -19,9 +17,7 @@ import android.widget.TextView;
 
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
-import com.example.fcm_tour.Views.Library;
 import com.example.fcm_tour.R;
-import com.example.fcm_tour.SideBar;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -53,13 +49,13 @@ public class History extends Fragment {
         View v = inflater.inflate(R.layout.fragment_history, container, false);
         Preferences.init(getContext());
         new History.GetMuseum().execute(API.API_URL + "/home");
-        towerBtn = (ImageButton) v.findViewById(R.id.tower);
+        towerBtn = v.findViewById(R.id.tower);
         towerBtn.setOnClickListener(v1 -> {
             final int homeContainer = R.id.fullpage;
             Tower towerPage = new Tower();
             openTowerFragment(towerPage, homeContainer);
         });
-        museumBtn = (ImageButton) v.findViewById(R.id.museum);
+        museumBtn = v.findViewById(R.id.museum);
         museumBtn.setOnClickListener(v1 -> {
             final int homeContainer = R.id.fullpage;
             Museum museumPage = new Museum();
@@ -68,13 +64,13 @@ public class History extends Fragment {
         if (Preferences.readQrPaint() != null) {
             new History.TicketScan().execute(API.API_URL + "/museu/quadros/" + Preferences.readQrPaint());
         }
-        libraryBtn = (ImageButton) v.findViewById(R.id.library);
+        libraryBtn = v.findViewById(R.id.library);
         libraryBtn.setOnClickListener(v1 -> {
             final int homeContainer = R.id.fullpage;
             Library library = new Library();
             openLibraryFragment(library, homeContainer);
         });
-        musicBtn = (ImageButton) v.findViewById(R.id.music);
+        musicBtn = v.findViewById(R.id.music);
         musicBtn.setOnClickListener(v1 -> {
             final int homeContainer = R.id.fullpage;
             Music musicPage = new Music();
@@ -104,7 +100,7 @@ public class History extends Fragment {
         ft.commit();
     }
 
-   private void openMusicFragment(Music musicPage, int homeContainer) {
+    private void openMusicFragment(Music musicPage, int homeContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(homeContainer, musicPage);
@@ -142,7 +138,7 @@ public class History extends Fragment {
                 String img = jsonObjetcs.getString("cover");
                 ImageView imgChuck = v.findViewById(R.id.cover);
                 Picasso.get().load(img).into(imgChuck);
-                TextView text = (TextView) v.findViewById(R.id.textview2);
+                TextView text = v.findViewById(R.id.textview2);
                 text.setText(TEMP);
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -175,26 +171,24 @@ public class History extends Fragment {
             super.onPostExecute(result);
             try {
                 JSONObject jsonObject = new JSONObject(result);
-                String state = jsonObject.getString("number");
                 name = jsonObject.getString("name");
                 description = jsonObject.getString("description");
                 img = jsonObject.getString("img");
                 link = jsonObject.getString("audio");
-                Log.d("SIGA", "onPostExecute: " + name + description);
                 extras.putString("title", name);
                 extras.putString("description", description);
                 extras.putString("img", img);
                 extras.putString("link", link);
                 extras.putBoolean("paitingQr", true);
                 Preferences.saveAudioPageType(1);
-                openPaintingPage(extras);
+                openPaintingPage();
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public void openPaintingPage(Bundle extras) {
+    public void openPaintingPage() {
         final int homeContainer = R.id.fullpage;
         AudioPage audioPage = new AudioPage();
         audioPage.setArguments(this.extras);

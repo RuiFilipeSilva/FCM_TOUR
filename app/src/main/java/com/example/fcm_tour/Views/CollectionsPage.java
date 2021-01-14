@@ -22,7 +22,7 @@ public class CollectionsPage extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_collections_page, container, false);
         final int homeContainer = R.id.listRooms;
         Collections collections = new Collections();

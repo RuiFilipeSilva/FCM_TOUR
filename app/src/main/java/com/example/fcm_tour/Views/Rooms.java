@@ -62,7 +62,7 @@ public class Rooms extends Fragment {
 
     private void locationSort(JSONArray result) throws JSONException {
         View v = getView();
-        ListView listView = (ListView) v.findViewById(R.id.listCards);
+        ListView listView = v.findViewById(R.id.listCards);
         numbers = new String[result.length()];
         names = new String[result.length()];
         imgs = new String[result.length()];
@@ -88,10 +88,8 @@ public class Rooms extends Fragment {
             numbers[i] = number;
             imgs[i] = img;
         }
-
         MyAdapter adapter = new MyAdapter(getContext(), names, numbers, imgs, colors, icons);
         listView.setAdapter(adapter);
-
         listView.setOnItemClickListener((parent, view, position, id) -> {
             boolean access = true;
             for (int i = 0; i < numbers.length; i++) {
@@ -269,7 +267,7 @@ public class Rooms extends Fragment {
 
     public void AlertDialogInsertTicket() {
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-        alert.setTitle("Não têm acesso para entrar");
+        alert.setTitle(R.string.noAccessAlertTitle);
         alert.setMessage("Digitalize o seu bilhete para ter acesso");
         alert.setPositiveButton("Digitalize o Código", (dialog, whichButton) -> {
             dialog.dismiss();

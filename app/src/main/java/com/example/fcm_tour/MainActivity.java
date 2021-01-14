@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Preferences.init(getApplicationContext());
-        ImageView img = (ImageView) findViewById(R.id.FCM);
+        ImageView img = findViewById(R.id.FCM);
         Animation aniFade = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.fade_in);
         img.startAnimation(aniFade);
         new android.os.Handler().postDelayed(

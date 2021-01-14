@@ -30,20 +30,20 @@ public class Login2 extends AppCompatActivity {
         final int container = R.id.fragmentAuth;
         SocialMediaAuth socialMediaAuth = new SocialMediaAuth();
         openFragment(socialMediaAuth, container);
-        Button btnVoltar = (Button) findViewById(R.id.voltar);
+        Button btnVoltar = findViewById(R.id.voltar);
         btnVoltar.setOnClickListener(v -> {
             comeBack = new Intent(v.getContext(), SideBar.class);
             startActivity(comeBack);
         });
-        Button btnRegister = (Button) findViewById(R.id.register);
+        Button btnRegister = findViewById(R.id.register);
         btnRegister.setOnClickListener(v -> {
             register = new Intent(v.getContext(), Register.class);
             startActivity(register);
         });
-        Button loginBtn = (Button) findViewById(R.id.loginBtn);
-        loginBtn.setOnClickListener((View.OnClickListener) v -> {
-            email = (EditText) findViewById(R.id.mail);
-            password = (EditText) findViewById(R.id.passwordTxt);
+        Button loginBtn = findViewById(R.id.loginBtn);
+        loginBtn.setOnClickListener(v -> {
+            email = findViewById(R.id.mail);
+            password = findViewById(R.id.passwordTxt);
             homePage = new Intent(v.getContext(), SideBar.class);
             Users.loginVolley(email.getText().toString(), password.getText().toString(), getApplicationContext());
         });

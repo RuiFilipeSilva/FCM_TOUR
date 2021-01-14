@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:hint="@string/nome"
+        android:hint="@string/namePlaceholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView7"
@@ -45,7 +45,6 @@
             tools:layout_conversion_absoluteWidth="300dp"
             tools:layout_editor_absoluteX="56dp"
             tools:layout_editor_absoluteY="308dp" />
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -73,7 +72,6 @@
             tools:layout_conversion_absoluteWidth="300dp"
             tools:layout_editor_absoluteX="56dp"
             tools:layout_editor_absoluteY="381dp" />
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -82,7 +80,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:hint="@string/palavraPasse"
+        android:hint="@string/password"
         app:endIconMode="password_toggle"
         app:helperTextEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -102,9 +100,7 @@
             tools:layout_conversion_absoluteHeight="47dp"
             tools:layout_conversion_absoluteWidth="300dp"
             tools:layout_editor_absoluteX="56dp"
-            tools:layout_editor_absoluteY="453dp"
-
-            />
+            tools:layout_editor_absoluteY="453dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -114,7 +110,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:hint="@string/confPalavraPasse"
+        android:hint="@string/confirmPassword"
         app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -134,8 +130,6 @@
             tools:layout_conversion_absoluteWidth="300dp"
             tools:layout_editor_absoluteX="56dp"
             tools:layout_editor_absoluteY="525dp" />
-
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
@@ -144,7 +138,7 @@
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/rounded_button"
-        android:text="@string/registar"
+        android:text="@string/register"
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -152,9 +146,7 @@
         app:layout_constraintTop_toBottomOf="@+id/confpass"
         tools:ignore="MissingConstraints"
         tools:layout_conversion_absoluteHeight="40dp"
-        tools:layout_conversion_absoluteWidth="170dp"
-
-        />
+        tools:layout_conversion_absoluteWidth="170dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -174,7 +166,7 @@
             android:id="@+id/fragmentAuth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"/>
+            android:layout_marginBottom="5dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -185,16 +177,14 @@
         tools:layout_conversion_absoluteHeight="0dp"
         tools:layout_conversion_absoluteWidth="263dp"
         tools:layout_editor_absoluteX="74dp"
-        tools:layout_editor_absoluteY="762dp">
-
-    </LinearLayout>
+        tools:layout_editor_absoluteY="762dp"></LinearLayout>
 
     <Button
         android:id="@+id/comeBack"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-        android:text="@string/voltar"
+        android:text="@string/backBtn"
         android:textColor="@color/grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -211,7 +201,7 @@
         android:layout_marginStart="68dp"
         android:layout_marginBottom="14dp"
         android:gravity="center"
-        android:text="@string/iniciarSessão"
+        android:text="@string/hasAlreadyAccount"
         app:layout_constraintBottom_toTopOf="@+id/comeBack"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -227,6 +217,4 @@
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/comeBack"
         app:layout_constraintEnd_toEndOf="parent" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

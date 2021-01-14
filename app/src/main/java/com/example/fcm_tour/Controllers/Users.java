@@ -62,24 +62,21 @@ public class Users {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-                        Intent login = new Intent(context, Login2.class);
-                        login.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(login);
-                        Toast.makeText(context, "Registado com sucesso", Toast.LENGTH_SHORT).show();
-                    }
+                JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData, response -> {
+                    Intent login = new Intent(context, Login2.class);
+                    login.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(login);
+                    Toast.makeText(context, R.string.successRegisterMsg, Toast.LENGTH_SHORT).show();
                 }, error -> {
                     handleError(error, context);
                     error.printStackTrace();
                 });
                 requestQueue.add(jsonObjectRequest);
             } else {
-                Toast.makeText(context, "Erro: Palavra-Passe não cumpre os requisitos!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, R.string.passwordErrorMsg, Toast.LENGTH_SHORT).show();
             }
         } else {
-            Toast.makeText(context, "Erro: E-mail inválido!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, R.string.emailErrorMsg, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -119,7 +116,7 @@ public class Users {
                         Intent homePage = new Intent(context, SideBar.class);
                         homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(homePage);
-                        Toast toast = Toast.makeText(context, "Bem vindo", Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(context, R.string.welcomeToast, Toast.LENGTH_SHORT);
                         toast.show();
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -158,7 +155,7 @@ public class Users {
                         Intent homePage = new Intent(context, SideBar.class);
                         homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(homePage);
-                        Toast toast = Toast.makeText(context, "Bem vindo Facebook", Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(context, R.string.welcomeToast, Toast.LENGTH_SHORT);
                         toast.show();
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -194,7 +191,7 @@ public class Users {
                         Intent homePage = new Intent(context, SideBar.class);
                         homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(homePage);
-                        Toast toast = Toast.makeText(context, "Bem vindo Google", Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(context, R.string.welcomeToast, Toast.LENGTH_SHORT);
                         toast.show();
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -237,14 +234,13 @@ public class Users {
     }
 
     public static void Logout() {
-        //logout - google or default account
         Preferences.Logout();
         if (AccessToken.getCurrentAccessToken() == null) {
             return;
         } else {
             LoginManager.getInstance().logOut();
         }
-        Toast.makeText(getApplicationContext(), R.string.logout, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getApplicationContext(), R.string.logoutToast, Toast.LENGTH_SHORT).show();
     }
 
     public static void handleError(VolleyError error, Context context) {
@@ -252,9 +248,8 @@ public class Users {
         try {
             body = new String(error.networkResponse.data, "UTF-8");
         } catch (UnsupportedEncodingException e) {
-            // exception
         }
-        Toast toast = Toast.makeText(context, R.string.error + body, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(context, R.string.errorToast + body, Toast.LENGTH_SHORT);
         toast.show();
     }
 }

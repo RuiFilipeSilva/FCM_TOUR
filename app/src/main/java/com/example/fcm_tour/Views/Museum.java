@@ -48,18 +48,17 @@ public class Museum extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_museum, container, false);
         displayLayoutMuseum();
-        qrCodeBtn = (ImageButton) v.findViewById(R.id.qrCode);
+        qrCodeBtn = v.findViewById(R.id.qrCode);
         qrCodeBtn.setOnClickListener(v -> {
             qrCodeIntent = new Intent(getContext(), PaintingQrCodes.class);
             startActivity(qrCodeIntent);
         });
-        sculptures = (Button) v.findViewById(R.id.btnAR);
+        sculptures = v.findViewById(R.id.btnAR);
         sculptures.setOnClickListener(v1 -> {
             final int homeContainer = R.id.fullpage;
             SculpturePage sculpturePage = new SculpturePage();
             openFragment(sculpturePage, homeContainer);
         });
-
         return v;
     }
 
@@ -141,31 +140,31 @@ public class Museum extends Fragment {
                 Picasso.get()
                         .load(cover)
                         .into(imgChuck);
-                TextView text = (TextView) v.findViewById(R.id.description);
+                TextView text = v.findViewById(R.id.description);
                 text.setText(description);
 
-                ImageButton card1 = (ImageButton) v.findViewById(R.id.temp1);
+                ImageButton card1 = v.findViewById(R.id.temp1);
                 Picasso.get().load(temporaryImgs[0]).into(card1);
 
-                ImageButton card2 = (ImageButton) v.findViewById(R.id.temp2);
+                ImageButton card2 = v.findViewById(R.id.temp2);
                 Picasso.get().load(temporaryImgs[1]).into(card2);
 
-                ImageButton card3 = (ImageButton) v.findViewById(R.id.temp3);
+                ImageButton card3 = v.findViewById(R.id.temp3);
                 Picasso.get().load(temporaryImgs[2]).into(card3);
 
-                ImageButton card4 = (ImageButton) v.findViewById(R.id.temp4);
+                ImageButton card4 = v.findViewById(R.id.temp4);
                 Picasso.get().load(temporaryImgs[3]).into(card4);
 
-                ImageButton perma1 = (ImageButton) v.findViewById(R.id.perma1);
+                ImageButton perma1 = v.findViewById(R.id.perma1);
                 Picasso.get().load(permanentImgs[0]).into(perma1);
 
-                ImageButton perma2 = (ImageButton) v.findViewById(R.id.perma2);
+                ImageButton perma2 = v.findViewById(R.id.perma2);
                 Picasso.get().load(permanentImgs[1]).into(perma2);
 
-                ImageButton perma3 = (ImageButton) v.findViewById(R.id.perma3);
+                ImageButton perma3 = v.findViewById(R.id.perma3);
                 Picasso.get().load(permanentImgs[2]).into(perma3);
 
-                ImageButton perma4 = (ImageButton) v.findViewById(R.id.perma4);
+                ImageButton perma4 = v.findViewById(R.id.perma4);
                 Picasso.get().load(permanentImgs[3]).into(perma4);
             } catch (JSONException e) {
                 e.printStackTrace();

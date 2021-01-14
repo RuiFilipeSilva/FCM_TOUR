@@ -55,14 +55,13 @@ public class Collections extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         actualView = inflater.inflate(R.layout.fragment_rooms, container, false);
         extras = new Bundle();
-        Log.d("SIGA", "onCreateView: " );
         new Collections.GetCollections().execute(API.API_URL + "/biblioteca/acervos");
         return actualView;
     }
 
     private void locationSort(JSONArray result) throws JSONException {
         View v = getView();
-        ListView listView = (ListView) v.findViewById(R.id.listCards);
+        ListView listView = v.findViewById(R.id.listCards);
         numbers = new String[result.length()];
         names = new String[result.length()];
         imgs = new String[result.length()];
@@ -75,13 +74,11 @@ public class Collections extends Fragment {
             numbers[i] = number;
             imgs[i] = img;
         }
-
         Collections.MyAdapter adapter = new Collections.MyAdapter(getContext(), names, numbers, imgs);
         listView.setAdapter(adapter);
-
         listView.setOnItemClickListener((parent, view, position, id) -> {
             for (int i = 0; i < numbers.length; i++) {
-                if(position == i) {
+                if (position == i) {
                     new Collections.GetCollectionsByNumber().execute(API.API_URL + "/biblioteca/acervos/" + numbers[i]);
                     break;
                 }
@@ -152,7 +149,6 @@ public class Collections extends Fragment {
     }
 
     class GetCollectionsByNumber extends AsyncTask<String, String, String> {
-
         @Override
         protected String doInBackground(String... fileUrl) {
             StringBuilder stringBuilder = new StringBuilder();
@@ -196,13 +192,10 @@ public class Collections extends Fragment {
         }
     }
 
-
     private void openFragment(AudioPage audioPage, int homeContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(homeContainer, audioPage);
         ft.commit();
     }
-
-
 }

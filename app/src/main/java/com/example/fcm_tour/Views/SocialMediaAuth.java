@@ -62,7 +62,7 @@ public class SocialMediaAuth extends Fragment {
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             startActivityForResult(signInIntent, RC_GET_TOKEN);
         }));
-        loginButton = (LoginButton) v.findViewById(R.id.login_button);
+        loginButton = v.findViewById(R.id.login_button);
         loginButton.setFragment(this);
         loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
@@ -90,6 +90,7 @@ public class SocialMediaAuth extends Fragment {
             @Override
             public void onCancel() {
             }
+
             @Override
             public void onError(FacebookException exception) {
             }
@@ -103,7 +104,6 @@ public class SocialMediaAuth extends Fragment {
         if (requestCode == RC_GET_TOKEN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
             handleSignInResult(task);
-
         } else {
             callbackManager.onActivityResult(requestCode, resultCode, data);
         }

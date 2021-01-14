@@ -13,6 +13,6 @@
     <color name="museum">#54C5D0</color>
     <color name="library">#8CC751</color>
     <color name="music">#D7DF21</color>
-
+    <color name="paintingMask">#77000000</color>
 
 </resources>

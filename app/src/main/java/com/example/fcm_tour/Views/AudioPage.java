@@ -74,16 +74,16 @@ public class AudioPage extends Fragment {
             openDescFragment();
             goBackFragment();
         });
-        nextRoomBtn = (Button) v.findViewById(R.id.nextBtn);
+        nextRoomBtn = v.findViewById(R.id.nextBtn);
         nextRoomBtn.setOnClickListener(v -> {
             new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + nextRoomNum);
         });
-        beforeRoomBtn = (Button) v.findViewById(R.id.beforeBtn);
+        beforeRoomBtn = v.findViewById(R.id.beforeBtn);
         beforeRoomBtn.setOnClickListener(v -> {
             new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + beforeRoomNum);
         });
-        btnTxt = (Button) v.findViewById(R.id.txtBtn);
-        btnAudio = (Button) v.findViewById(R.id.audio);
+        btnTxt = v.findViewById(R.id.txtBtn);
+        btnAudio = v.findViewById(R.id.audio);
         btnTxt.setOnClickListener(v1 -> openDescFragment());
         btnAudio.setOnClickListener(v12 -> openAudioFragment());
 
@@ -254,7 +254,7 @@ public class AudioPage extends Fragment {
     }
 
     public void loadNextRoomInfo() throws JSONException {
-        TextView text = (TextView) v.findViewById(R.id.title);
+        TextView text = v.findViewById(R.id.title);
         text.setText(title);
         JSONArray imgsResult = new JSONArray(getImgs);
         List<SlideModel> imgsList = new ArrayList<>();
@@ -292,7 +292,7 @@ public class AudioPage extends Fragment {
         FragmentTransaction ft;
         switch (pageType) {
             case 0:
-                if(roomsAccess == true) {
+                if (roomsAccess == true) {
                     Preferences.saveRoomsAccess();
                 }
                 final int roomContainer = R.id.fullpage;
@@ -333,6 +333,5 @@ public class AudioPage extends Fragment {
             default:
                 break;
         }
-
     }
 }

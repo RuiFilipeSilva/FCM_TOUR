@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Views.Library">
-
 
     <ScrollView
         android:layout_width="match_parent"
@@ -31,7 +30,7 @@
                     android:layout_marginEnd="20dp"
                     android:background="@drawable/rounded_tower"
                     android:elevation="40dp"
-                    android:text="Acervos"
+                    android:text="@string/collectionsBtn"
                     android:textColor="@color/white"
                     android:textSize="13dp"
                     app:backgroundTint="@color/library" />
@@ -51,16 +50,16 @@
                 android:layout_marginTop="20dp"
                 android:fontFamily="@font/stratum1_black"
                 android:paddingLeft="20dp"
-                android:text="BIBLIOTECA"
+                android:text="@string/libraryTitle"
                 android:textColor="@color/black"
                 android:textSize="26dp" />
 
             <ImageView
-                android:layout_marginLeft="20dp"
                 android:layout_width="80dp"
                 android:layout_height="3dp"
+                android:layout_marginLeft="20dp"
                 android:background="@drawable/rec"
-                android:backgroundTint="@color/library"/>
+                android:backgroundTint="@color/library" />
 
             <TextView
                 android:id="@+id/description"
@@ -75,5 +74,4 @@
                 tools:layout_editor_absoluteX="0dp" />
         </LinearLayout>
     </ScrollView>
-
 </FrameLayout>

@@ -41,7 +41,7 @@ public class Tower extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_tower, container, false);
         new GetTower().execute("https://fcm-tour.herokuapp.com/torre");
-        Button tower = (Button) v.findViewById(R.id.btnStart);
+        Button tower = v.findViewById(R.id.btnStart);
         tower.setOnClickListener(v1 -> {
             final int homeContainer = R.id.fullpage;
             RoomPage rooms = new RoomPage();
@@ -91,7 +91,7 @@ public class Tower extends Fragment {
                 Picasso.get()
                         .load(img)
                         .into(imgChuck);
-                TextView text = (TextView) v.findViewById(R.id.description);
+                TextView text = v.findViewById(R.id.description);
                 text.setText(TEMP);
             } catch (JSONException e) {
                 e.printStackTrace();

@@ -31,13 +31,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class RoomPage extends Fragment {
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-
-    boolean access = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -91,7 +88,7 @@ public class RoomPage extends Fragment {
                     Rooms.getRoomsAccess(getContext());
                 } else {
                     AlertDialog alertDialog2 = new AlertDialog.Builder(getContext()).create();
-                    alertDialog2.setTitle("Sem Resultados");
+                    alertDialog2.setTitle(R.string.noResultsDialog);
                     alertDialog2.setMessage("Não foi encontrado nenhum bilhete com esse número");
                     alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             (dialog, which) -> {
@@ -102,7 +99,7 @@ public class RoomPage extends Fragment {
                 }
             } catch (JSONException e) {
                 AlertDialog alertDialog2 = new AlertDialog.Builder(getContext()).create();
-                alertDialog2.setTitle("Sem Resultados");
+                alertDialog2.setTitle(R.string.noResultsDialog);
                 alertDialog2.setMessage("Não foi encontrado nenhum bilhete com esse número");
                 alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         (dialog, which) -> {
@@ -117,7 +114,7 @@ public class RoomPage extends Fragment {
 
     public void AlertDialogInsertTicket() {
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
-        alert.setTitle("Código do Bilhete");
+        alert.setTitle(R.string.insertTicketAlertTitle);
         alert.setMessage("Insira o código que se encontra no bilhete");
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
