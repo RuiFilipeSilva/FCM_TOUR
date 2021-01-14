@@ -39,17 +39,11 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class Rooms extends Fragment {
-    private static String[] numbers;
-    private static String[] names;
-    private static String[] imgs;
-    private static int[] colors;
-    private static int[] icons;
+    private static String[] numbers, names, imgs;
+    private static int[] colors, icons;
     private static View actualView;
+    String description, link, title, imgsList;
     Bundle extras;
-    String description;
-    String link;
-    String title;
-    String imgsList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -248,6 +242,7 @@ public class Rooms extends Fragment {
                 extras.putString("title", title);
                 extras.putString("description", description);
                 extras.putString("link", link);
+                Preferences.saveAudioPageType(0);
                 final int homeContainer = R.id.fullpage;
                 AudioPage audioPage = new AudioPage();
                 audioPage.setArguments(extras);

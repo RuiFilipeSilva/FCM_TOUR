@@ -24,7 +24,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <ImageView
+                    android:visibility="invisible"
+                    android:id="@+id/imgView"
+                    android:layout_width="match_parent"
+                    android:layout_height="350dp"
+                    android:scaleType="fitXY"
+                    tools:layout_editor_absoluteX="-16dp"/>
+
                 <com.denzcoskun.imageslider.ImageSlider
+                    android:visibility="invisible"
                     android:id="@+id/slider"
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
@@ -69,6 +78,7 @@
 
 
             <ImageView
+                android:id="@+id/underline"
                 android:layout_width="40dp"
                 android:layout_height="3dp"
                 android:layout_marginLeft="20dp"

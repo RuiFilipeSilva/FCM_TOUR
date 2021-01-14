@@ -3,10 +3,6 @@ package com.example.fcm_tour.Controllers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.preference.PreferenceManager;
-import android.util.Log;
-
-import com.example.fcm_tour.R;
 
 public class Preferences {
     private static SharedPreferences mSharedPref;
@@ -68,6 +64,13 @@ public class Preferences {
         prefsEditor.commit();
     }
 
+    public static void saveAudioPageType(int value) {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("pageType");
+        prefsEditor.putInt("pageType", value);
+        prefsEditor.commit();
+    }
+
     public static void removeRoomsAccess() {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
         prefsEditor.remove("roomsAccess");
@@ -93,6 +96,10 @@ public class Preferences {
 
     public static String readUserImg() {
         return mSharedPref.getString("userImg", null);
+    }
+
+    public static Integer readPageType() {
+        return mSharedPref.getInt("pageType", 0);
     }
 
     public static Boolean readRoomsAccess() {

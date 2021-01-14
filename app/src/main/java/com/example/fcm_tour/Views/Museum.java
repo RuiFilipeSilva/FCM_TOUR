@@ -1,5 +1,6 @@
 package com.example.fcm_tour.Views;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -33,6 +34,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class Museum extends Fragment {
+    View v;
+    Button sculptures;
+    ImageButton qrCodeBtn;
+    Intent qrCodeIntent;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,22 +46,30 @@ public class Museum extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_museum, container, false);
-        final int tempContainer = R.id.temporary;
-        Temporary temporary = new Temporary();
-        setFragment(temporary, tempContainer);
-        final int permaContainer = R.id.permanet;
-        Permanent permanent = new Permanent();
-        setFragment2(permanent, permaContainer);
-        new GetMuseum().execute(API.API_URL + "/museu");
-
-        Button sculptures = (Button) v.findViewById(R.id.btnAR);
+        v = inflater.inflate(R.layout.fragment_museum, container, false);
+        displayLayoutMuseum();
+        qrCodeBtn = (ImageButton) v.findViewById(R.id.qrCode);
+        qrCodeBtn.setOnClickListener(v -> {
+            qrCodeIntent = new Intent(getContext(), PaintingQrCodes.class);
+            startActivity(qrCodeIntent);
+        });
+        sculptures = (Button) v.findViewById(R.id.btnAR);
         sculptures.setOnClickListener(v1 -> {
             final int homeContainer = R.id.fullpage;
             SculpturePage sculpturePage = new SculpturePage();
             openFragment(sculpturePage, homeContainer);
         });
         return v;
+    }
+
+    public void displayLayoutMuseum() {
+        final int tempContainer = R.id.temporary;
+        Temporary temporary = new Temporary();
+        setTempFragment(temporary, tempContainer);
+        final int permaContainer = R.id.permanet;
+        Permanent permanent = new Permanent();
+        setPermFragment(permanent, permaContainer);
+        new GetMuseum().execute(API.API_URL + "/museu");
     }
 
     private void openFragment(SculpturePage sculpturePage, int homeContainer) {
@@ -66,14 +79,14 @@ public class Museum extends Fragment {
         ft.commit();
     }
 
-    public void setFragment(Temporary temporary, int tempContainer) {
+    public void setTempFragment(Temporary temporary, int tempContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(tempContainer, temporary);
         ft.commit();
     }
 
-    public void setFragment2(Permanent permanent, int permaContainer) {
+    public void setPermFragment(Permanent permanent, int permaContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(permaContainer, permanent);
@@ -106,11 +119,11 @@ public class Museum extends Fragment {
             View v = getView();
             try {
                 JSONArray jsonResponse = new JSONArray(result);
-                JSONObject jsonObjetcs = jsonResponse.getJSONObject(0);
-                String description = jsonObjetcs.getString("description");
-                String cover = jsonObjetcs.getString("cover");
-                JSONArray temporary = jsonObjetcs.getJSONArray("temporary");
-                JSONArray permanent = jsonObjetcs.getJSONArray("permanent");
+                JSONObject jsonObject = jsonResponse.getJSONObject(0);
+                String description = jsonObject.getString("description");
+                String cover = jsonObject.getString("cover");
+                JSONArray temporary = jsonObject.getJSONArray("temporary");
+                JSONArray permanent = jsonObject.getJSONArray("permanent");
                 String[] temporaryImgs = new String[temporary.length()];
                 String[] permanentImgs = new String[permanent.length()];
                 for (int i = 0; i < temporary.length(); i++) {
@@ -130,16 +143,16 @@ public class Museum extends Fragment {
                 TextView text = (TextView) v.findViewById(R.id.description);
                 text.setText(description);
 
-                ImageButton card1 = (ImageButton) v.findViewById(R.id.card1);
+                ImageButton card1 = (ImageButton) v.findViewById(R.id.temp1);
                 Picasso.get().load(temporaryImgs[0]).into(card1);
 
-                ImageButton card2 = (ImageButton) v.findViewById(R.id.card2);
+                ImageButton card2 = (ImageButton) v.findViewById(R.id.temp2);
                 Picasso.get().load(temporaryImgs[1]).into(card2);
 
-                ImageButton card3 = (ImageButton) v.findViewById(R.id.card3);
+                ImageButton card3 = (ImageButton) v.findViewById(R.id.temp3);
                 Picasso.get().load(temporaryImgs[2]).into(card3);
 
-                ImageButton card4 = (ImageButton) v.findViewById(R.id.card4);
+                ImageButton card4 = (ImageButton) v.findViewById(R.id.temp4);
                 Picasso.get().load(temporaryImgs[3]).into(card4);
 
                 ImageButton perma1 = (ImageButton) v.findViewById(R.id.perma1);

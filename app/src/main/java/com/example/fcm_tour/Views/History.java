@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
+import com.example.fcm_tour.Library;
 import com.example.fcm_tour.R;
 import com.squareup.picasso.Picasso;
 
@@ -31,6 +32,10 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class History extends Fragment {
+    ImageButton towerBtn;
+    ImageButton museumBtn;
+    ImageButton libraryBtn;
+    ImageButton musicBtn;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -42,21 +47,60 @@ public class History extends Fragment {
         View v = inflater.inflate(R.layout.fragment_history, container, false);
         Preferences.init(getContext());
         new History.GetMuseum().execute(API.API_URL + "/home");
-        ImageButton tower = (ImageButton) v.findViewById(R.id.tower);
-        tower.setOnClickListener(v1 -> {
+        towerBtn = (ImageButton) v.findViewById(R.id.tower);
+        towerBtn.setOnClickListener(v1 -> {
             final int homeContainer = R.id.fullpage;
             Tower towerPage = new Tower();
-            openFragment(towerPage, homeContainer);
+            openTowerFragment(towerPage, homeContainer);
         });
+        museumBtn = (ImageButton) v.findViewById(R.id.museum);
+        museumBtn.setOnClickListener(v1 -> {
+            final int homeContainer = R.id.fullpage;
+            Museum museumPage = new Museum();
+            openMuseumFragment(museumPage, homeContainer);
+        });
+        /*libraryBtn = (ImageButton) v.findViewById(R.id.library);
+        libraryBtn.setOnClickListener(v1 -> {
+            final int homeContainer = R.id.fullpage;
+            Library libraryPage = new Library();
+            openMuseumFragment(libraryPage, homeContainer);
+        });
+        musicBtn = (ImageButton) v.findViewById(R.id.music);
+        musicBtn.setOnClickListener(v1 -> {
+            final int homeContainer = R.id.fullpage;
+            Music musicPage = new Music();
+            openMuseumFragment(musicPage, homeContainer);
+        });*/
         return v;
     }
 
-    private void openFragment(Tower towerPage, int homeContainer) {
+    private void openTowerFragment(Tower towerPage, int homeContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(homeContainer, towerPage);
         ft.commit();
     }
+
+    private void openMuseumFragment(Museum museumPage, int homeContainer) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(homeContainer, museumPage);
+        ft.commit();
+    }
+
+    /*private void openLibraryFragment(Library libraryPage, int homeContainer) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(homeContainer, libraryPage);
+        ft.commit();
+    }
+
+    private void openMusicFragment(Music musicPage, int homeContainer) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(homeContainer, musicPage);
+        ft.commit();
+    }*/
 
     class GetMuseum extends AsyncTask<String, String, String> {
         @Override

@@ -1,5 +1,7 @@
 package com.example.fcm_tour.Views;
 
+import android.annotation.SuppressLint;
+import android.content.res.ColorStateList;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
@@ -47,20 +49,13 @@ import java.util.List;
 
 public class AudioPage extends Fragment {
     View v;
-    Bundle extras;
-    String title;
-    String description;
-    String link;
-    String getImgs;
-    Button btnTxt;
-    Button btnAudio;
+    String title, description, link, getImgs, nextRoomNum, beforeRoomNum;
+    Button btnTxt, btnAudio, nextRoomBtn, beforeRoomBtn;
     ImageSlider imageSlider;
     Boolean roomsAccess;
-    Bundle bundle;
-    Button nextRoomBtn;
-    Button beforeRoomBtn;
-    String nextRoomNum;
-    String beforeRoomNum;
+    Integer pageType;
+    Bundle extras, bundle;
+    ImageView imgView, underline;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -85,6 +80,8 @@ public class AudioPage extends Fragment {
         btnAudio = (Button) v.findViewById(R.id.audio);
         btnTxt.setOnClickListener(v1 -> openDescFragment());
         btnAudio.setOnClickListener(v12 -> openAudioFragment());
+
+        pageType = Preferences.readPageType();
         try {
             loadRoomInfo();
         } catch (JSONException e) {
@@ -97,8 +94,13 @@ public class AudioPage extends Fragment {
         extras.putString("description", description);
         btnTxt.setClickable(false);
         btnAudio.setClickable(true);
-        btnTxt.setBackgroundResource(R.drawable.botao_descricao_amarelo);
-        btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
+        if (pageType == 0) {
+            btnTxt.setBackgroundResource(R.drawable.botao_descricao_amarelo);
+            btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
+        } else {
+            btnTxt.setBackgroundResource(R.drawable.botao_descricao_museu);
+            btnAudio.setBackgroundResource(R.drawable.botao_audio_dgrey);
+        }
         final int descriptionContainer = R.id.audioPageFrame;
         Description description = new Description();
         description.setArguments(extras);
@@ -112,8 +114,13 @@ public class AudioPage extends Fragment {
         extras.putString("link", link);
         btnTxt.setClickable(true);
         btnAudio.setClickable(false);
-        btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
-        btnAudio.setBackgroundResource(R.drawable.botao_do_audio_amarelo);
+        if (pageType == 0) {
+            btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
+            btnAudio.setBackgroundResource(R.drawable.botao_do_audio_amarelo);
+        } else {
+            btnTxt.setBackgroundResource(R.drawable.botao_da_descricao_dgray);
+            btnAudio.setBackgroundResource(R.drawable.botao_audio_museu);
+        }
         final int audioContainer = R.id.audioPageFrame;
         AudioPlayer audioPlayer = new AudioPlayer();
         audioPlayer.setArguments(extras);
@@ -123,6 +130,7 @@ public class AudioPage extends Fragment {
         ft.commit();
     }
 
+    @SuppressLint("ResourceAsColor")
     public void loadRoomInfo() throws JSONException {
         title = bundle.getString("title");
         TextView text = (TextView) v.findViewById(R.id.title);
@@ -130,13 +138,31 @@ public class AudioPage extends Fragment {
         description = bundle.getString("description");
         link = bundle.getString("link");
         getImgs = bundle.getString("imgsList");
-        JSONArray imgsResult = new JSONArray(getImgs);
-        List<SlideModel> imgsList = new ArrayList<>();
-        for (int i = 0; i < imgsResult.length(); i++) {
-            imgsList.add(new SlideModel(imgsResult.getString(i)));
-        }
+        imgView = v.findViewById(R.id.imgView);
+        underline = v.findViewById(R.id.underline);
         imageSlider = v.findViewById(R.id.slider);
-        imageSlider.setImageList(imgsList, true);
+        switch (pageType) {
+            case 0:
+                Log.d("SIGA", "entrou no 2: ");
+                JSONArray imgsResult = new JSONArray(getImgs);
+                List<SlideModel> imgsList = new ArrayList<>();
+                for (int i = 0; i < imgsResult.length(); i++) {
+                    imgsList.add(new SlideModel(imgsResult.getString(i)));
+                }
+                imgView.setVisibility(View.INVISIBLE);
+                imageSlider.setVisibility(View.VISIBLE);
+                imageSlider.setImageList(imgsList, true);
+                break;
+            case 1:
+                underline.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.museum)));
+                imgView.setVisibility(View.VISIBLE);
+                imageSlider.setVisibility(View.INVISIBLE);
+                getImgs = bundle.getString("img");
+                Picasso.get().load(getImgs).into(imgView);
+                break;
+            default:
+                break;
+        }
         roomsAccess = Preferences.readRoomsAccess();
         verifyRooms(title);
         openDescFragment();

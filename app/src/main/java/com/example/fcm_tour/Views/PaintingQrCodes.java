@@ -2,31 +2,27 @@ package com.example.fcm_tour.Views;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
 import com.example.fcm_tour.API;
-import com.example.fcm_tour.MainActivity;
+import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
+import com.example.fcm_tour.SideBar;
 import com.google.zxing.Result;
-import com.squareup.picasso.Picasso;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -35,19 +31,25 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.zip.Inflater;
 
-public class QrScan extends AppCompatActivity {
+public class PaintingQrCodes extends AppCompatActivity {
     public CodeScanner mCodeScanner;
     public static final int MY_CAMERA_REQUEST_CODE = 100;
+    String numberResult;
+    Bundle extras;
+    String name, description, img, link;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_qr_scan);
+        setContentView(R.layout.activity_painting_qr_codes);
+        extras = new Bundle();
         CodeScannerView scannerView = findViewById(R.id.scanner_view);
         mCodeScanner = new CodeScanner(this, scannerView);
-        mCodeScanner.setDecodeCallback(result -> runOnUiThread(() -> new TicketScan().execute(API.API_URL + "/ticket/" + result.getText())));
+        mCodeScanner.setDecodeCallback(result -> runOnUiThread(() -> {
+            numberResult = result.getText();
+            new TicketScan().execute(API.API_URL + "/museu/quadros/" + result.getText());
+        }));
         scannerView.setOnClickListener(view -> mCodeScanner.startPreview());
     }
 
@@ -104,22 +106,23 @@ public class QrScan extends AppCompatActivity {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             try {
-                JSONObject jsonResponse = new JSONObject(result);
-                String state = jsonResponse.getString("state");
-                if (state.equals("Ticket válido")) {
-                    Rooms.getRoomsAccess(getApplicationContext());
-                    AlertDialog alertDialog = new AlertDialog.Builder(QrScan.this).create();
-                    alertDialog.setTitle("Bilhete Válido");
-                    alertDialog.setMessage("Já pode aceder a todas as salas");
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            (dialog, which) -> {
-                                dialog.dismiss();
-                                finish();
-                            });
-                    alertDialog.show();
+                JSONObject jsonObject = new JSONObject(result);
+                String state = jsonObject.getString("number");
+                if (state.equals(numberResult)) {
+                    name = jsonObject.getString("name");
+                    description = jsonObject.getString("description");
+                    img = jsonObject.getString("img");
+                    link = jsonObject.getString("audio");
+                    extras.putString("title", name);
+                    extras.putString("description", description);
+                    extras.putString("img", img);
+                    extras.putString("link", link);
+                    extras.putBoolean("paitingQr", true);
+                    Preferences.saveAudioPageType(1);
+                    //openTemporaryPage(extras);
                 } else {
-                    AlertDialog alertDialog = new AlertDialog.Builder(QrScan.this).create();
-                    alertDialog.setTitle("Sem Resultados");
+                    AlertDialog alertDialog = new AlertDialog.Builder(PaintingQrCodes.this).create();
+                    alertDialog.setTitle(R.string.noResultsDialog);
                     alertDialog.setMessage("Não foi encontrado nenhum bilhete com esse número");
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             (dialog, which) -> {
@@ -129,8 +132,8 @@ public class QrScan extends AppCompatActivity {
                     alertDialog.show();
                 }
             } catch (JSONException e) {
-                AlertDialog alertDialog2 = new AlertDialog.Builder(QrScan.this).create();
-                alertDialog2.setTitle("Sem Resultados");
+                AlertDialog alertDialog2 = new AlertDialog.Builder(PaintingQrCodes.this).create();
+                alertDialog2.setTitle(R.string.noResultsDialog);
                 alertDialog2.setMessage("Não foi encontrado nenhum bilhete com esse número");
                 alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         (dialog, which) -> {
@@ -142,4 +145,11 @@ public class QrScan extends AppCompatActivity {
             }
         }
     }
+
+   /* public void openTemporaryPage(Bundle extras) {
+        Intent i = new Intent(this, SideBar.class);
+        i.putExtras(extras);
+        startActivity(i);
+    }*/
+
 }

@@ -21,6 +21,14 @@
     <string name="title_activity_a_r__sculptures">AR_Sculptures</string>
     <string name="dialogAudioText">A carregar áudio...</string>
     <string name="ARexception">Model can`t be Loaded</string>
+    <string name="temporaryTitle">TEMPORÁRIAS</string>
+    <string name="permanentTitle">PERMANENTES</string>
+    <string name="qrCodeState">Ticket válido</string>
+    <string name="alertDialogTitle">Bilhete Válido</string>
+    <string name="noResultsDialog">Sem Resultados</string>
+    <string name="messageTwo">Não foi encontrado nenhum bilhete com esse número</string>
+
+
     <!--
     This string is used for square devices and overridden by hello_world in
     values-round/strings.xml for round devices.

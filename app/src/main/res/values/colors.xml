@@ -10,5 +10,9 @@
     <color name="grey">#8C8A8A</color>
     <color name="grey_light">#B1AEAE</color>
     <color name="tower">#FCB034</color>
+    <color name="museum">#54C5D0</color>
+    <color name="library">#8CC751</color>
+    <color name="music">#D7DF21</color>
+
 
 </resources>

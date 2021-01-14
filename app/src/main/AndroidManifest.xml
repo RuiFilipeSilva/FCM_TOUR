@@ -15,12 +15,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FCM_TOUR">
+        <activity android:name=".Views.PaintingQrCodes"></activity>
         <activity
             android:name=".Views.AR_Sculptures"
             android:label="@string/title_activity_a_r__sculptures"
             android:screenOrientation="portrait" />
-
-
         <activity
             android:name=".Views.QrScan"
             android:screenOrientation="portrait" />
@@ -65,4 +64,5 @@
             android:label="@string/app_name"
             android:screenOrientation="portrait" />
     </application>
+
 </manifest>

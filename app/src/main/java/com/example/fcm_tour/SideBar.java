@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.Controllers.Users;
+import com.example.fcm_tour.Views.AudioPage;
 import com.example.fcm_tour.Views.Authentication;
 import com.example.fcm_tour.Views.History;
 import com.example.fcm_tour.Views.Museum;

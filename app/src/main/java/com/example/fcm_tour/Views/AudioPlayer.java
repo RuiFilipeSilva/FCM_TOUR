@@ -1,8 +1,11 @@
 package com.example.fcm_tour.Views;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
@@ -32,36 +35,57 @@ import java.io.IOException;
 public class AudioPlayer extends Fragment {
     ImageButton playBtn;
     SeekBar positionBar;
-    TextView elapsedTimeLabel;
-    TextView remainingTimeLabel;
+    TextView elapsedTimeLabel, remainingTimeLabel;
     MediaPlayer mp;
     int totalTime;
     String link;
     AlertDialog dialog;
     View v;
+    Integer pageType;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Preferences.init(getContext());
         v = inflater.inflate(R.layout.fragment_audio_player, container, false);
         Bundle bundle = this.getArguments();
+        pageType = Preferences.readPageType();
         link = bundle.getString("link");
         playBtn = v.findViewById(R.id.playBtn);
+        positionBar = v.findViewById(R.id.positionBar);
+        switch (pageType) {
+            case 1:
+                playBtn.setBackgroundResource(R.drawable.botao_play_museu);
+                positionBar.getProgressDrawable().setColorFilter(getResources().getColor(R.color.museum), PorterDuff.Mode.SRC_ATOP);
+                positionBar.getThumb().setColorFilter(getResources().getColor(R.color.museum), PorterDuff.Mode.SRC_ATOP);
+                break;
+            default:
+                break;
+        }
         elapsedTimeLabel = v.findViewById(R.id.elapsedTimeLabel);
         remainingTimeLabel = v.findViewById(R.id.remainingTimeLabel);
         playBtn.setOnClickListener(v1 -> {
             if (!mp.isPlaying()) {
                 mp.start();
-                playBtn.setBackgroundResource(R.drawable.biblio);
+                playBtn.setBackgroundResource(R.drawable.pause);
 
             } else {
                 mp.pause();
-                playBtn.setBackgroundResource(R.drawable.ic_baseline_play_arrow_24);
+                switch (pageType) {
+                    case 0:
+                        playBtn.setBackgroundResource(R.drawable.botao_play_torre);
+                        break;
+                    case 1:
+                        playBtn.setBackgroundResource(R.drawable.botao_play_museu);
+                        break;
+                    default:
+                        break;
+                }
             }
         });
         setProgressDialog();
@@ -76,6 +100,19 @@ public class AudioPlayer extends Fragment {
             prepareAudioLayout();
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
+            }
+        });
+
+        mp.setOnCompletionListener(mp -> {
+            switch (pageType) {
+                case 0:
+                    playBtn.setBackgroundResource(R.drawable.botao_play_torre);
+                    break;
+                case 1:
+                    playBtn.setBackgroundResource(R.drawable.botao_play_museu);
+                    break;
+                default:
+                    break;
             }
         });
         return v;
@@ -98,12 +135,13 @@ public class AudioPlayer extends Fragment {
         positionBar.setOnSeekBarChangeListener(
                 new SeekBar.OnSeekBarChangeListener() {
                     @Override
-                    public void onProgressChanged(SeekBar seekBar,  int progress, boolean fromUser) {
+                    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                         if (fromUser) {
                             mp.seekTo(progress);
                             positionBar.setProgress(progress);
                         }
                     }
+
                     @Override
                     public void onStartTrackingTouch(SeekBar seekBar) {
                     }
@@ -148,7 +186,7 @@ public class AudioPlayer extends Fragment {
         llParam.gravity = Gravity.CENTER;
         TextView tvText = new TextView(getContext());
         tvText.setText(R.string.dialogAudioText);
-        tvText.setTextColor(Color.parseColor(String.valueOf(R.color.white)));
+        tvText.setTextColor(Color.parseColor("#000000"));
         tvText.setTextSize(20);
         tvText.setLayoutParams(llParam);
 
