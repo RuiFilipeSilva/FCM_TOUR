@@ -50,7 +50,7 @@ import java.util.List;
 public class AudioPage extends Fragment {
     View v;
     String title, description, link, getImgs, nextRoomNum, beforeRoomNum;
-    Button btnTxt, btnAudio, nextRoomBtn, beforeRoomBtn;
+    Button btnTxt, btnAudio, nextRoomBtn, beforeRoomBtn, goBackBtn;
     ImageSlider imageSlider;
     Boolean roomsAccess;
     Integer pageType;
@@ -69,6 +69,10 @@ public class AudioPage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_audio_page, container, false);
         Preferences.removeQR();
+        goBackBtn = v.findViewById(R.id.goBackBtn);
+        goBackBtn.setOnClickListener(v -> {
+            goBackFragment();
+        });
         nextRoomBtn = (Button) v.findViewById(R.id.nextBtn);
         nextRoomBtn.setOnClickListener(v -> {
             new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + nextRoomNum);
@@ -174,8 +178,12 @@ public class AudioPage extends Fragment {
                 imgView.setVisibility(View.INVISIBLE);
                 imageSlider.setVisibility(View.VISIBLE);
                 imageSlider.setImageList(imgsList, true);
+                goBackBtn.setVisibility(View.VISIBLE);
+                goBackBtn.setText(R.string.goBackRooms);
                 break;
             case 1:
+                goBackBtn.setVisibility(View.VISIBLE);
+                goBackBtn.setText(R.string.gobackPaintings);
                 underline.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.museum)));
                 imgView.setVisibility(View.VISIBLE);
                 imageSlider.setVisibility(View.INVISIBLE);
@@ -183,17 +191,23 @@ public class AudioPage extends Fragment {
                 Picasso.get().load(getImgs).into(imgView);
                 break;
             case 2:
+                goBackBtn.setVisibility(View.VISIBLE);
+                goBackBtn.setText(R.string.goBackCollections);
                 underline.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.library)));
                 imgView.setVisibility(View.VISIBLE);
                 imageSlider.setVisibility(View.INVISIBLE);
                 getImgs = bundle.getString("img");
                 Picasso.get().load(getImgs).into(imgView);
+                break;
             case 3:
+                goBackBtn.setVisibility(View.VISIBLE);
+                goBackBtn.setText(R.string.goBackMusic);
                 underline.setBackgroundTintList(ColorStateList.valueOf(getResources().getColor(R.color.music)));
                 imgView.setVisibility(View.VISIBLE);
                 imageSlider.setVisibility(View.INVISIBLE);
                 getImgs = bundle.getString("img");
                 Picasso.get().load(getImgs).into(imgView);
+                break;
             default:
                 break;
         }
@@ -270,5 +284,51 @@ public class AudioPage extends Fragment {
                 nextRoomBtn.setVisibility(View.INVISIBLE);
             }
         }
+    }
+
+    public void goBackFragment() {
+        FragmentManager fragmentManager;
+        FragmentTransaction ft;
+        switch (pageType) {
+            case 0:
+                final int roomContainer = R.id.fullpage;
+                RoomPage rooms = new RoomPage();
+                rooms.setArguments(extras);
+                fragmentManager = getFragmentManager();
+                ft = fragmentManager.beginTransaction();
+                ft.replace(roomContainer, rooms);
+                ft.commit();
+                break;
+            case 1:
+                final int museumContainer = R.id.fullpage;
+                Museum museum = new Museum();
+                museum.setArguments(extras);
+                fragmentManager = getFragmentManager();
+                ft = fragmentManager.beginTransaction();
+                ft.replace(museumContainer, museum);
+                ft.commit();
+                break;
+            case 2:
+                final int collectionsContainer = R.id.fullpage;
+                CollectionsPage collectionsPage = new CollectionsPage();
+                collectionsPage.setArguments(extras);
+                fragmentManager = getFragmentManager();
+                ft = fragmentManager.beginTransaction();
+                ft.replace(collectionsContainer, collectionsPage);
+                ft.commit();
+                break;
+            case 3:
+                final int musicContainer = R.id.fullpage;
+                Music music = new Music();
+                music.setArguments(extras);
+                fragmentManager = getFragmentManager();
+                ft = fragmentManager.beginTransaction();
+                ft.replace(musicContainer, music);
+                ft.commit();
+                break;
+            default:
+                break;
+        }
+
     }
 }

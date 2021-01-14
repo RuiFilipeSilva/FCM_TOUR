@@ -30,6 +30,10 @@
     <string name="cupertinosTxt">OS CUPERTINOS</string>
     <string name="ciclosTxt">CICLOS DE MÚSICA E POESIA</string>
     <string name="musicPageTitle">MÚSICA</string>
+    <string name="goBackMusic">Música</string>
+    <string name="gobackPaintings">Exposições</string>
+    <string name="goBackRooms">Salas</string>
+    <string name="goBackCollections">Acervos</string>
 
 
     <!--

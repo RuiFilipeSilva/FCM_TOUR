@@ -33,6 +33,7 @@ import com.example.fcm_tour.Controllers.Users;
 import com.example.fcm_tour.Views.AudioPage;
 import com.example.fcm_tour.Views.Authentication;
 import com.example.fcm_tour.Views.History;
+import com.example.fcm_tour.Views.Library;
 import com.example.fcm_tour.Views.Museum;
 import com.example.fcm_tour.Views.Music;
 import com.example.fcm_tour.Views.Tower;
@@ -145,6 +146,9 @@ public class SideBar extends AppCompatActivity {
                 break;
             case R.id.item2:
                 fragmentClass = Museum.class;
+                break;
+            case R.id.item3:
+                fragmentClass = Library.class;
                 break;
             case R.id.item4:
                 fragmentClass = Music.class;

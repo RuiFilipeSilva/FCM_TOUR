@@ -81,9 +81,10 @@ public class Collections extends Fragment {
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
             for (int i = 0; i < numbers.length; i++) {
-                Log.d("SIGA", "locationSort: click");
-                new Collections.GetCollectionsByNumber().execute(API.API_URL + "/biblioteca/acervos/" + numbers[i]);
-                break;
+                if(position == i) {
+                    new Collections.GetCollectionsByNumber().execute(API.API_URL + "/biblioteca/acervos/" + numbers[i]);
+                    break;
+                }
             }
         });
     }

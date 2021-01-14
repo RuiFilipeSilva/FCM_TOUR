@@ -29,9 +29,6 @@
             android:name=".SideBar"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Library"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".Views.Login2"
             android:screenOrientation="portrait" />
         <activity
