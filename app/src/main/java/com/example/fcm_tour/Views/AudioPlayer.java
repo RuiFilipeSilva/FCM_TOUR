@@ -9,7 +9,10 @@ import android.graphics.PorterDuff;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.LifecycleOwner;
 
 import android.os.Handler;
 import android.os.Message;
@@ -54,6 +57,7 @@ public class AudioPlayer extends Fragment {
         Preferences.init(getContext());
         v = inflater.inflate(R.layout.fragment_audio_player, container, false);
         Bundle bundle = this.getArguments();
+        handleOnBackBtnClick();
         pageType = Preferences.readPageType();
         link = bundle.getString("link");
         playBtn = v.findViewById(R.id.playBtn);
@@ -143,9 +147,26 @@ public class AudioPlayer extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        mp.stop();
-        mp = null;
+        if(mp != null) {
+            mp.stop();
+            mp = null;
+        }
     }
+
+    public void handleOnBackBtnClick() {
+        OnBackPressedCallback callback = new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                // Handle the back button event
+                mp.stop();
+                mp = null;
+                getFragmentManager().popBackStack();
+            }
+        };
+
+        requireActivity().getOnBackPressedDispatcher().addCallback((LifecycleOwner) getContext(), callback);
+    }
+
 
     public void prepareAudioLayout() {
         mp.seekTo(0);

@@ -139,6 +139,7 @@ public class SideBar extends AppCompatActivity {
         switch (menuItem.getItemId()) {
             case R.id.inicio:
                 fragmentClass = History.class;
+
                 break;
             case R.id.item1:
                 fragmentClass = Tower.class;
@@ -168,6 +169,7 @@ public class SideBar extends AppCompatActivity {
             e.printStackTrace();
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().addToBackStack(null);
         fragmentManager.beginTransaction().replace(R.id.fullpage, fragment).commit();
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());

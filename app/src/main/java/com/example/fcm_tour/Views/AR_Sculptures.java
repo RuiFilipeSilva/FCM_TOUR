@@ -32,7 +32,6 @@ public class AR_Sculptures extends AppCompatActivity {
             setUpModel(MODEL_URL);
             setUpPlane();
         }
-
     }
 
     private void setUpModel(String MODEL_URL) {

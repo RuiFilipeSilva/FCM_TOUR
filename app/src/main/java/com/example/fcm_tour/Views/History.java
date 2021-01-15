@@ -31,10 +31,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class History extends Fragment {
-    ImageButton towerBtn;
-    ImageButton museumBtn;
-    ImageButton libraryBtn;
-    ImageButton musicBtn;
+    ImageButton towerBtn, museumBtn, libraryBtn, musicBtn;
     Bundle extras;
     String name, description, img, link;
 
@@ -82,6 +79,7 @@ public class History extends Fragment {
     private void openTowerFragment(Tower towerPage, int homeContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.addToBackStack(null);
         ft.replace(homeContainer, towerPage);
         ft.commit();
     }
@@ -89,6 +87,7 @@ public class History extends Fragment {
     private void openMuseumFragment(Museum museumPage, int homeContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.addToBackStack(null);
         ft.replace(homeContainer, museumPage);
         ft.commit();
     }
@@ -96,6 +95,7 @@ public class History extends Fragment {
     private void openLibraryFragment(Library library, int homeContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.addToBackStack(null);
         ft.replace(homeContainer, library);
         ft.commit();
     }
@@ -103,6 +103,7 @@ public class History extends Fragment {
     private void openMusicFragment(Music musicPage, int homeContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.addToBackStack(null);
         ft.replace(homeContainer, musicPage);
         ft.commit();
     }
@@ -194,6 +195,7 @@ public class History extends Fragment {
         audioPage.setArguments(this.extras);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.addToBackStack(null);
         ft.replace(homeContainer, audioPage);
         ft.commit();
     }

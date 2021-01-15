@@ -111,6 +111,7 @@ public class Temporary extends Fragment {
         audioPage.setArguments(extras);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.addToBackStack(null);
         ft.replace(homeContainer, audioPage);
         ft.commit();
     }
