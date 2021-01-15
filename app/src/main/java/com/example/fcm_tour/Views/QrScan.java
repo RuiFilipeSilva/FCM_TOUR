@@ -110,7 +110,7 @@ public class QrScan extends AppCompatActivity {
                     Rooms.getRoomsAccess(getApplicationContext());
                     AlertDialog alertDialog = new AlertDialog.Builder(QrScan.this).create();
                     alertDialog.setTitle(R.string.validTicketMsg);
-                    alertDialog.setMessage("Já pode aceder a todas as salas");
+                    alertDialog.setMessage(getString(R.string.validMessageQrScan));
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             (dialog, which) -> {
                                 dialog.dismiss();
@@ -120,7 +120,7 @@ public class QrScan extends AppCompatActivity {
                 } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(QrScan.this).create();
                     alertDialog.setTitle(R.string.noResultsDialog);
-                    alertDialog.setMessage("Não foi encontrado nenhum bilhete com esse número");
+                    alertDialog.setMessage(getString(R.string.invalidMessageTicket));
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             (dialog, which) -> {
                                 dialog.dismiss();
@@ -131,7 +131,7 @@ public class QrScan extends AppCompatActivity {
             } catch (JSONException e) {
                 AlertDialog alertDialog2 = new AlertDialog.Builder(QrScan.this).create();
                 alertDialog2.setTitle(R.string.noResultsDialog);
-                alertDialog2.setMessage("Não foi encontrado nenhum bilhete com esse número");
+                alertDialog2.setMessage(getString(R.string.invalidMessageTicket));
                 alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         (dialog, which) -> {
                             dialog.dismiss();

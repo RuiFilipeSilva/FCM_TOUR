@@ -300,6 +300,8 @@ public class AudioPage extends Fragment {
                 rooms.setArguments(extras);
                 fragmentManager = getFragmentManager();
                 ft = fragmentManager.beginTransaction();
+                ft.setCustomAnimations(R.anim.from_right, R.anim.to_left);
+                ft.addToBackStack(null);
                 ft.replace(roomContainer, rooms);
                 ft.commit();
                 break;
@@ -309,6 +311,8 @@ public class AudioPage extends Fragment {
                 museum.setArguments(extras);
                 fragmentManager = getFragmentManager();
                 ft = fragmentManager.beginTransaction();
+                ft.setCustomAnimations(R.anim.from_right, R.anim.to_left);
+                ft.addToBackStack(null);
                 ft.replace(museumContainer, museum);
                 ft.commit();
                 break;
@@ -318,6 +322,8 @@ public class AudioPage extends Fragment {
                 collectionsPage.setArguments(extras);
                 fragmentManager = getFragmentManager();
                 ft = fragmentManager.beginTransaction();
+                ft.setCustomAnimations(R.anim.from_right, R.anim.to_left);
+                ft.addToBackStack(null);
                 ft.replace(collectionsContainer, collectionsPage);
                 ft.commit();
                 break;
@@ -327,6 +333,8 @@ public class AudioPage extends Fragment {
                 music.setArguments(extras);
                 fragmentManager = getFragmentManager();
                 ft = fragmentManager.beginTransaction();
+                ft.setCustomAnimations(R.anim.from_right, R.anim.to_left);
+                ft.addToBackStack(null);
                 ft.replace(musicContainer, music);
                 ft.commit();
                 break;

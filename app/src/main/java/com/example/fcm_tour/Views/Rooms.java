@@ -261,6 +261,8 @@ public class Rooms extends Fragment {
     private void openFragment(AudioPage audioPage, int homeContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.setCustomAnimations(R.anim.from_left, R.anim.to_right);
+        ft.addToBackStack(null);
         ft.replace(homeContainer, audioPage);
         ft.commit();
     }

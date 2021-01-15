@@ -70,6 +70,8 @@
     <!--QrScan-->
     <string name="validTicketMsg">Bilhete válido!</string>
 
+    <string name="validMessageQrScan">Já pode aceder a todas as salas!</string>
+
     <!--Register-->
     <string name="namePlaceholder">Nome</string>
     <string name="confirmPassword">Confirmar Palavra-Passe</string>

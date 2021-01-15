@@ -14,9 +14,8 @@ import com.example.fcm_tour.R;
 import com.example.fcm_tour.SideBar;
 
 public class Authentication extends AppCompatActivity {
-    Intent login;
-    Intent register;
-    Intent comeBack;
+    Intent login, register, comeBack;
+    Button btnLogin, btnRegister, btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,22 +26,23 @@ public class Authentication extends AppCompatActivity {
         SocialMediaAuth socialMediaAuth = new SocialMediaAuth();
         openFragment(socialMediaAuth, container);
 
-        Button btnLogin = findViewById(R.id.login);
+        btnLogin = findViewById(R.id.login);
         btnLogin.setOnClickListener(v -> {
             login = new Intent(v.getContext(), Login2.class);
             startActivity(login);
         });
 
-        Button btnRegister = findViewById(R.id.register);
+        btnRegister = findViewById(R.id.register);
         btnRegister.setOnClickListener(v -> {
             register = new Intent(v.getContext(), Register.class);
             startActivity(register);
         });
 
-        Button btnBack = findViewById(R.id.voltar);
+        btnBack = findViewById(R.id.voltar);
         btnBack.setOnClickListener(v -> {
             comeBack = new Intent(v.getContext(), SideBar.class);
             startActivity(comeBack);
+            overridePendingTransition(R.anim.from_bottom, R.anim.to_top);
         });
     }
 

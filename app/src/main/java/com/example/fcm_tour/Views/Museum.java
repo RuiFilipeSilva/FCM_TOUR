@@ -75,6 +75,8 @@ public class Museum extends Fragment {
     private void openFragment(SculpturePage sculpturePage, int homeContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.setCustomAnimations(R.anim.from_left, R.anim.to_right);
+        ft.addToBackStack(null);
         ft.replace(homeContainer, sculpturePage);
         ft.commit();
     }

@@ -53,6 +53,8 @@ public class Tower extends Fragment {
     private void openFragment(RoomPage rooms, int homeContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.setCustomAnimations(R.anim.from_left, R.anim.to_right);
+        ft.addToBackStack(null);
         ft.replace(homeContainer, rooms);
         ft.commit();
     }

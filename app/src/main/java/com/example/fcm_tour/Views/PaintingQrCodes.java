@@ -111,7 +111,7 @@ public class PaintingQrCodes extends AppCompatActivity {
                 if (state.equals(numberResult)) {
                     AlertDialog alertDialog = new AlertDialog.Builder(PaintingQrCodes.this).create();
                     alertDialog.setTitle(R.string.validResultDialog);
-                    alertDialog.setMessage("Quadro encontrado, vai ser redirecionado para a página!");
+                    alertDialog.setMessage(getString(R.string.validMessageDialog));
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             (dialog, which) -> {
                                 Preferences.write("qrPaint", numberResult);
@@ -123,7 +123,7 @@ public class PaintingQrCodes extends AppCompatActivity {
                 } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(PaintingQrCodes.this).create();
                     alertDialog.setTitle(R.string.noResultsDialog);
-                    alertDialog.setMessage("Não foi encontrado nenhum código com esse número!");
+                    alertDialog.setMessage(getString(R.string.invalidMessageCode));
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             (dialog, which) -> {
                                 dialog.dismiss();
@@ -134,7 +134,7 @@ public class PaintingQrCodes extends AppCompatActivity {
             } catch (JSONException e) {
                 AlertDialog alertDialog2 = new AlertDialog.Builder(PaintingQrCodes.this).create();
                 alertDialog2.setTitle(R.string.noResultsDialog);
-                alertDialog2.setMessage("Não foi encontrado nenhum bilhete com esse número!");
+                alertDialog2.setMessage(getString(R.string.invalidMessageTicket));
                 alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         (dialog, which) -> {
                             dialog.dismiss();
