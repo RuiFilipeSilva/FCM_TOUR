@@ -18,6 +18,7 @@ import com.example.fcm_tour.SideBar;
 public class Register extends AppCompatActivity {
     Intent comeBack, login;
     EditText name, email, password, confPassword;
+    Button btnComeBack, btnLogin, btnRegister;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,17 +28,18 @@ public class Register extends AppCompatActivity {
         final int container = R.id.fragmentAuth;
         SocialMediaAuth socialMediaAuth = new SocialMediaAuth();
         openFragment(socialMediaAuth, container);
-        Button btnComeBack = findViewById(R.id.comeBack);
+        btnComeBack = findViewById(R.id.comeBack);
         btnComeBack.setOnClickListener(v -> {
             comeBack = new Intent(v.getContext(), SideBar.class);
             startActivity(comeBack);
+            overridePendingTransition(R.anim.from_bottom, R.anim.to_top);
         });
-        Button btnLogin = findViewById(R.id.login);
+        btnLogin = findViewById(R.id.login);
         btnLogin.setOnClickListener(v -> {
             login = new Intent(v.getContext(), Login2.class);
             startActivity(login);
         });
-        Button btnRegister = findViewById(R.id.register);
+        btnRegister = findViewById(R.id.register);
         btnRegister.setOnClickListener(v -> {
             name = findViewById(R.id.nametxt);
             email = findViewById(R.id.mail);

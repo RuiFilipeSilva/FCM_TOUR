@@ -120,6 +120,8 @@ public class Music extends Fragment {
         audioPage.setArguments(extras);
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.setCustomAnimations(R.anim.from_left, R.anim.to_right);
+        ft.addToBackStack(null);
         ft.replace(homeContainer, audioPage);
         ft.commit();
     }

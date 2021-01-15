@@ -57,6 +57,8 @@ public class Library extends Fragment {
     private void openCollectionsFragment(CollectionsPage collectionsPage, int homeContainer) {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.setCustomAnimations(R.anim.from_left, R.anim.to_right);
+        ft.addToBackStack(null);
         ft.replace(homeContainer, collectionsPage);
         ft.commit();
     }
