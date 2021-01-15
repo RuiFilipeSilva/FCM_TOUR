@@ -158,8 +158,10 @@ public class AudioPlayer extends Fragment {
             @Override
             public void handleOnBackPressed() {
                 // Handle the back button event
-                mp.stop();
-                mp = null;
+                if(mp != null) {
+                    mp.stop();
+                    mp = null;
+                }
                 getFragmentManager().popBackStack();
             }
         };
