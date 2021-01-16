@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Views.Awards">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="50dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/title_awards"
+        android:fontFamily="@font/stratum1_black"
+        android:textSize="40dp"
+        android:layout_marginRight="20dp"
+        android:textColor="@color/black"
+        android:layout_marginStart="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_gravity="start"
+        />
+    <ImageView
+        android:layout_width="78dp"
+        android:layout_height="3dp"
+        android:layout_marginLeft="20dp"
+        android:background="@drawable/rec"
+        android:backgroundTint="@color/roulette"
+        android:layout_gravity="start"/>
+
+
+    <ListView
+        android:id="@+id/listAwards"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="30dp"
+        android:divider="#00000000"
+        android:dividerHeight="10dp" />
+</LinearLayout>
+</FrameLayout>

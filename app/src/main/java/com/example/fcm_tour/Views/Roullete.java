@@ -6,6 +6,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -32,6 +34,7 @@ import pl.droidsonroids.gif.GifImageView;
 public class Roullete extends Fragment {
     GifImageView gif;
     Button spining;
+    Button award;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,8 +54,19 @@ public class Roullete extends Fragment {
             @Override
             public void onClick(View v) {
                 ((GifDrawable) gif.getDrawable()).start();
+                award.setClickable(false);
                 new android.os.Handler().postDelayed(
                         () -> loading(), 5000);
+            }
+        });
+
+        award = (Button) v.findViewById(R.id.awards);
+        award.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final int homeContainer = R.id.fullpage;
+                Awards award = new Awards();
+                openFragment(award, homeContainer);
             }
         });
 
@@ -60,9 +74,19 @@ public class Roullete extends Fragment {
         return v;
     }
 
+    private void openFragment(Awards awards, int homeContainer) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.setCustomAnimations(R.anim.from_left, R.anim.to_right);
+        ft.addToBackStack(null);
+        ft.replace(homeContainer, awards);
+        ft.commit();
+    }
+
     public void loading() {
         ((GifDrawable) gif.getDrawable()).stop();
         new GetPoints().execute(API.API_URL + "/roleta/girar");
+        award.setClickable(true);
     }
 
     class GetPoints extends AsyncTask<String, String, String> {
