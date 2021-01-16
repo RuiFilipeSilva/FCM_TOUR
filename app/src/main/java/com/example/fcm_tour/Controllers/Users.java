@@ -2,45 +2,27 @@ package com.example.fcm_tour.Controllers;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.util.Base64;
-import android.util.Log;
 import android.widget.Toast;
-
-import androidx.fragment.app.FragmentTransaction;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.fcm_tour.R;
 import com.example.fcm_tour.SideBar;
-import com.example.fcm_tour.Views.History;
 import com.example.fcm_tour.Views.Login2;
 import com.example.fcm_tour.API;
-import com.example.fcm_tour.Views.SettingsPage;
-import com.example.fcm_tour.Views.changePwPage;
+import com.example.fcm_tour.Views.ChangePwPage;
 import com.facebook.AccessToken;
-import com.facebook.FacebookRequestError;
-import com.facebook.FacebookSdk;
-import com.facebook.GraphRequest;
-import com.facebook.GraphResponse;
-import com.facebook.HttpMethod;
 import com.facebook.login.LoginManager;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.regex.Matcher;
@@ -271,7 +253,7 @@ public class Users {
         }
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, postUrl, postData,
                 response -> {
-                    changePwPage.pwChangedSuccess();
+                    ChangePwPage.pwChangedSuccess();
                     Toast.makeText(context, R.string.changePwToast, Toast.LENGTH_SHORT).show();
                 },
                 error -> handleError(error, context)) {
@@ -299,7 +281,7 @@ public class Users {
                     try {
                         String type = response.getString("user");
                         Preferences.saveUserType(type);
-                        changePwPage.pwChangedSuccess();
+                        ChangePwPage.pwChangedSuccess();
                         Toast.makeText(context, R.string.addPwToast, Toast.LENGTH_SHORT).show();
                     } catch (JSONException e) {
                         e.printStackTrace();

@@ -17,6 +17,7 @@ import android.graphics.Paint;
 import android.graphics.Shader;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -182,8 +183,14 @@ public class SideBar extends AppCompatActivity {
     }
 
     public static void updateImg(){
-        CircleImageView auth = navigationView.getHeaderView(0).findViewById(R.id.profilePicture);
-        auth.setImageResource(R.drawable.ic_launcher_background);
-        picture.setImageResource(R.drawable.ic_launcher_background);
+        if(Preferences.readUserImg() == null){
+            CircleImageView auth = navigationView.getHeaderView(0).findViewById(R.id.profilePicture);
+            auth.setImageResource(R.drawable.ic_launcher_background);
+            picture.setImageResource(R.drawable.ic_launcher_background);
+        }else{
+            CircleImageView auth = navigationView.getHeaderView(0).findViewById(R.id.profilePicture);
+            Picasso.get().load(Preferences.readUserImg()).into(picture);
+            Picasso.get().load(Preferences.readUserImg()).into(auth);
+        }
     }
 }

@@ -25,7 +25,7 @@ import org.w3c.dom.Text;
 
 import java.util.Set;
 
-public class changePwPage extends Fragment {
+public class ChangePwPage extends Fragment {
     static View v;
     EditText currentPassword, newPassword, confirmPassword;
     TextView currentPasswordTxt, newPasswordTxt, confirmPasswordTxt;
