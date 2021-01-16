@@ -57,6 +57,13 @@ public class Preferences {
         prefsEditor.commit();
     }
 
+    public static void saveUserType(String value) {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("userType");
+        prefsEditor.putString("userType", value);
+        prefsEditor.commit();
+    }
+
     public static void saveRoomsAccess(String code) {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
         prefsEditor.remove("roomsAccess");
@@ -92,9 +99,13 @@ public class Preferences {
         prefsEditor.commit();
     }
 
-    public static String readUserToken() { return mSharedPref.getString("token", null); }
+    public static String readUserToken() {
+        return mSharedPref.getString("token", null);
+    }
 
-    public static String readQrPaint() { return mSharedPref.getString("qrPaint", null); }
+    public static String readQrPaint() {
+        return mSharedPref.getString("qrPaint", null);
+    }
 
     public static String readUsername() {
         return mSharedPref.getString("username", null);
@@ -108,6 +119,10 @@ public class Preferences {
         return mSharedPref.getString("userImg", null);
     }
 
+    public static String readUserType() {
+        return mSharedPref.getString("userType", null);
+    }
+
     public static Integer readPageType() {
         return mSharedPref.getInt("pageType", 0);
     }
@@ -115,6 +130,7 @@ public class Preferences {
     public static Boolean readRoomsAccess() {
         return mSharedPref.getBoolean("roomsAccess", false);
     }
+
     public static String readRoomsAccessCode() {
         return mSharedPref.getString("roomsAccessCode", null);
     }

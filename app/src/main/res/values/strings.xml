@@ -107,6 +107,10 @@
     <string name="definitionsLabel">Definições</string>
     <string name="logoutLabel">Terminar Sessão</string>
 
+    <!--changePWPage-->
+    <string name="changePwToast">Password alterada com sucesso!</string>
+    <string name="addPwToast">Password adicionada com sucesso!</string>
+
     <!--Outros-->
     <string name="FB_APP_ID">3302524869853214</string>
     <string name="fb_login_protocol_scheme">fb3302524869853214</string>

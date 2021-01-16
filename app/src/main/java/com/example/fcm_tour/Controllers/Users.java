@@ -7,6 +7,8 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentTransaction;
+
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -19,6 +21,8 @@ import com.example.fcm_tour.SideBar;
 import com.example.fcm_tour.Views.History;
 import com.example.fcm_tour.Views.Login2;
 import com.example.fcm_tour.API;
+import com.example.fcm_tour.Views.SettingsPage;
+import com.example.fcm_tour.Views.changePwPage;
 import com.facebook.AccessToken;
 import com.facebook.FacebookRequestError;
 import com.facebook.FacebookSdk;
@@ -80,13 +84,11 @@ public class Users {
         }
     }
 
-
     static boolean isEmailValid(CharSequence email) {
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
-
-    static boolean isPasswordValid(String password) {
+    public static boolean isPasswordValid(String password) {
         Boolean value = false;
         Pattern pattern = Pattern.compile("(?=[A-Za-z0-9@#$%^&+!=]+$)^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{6,}).*$");
         Matcher matcher = pattern.matcher(password);
@@ -111,14 +113,16 @@ public class Users {
                 response -> {
                     try {
                         token = response.get("token").toString();
+                        JWTUtils.decoded(token);
                         Preferences.saveUserToken(token);
-                        Preferences.saveUserEmail(email);
                         Intent homePage = new Intent(context, SideBar.class);
                         homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(homePage);
                         Toast toast = Toast.makeText(context, R.string.welcomeToast, Toast.LENGTH_SHORT);
                         toast.show();
                     } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 },
@@ -132,7 +136,6 @@ public class Users {
         };
         requestQueue.add(jsonObjectRequest);
     }
-
 
     public static void facebookLogin(String access_token, String username, String email, Context context) {
         String postUrl = API.API_URL + "/facebook";
@@ -222,6 +225,8 @@ public class Users {
                 Preferences.saveUsername(name);
                 String picture = body2.getString("picture");
                 Preferences.saveUserImg(picture);
+                String type = body2.getString("type");
+                Preferences.saveUserType(type);
             } catch (UnsupportedEncodingException e) {
                 //Error
             }
@@ -249,7 +254,65 @@ public class Users {
             body = new String(error.networkResponse.data, "UTF-8");
         } catch (UnsupportedEncodingException e) {
         }
-        Toast toast = Toast.makeText(context, R.string.errorToast + body, Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(context, getApplicationContext().getString(R.string.errorToast) + body, Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    public static void changePw(String email, String oldPassword, String newPassword, Context context) {
+        String postUrl = API.API_URL + "/pass/" + email;
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("oldPassword", oldPassword);
+            postData.put("newPassword", newPassword);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, postUrl, postData,
+                response -> {
+                    changePwPage.pwChangedSuccess();
+                    Toast.makeText(context, R.string.changePwToast, Toast.LENGTH_SHORT).show();
+                },
+                error -> handleError(error, context)) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public static void addPw(String email, String newPassword, Context context) {
+        String postUrl = API.API_URL + "/addPass/" + email;
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("newPassword", newPassword);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, postUrl, postData,
+                response -> {
+                    try {
+                        String type = response.getString("user");
+                        Preferences.saveUserType(type);
+                        changePwPage.pwChangedSuccess();
+                        Toast.makeText(context, R.string.addPwToast, Toast.LENGTH_SHORT).show();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> handleError(error, context)) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                return headers;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
     }
 }

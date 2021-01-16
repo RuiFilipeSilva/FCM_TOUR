@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Views.changePwPage">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/currentPWTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Password Actual"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/currentPW"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:ems="10"
+            android:inputType="textPassword"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/newPWTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nova Password" />
+
+        <EditText
+            android:id="@+id/newPW"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:ems="10"
+            android:inputType="textPassword" />
+
+        <TextView
+            android:id="@+id/confirmPWTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirmar nova Password" />
+
+        <EditText
+            android:id="@+id/confirmPW"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:ems="10"
+            android:inputType="textPassword" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/changePW"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="Mudar password"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/addPW"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:text="Adicionar password"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+    </LinearLayout>
+</FrameLayout>
