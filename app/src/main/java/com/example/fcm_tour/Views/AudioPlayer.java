@@ -147,7 +147,7 @@ public class AudioPlayer extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mp != null) {
+        if (mp != null) {
             mp.stop();
             mp = null;
         }
@@ -158,14 +158,15 @@ public class AudioPlayer extends Fragment {
             @Override
             public void handleOnBackPressed() {
                 // Handle the back button event
-                if(mp != null) {
+                if (mp != null) {
                     mp.stop();
                     mp = null;
                 }
-                getFragmentManager().popBackStack();
+                if(isVisible()) {
+                    getParentFragmentManager().popBackStack();
+                }
             }
         };
-
         requireActivity().getOnBackPressedDispatcher().addCallback((LifecycleOwner) getContext(), callback);
     }
 

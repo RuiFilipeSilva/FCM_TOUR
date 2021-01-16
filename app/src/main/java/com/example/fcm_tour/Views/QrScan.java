@@ -106,8 +106,9 @@ public class QrScan extends AppCompatActivity {
             try {
                 JSONObject jsonResponse = new JSONObject(result);
                 String state = jsonResponse.getString("state");
+                String code = jsonResponse.getString("code");
                 if (state.equals("Ticket válido")) {
-                    Rooms.getRoomsAccess(getApplicationContext());
+                    Rooms.getRoomsAccess(code);
                     AlertDialog alertDialog = new AlertDialog.Builder(QrScan.this).create();
                     alertDialog.setTitle(R.string.validTicketMsg);
                     alertDialog.setMessage(getString(R.string.validMessageQrScan));

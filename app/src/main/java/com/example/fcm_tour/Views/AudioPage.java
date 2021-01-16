@@ -293,7 +293,7 @@ public class AudioPage extends Fragment {
         switch (pageType) {
             case 0:
                 if (roomsAccess == true) {
-                    Preferences.saveRoomsAccess();
+                    Preferences.saveRoomsAccess(Preferences.readRoomsAccessCode());
                 }
                 final int roomContainer = R.id.fullpage;
                 RoomPage rooms = new RoomPage();

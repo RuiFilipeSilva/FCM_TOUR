@@ -57,10 +57,12 @@ public class Preferences {
         prefsEditor.commit();
     }
 
-    public static void saveRoomsAccess() {
+    public static void saveRoomsAccess(String code) {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
         prefsEditor.remove("roomsAccess");
+        prefsEditor.remove("roomsAccessCode");
         prefsEditor.putBoolean("roomsAccess", true);
+        prefsEditor.putString("roomsAccessCode", code);
         prefsEditor.commit();
     }
 
@@ -74,6 +76,7 @@ public class Preferences {
     public static void removeRoomsAccess() {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
         prefsEditor.remove("roomsAccess");
+        prefsEditor.remove("roomsAccessCode");
         prefsEditor.commit();
     }
 
@@ -111,6 +114,9 @@ public class Preferences {
 
     public static Boolean readRoomsAccess() {
         return mSharedPref.getBoolean("roomsAccess", false);
+    }
+    public static String readRoomsAccessCode() {
+        return mSharedPref.getString("roomsAccessCode", null);
     }
 
     public static String read(String key, String defValue) {

@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.example.fcm_tour.API;
+import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -31,6 +32,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class RoomPage extends Fragment {
+    static View v;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +41,7 @@ public class RoomPage extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_room_page, container, false);
+        v = inflater.inflate(R.layout.fragment_room_page, container, false);
         final int homeContainer = R.id.listRooms;
         Rooms rooms = new Rooms();
         openFragment(rooms, homeContainer);
@@ -84,8 +87,12 @@ public class RoomPage extends Fragment {
             try {
                 JSONObject jsonResponse = new JSONObject(result);
                 String state = jsonResponse.getString("state");
+                String code = jsonResponse.getString("code");
                 if (state.equals("Ticket válido")) {
-                    Rooms.getRoomsAccess(getContext());
+                    Preferences.saveRoomsAccess(code);
+                    final int homeContainer = R.id.listRooms;
+                    Rooms rooms = new Rooms();
+                    openFragment(rooms, homeContainer);
                 } else {
                     AlertDialog alertDialog2 = new AlertDialog.Builder(getContext()).create();
                     alertDialog2.setTitle(R.string.noResultsDialog);
@@ -133,5 +140,12 @@ public class RoomPage extends Fragment {
                     return;
                 });
         alert.show();
+    }
+
+    public static void showQrCodeScanners() {
+        v.findViewById(R.id.qrCode).setVisibility(View.VISIBLE);
+        v.findViewById(R.id.cardViewQr).setVisibility(View.VISIBLE);
+        v.findViewById(R.id.keyBoard).setVisibility(View.VISIBLE);
+        v.findViewById(R.id.cardViewKeyboard).setVisibility(View.VISIBLE);
     }
 }
