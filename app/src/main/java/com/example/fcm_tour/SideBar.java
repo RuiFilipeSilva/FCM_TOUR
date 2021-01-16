@@ -52,6 +52,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SideBar extends AppCompatActivity {
     public DrawerLayout drawerLayout;
+    static NavigationView navigationView;
+    static CircleImageView picture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,12 +67,15 @@ public class SideBar extends AppCompatActivity {
         openFragment(history, homeContainer);
         final DrawerLayout drawerLayout = findViewById(R.id.draweLayout);
         findViewById(R.id.menu).setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
-        NavigationView navigationView = findViewById(R.id.navigationView);
+        navigationView = findViewById(R.id.navigationView);
         navigationView.setItemIconTintList(null);
         if (Preferences.readUserToken() == null) {
             Menu menu = navigationView.getMenu();
             MenuItem nav_dashboard = menu.findItem(R.id.logout);
             nav_dashboard.setVisible(false);
+            MenuItem nav_settings= menu.findItem(R.id.def);
+            nav_settings.setTitle("Alterar Idioma");
+
         }
         setupDrawerContent(navigationView);
         CircleImageView auth = navigationView.getHeaderView(0).findViewById(R.id.profilePicture);
@@ -97,9 +102,9 @@ public class SideBar extends AppCompatActivity {
 
     public void loadUserPicture() {
         String userPicture = Preferences.readUserImg();
-        NavigationView navigationView = findViewById(R.id.navigationView);
+        navigationView = findViewById(R.id.navigationView);
         CircleImageView auth = navigationView.getHeaderView(0).findViewById(R.id.profilePicture);
-        CircleImageView picture = findViewById(R.id.profilePicture);
+        picture = findViewById(R.id.profilePicture);
         if (userPicture != null && !userPicture.equals("")) {
             Picasso.get().load(userPicture).into(picture);
             Picasso.get().load(userPicture).into(auth);
@@ -146,7 +151,12 @@ public class SideBar extends AppCompatActivity {
                 fragmentClass = History.class;
                 break;
             case R.id.def:
-                fragmentClass = SettingsPage.class;
+                if(Preferences.readUserToken() == null){
+                    fragmentClass = History.class;
+
+                }else {
+                    fragmentClass = SettingsPage.class;
+                }
                 break;
             default:
                 fragmentClass = History.class;
@@ -169,5 +179,11 @@ public class SideBar extends AppCompatActivity {
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(homeContainer, history);
         ft.commit();
+    }
+
+    public static void updateImg(){
+        CircleImageView auth = navigationView.getHeaderView(0).findViewById(R.id.profilePicture);
+        auth.setImageResource(R.drawable.ic_launcher_background);
+        picture.setImageResource(R.drawable.ic_launcher_background);
     }
 }
