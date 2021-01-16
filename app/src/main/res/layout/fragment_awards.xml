@@ -3,41 +3,79 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="true"
     tools:context=".Views.Awards">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:layout_marginTop="50dp">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/title_awards"
-        android:fontFamily="@font/stratum1_black"
-        android:textSize="40dp"
-        android:layout_marginRight="20dp"
-        android:textColor="@color/black"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_gravity="start"
-        />
-    <ImageView
-        android:layout_width="78dp"
-        android:layout_height="3dp"
-        android:layout_marginLeft="20dp"
-        android:background="@drawable/rec"
-        android:backgroundTint="@color/roulette"
-        android:layout_gravity="start"/>
 
-
-    <ListView
-        android:id="@+id/listAwards"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_marginLeft="30dp"
+        android:layout_height="match_parent"
         android:layout_marginTop="30dp"
-        android:layout_marginRight="30dp"
-        android:divider="#00000000"
-        android:dividerHeight="10dp" />
-</LinearLayout>
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="7dp"
+                android:background="@color/white"
+                android:src="@drawable/ic_baseline_arrow_back_24" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="40dp"
+                android:fontFamily="@font/stratum1_black"
+                android:text="1300"
+                android:textColor="@color/black"
+                android:textSize="30dp" />
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ic_coin_01" />
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/stratum1_black"
+            android:text="@string/title_awards"
+            android:textColor="@color/black"
+            android:textSize="40dp" />
+
+        <ImageView
+            android:layout_width="78dp"
+            android:layout_height="3dp"
+            android:layout_gravity="start"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/rec"
+            android:backgroundTint="@color/roulette" />
+
+
+        <ListView
+            android:id="@+id/listAwards"
+            android:layout_width="match_parent"
+            android:layout_height="500dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginRight="30dp"
+            android:divider="#00000000"
+            android:dividerHeight="10dp" />
+    </LinearLayout>
 </FrameLayout>

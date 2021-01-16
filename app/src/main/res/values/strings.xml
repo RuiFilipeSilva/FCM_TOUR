@@ -126,7 +126,19 @@
     <string name="message_award">Parabéns ganhou </string>
     <string name="message_award_2"> Cupertinos</string>
     <string name="title_roulette">Roleta</string>
-    <string name="title_awards">Prêmios</string>
+    <string name="title_awards">Prémios</string>
+    <string name="name_form">Nome</string>
+    <string name="adress_form">Morada</string>
+    <string name="postal_code_form">Código Postal</string>
+    <string name="city_form">Cidade</string>
+    <string name="get_awards">Redimir</string>
+    <string name="title_get_awards">ERRO</string>
+    <string name="message_get_award">Alguns campos não foram Preenchidos</string>
+    <string name="conf_title_get_awards">Confirmação</string>
+    <string name="conf_message_get_awards">Confirma que deseja receber este prémio?</string>
+    <string name="toast_get_awards">A sua encomenda já está a ser processada</string>
+    <string name="back">Voltar</string>
+    <string name="no_cupertinos">Não têm cupertinos suficientes para adquirir este prémio, volte aqui todos os dia e jogo na roleta para pode coletar mais cupertinos!</string>
 
 
     <!--This string is used for square devices and overridden by hello_world in    values-round/strings.xml for round devices.-->
