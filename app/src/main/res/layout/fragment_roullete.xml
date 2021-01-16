@@ -11,19 +11,48 @@
         android:background="@drawable/ic_backgroundbottom_01"
         android:layout_gravity="bottom"
         />
+    <ImageView
+        android:layout_width="78dp"
+        android:layout_height="3dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="-25dp"
+        android:background="@drawable/rec"
+        android:backgroundTint="@color/tower" />
+
 <LinearLayout
-    android:layout_marginTop="80dp"
+    android:layout_marginTop="50dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_roulette"
+            android:fontFamily="@font/stratum1_black"
+            android:textSize="40dp"
+            android:layout_marginRight="20dp"
+            android:textColor="@color/black"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_gravity="start"
+            />
+        <ImageView
+            android:layout_width="78dp"
+            android:layout_height="3dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/rec"
+            android:backgroundTint="@color/roulette"
+            android:layout_gravity="start"/>
     <pl.droidsonroids.gif.GifImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/giphy_roullete"
         tools:ignore="MissingConstraints"
-        android:id="@+id/gify"/>
+        android:id="@+id/gify"
+        android:layout_marginTop="25dp"/>
 
     <Button
         android:layout_marginTop="80dp"
@@ -36,17 +65,20 @@
         android:textColor="@color/white"
         android:textSize="13dp"
         app:backgroundTint="@null"
+        android:fontFamily="@font/barlow_medium"
         />
     <Button
         android:layout_width="150dp"
         android:layout_height="40dp"
         android:layout_marginTop="10dp"
         android:text="@string/awards"
+        android:id="@+id/awards"
         android:background="@drawable/rounded_roullete"
         android:elevation="40dp"
         android:textColor="@color/white"
         android:textSize="13dp"
-        app:backgroundTint="@null"/>
+        app:backgroundTint="@null"
+        android:fontFamily="@font/barlow_medium"/>
 </LinearLayout>
 
 </FrameLayout>
