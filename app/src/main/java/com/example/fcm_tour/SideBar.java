@@ -37,6 +37,7 @@ import com.example.fcm_tour.Views.Library;
 import com.example.fcm_tour.Views.Museum;
 import com.example.fcm_tour.Views.Music;
 import com.example.fcm_tour.Views.Roullete;
+import com.example.fcm_tour.Views.SettingsPage;
 import com.example.fcm_tour.Views.Tower;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -46,6 +47,8 @@ import com.facebook.login.LoginManager;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class SideBar extends AppCompatActivity {
     public DrawerLayout drawerLayout;
@@ -70,21 +73,36 @@ public class SideBar extends AppCompatActivity {
             nav_dashboard.setVisible(false);
         }
         setupDrawerContent(navigationView);
-        ImageButton auth = navigationView.getHeaderView(0).findViewById(R.id.iconProfile);
+        CircleImageView auth = navigationView.getHeaderView(0).findViewById(R.id.profilePicture);
         auth.setOnClickListener(view -> {
-            Intent intent = new Intent(view.getContext(), Authentication.class);
-            startActivity(intent);
+            if(Preferences.readUserToken() == null){
+                Intent intent = new Intent(view.getContext(), Authentication.class);
+                startActivity(intent);
+            }
+            else{
+               openSettings();
+            }
+
         });
+    }
+
+    public void openSettings() {
+        final int homeContainer = R.id.fullpage;
+        SettingsPage settingsPage = new SettingsPage();
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.addToBackStack(null);
+        ft.replace(homeContainer, settingsPage);
+        ft.commit();
     }
 
     public void loadUserPicture() {
         String userPicture = Preferences.readUserImg();
         NavigationView navigationView = findViewById(R.id.navigationView);
-        ImageButton auth = navigationView.getHeaderView(0).findViewById(R.id.iconProfile);
-        ImageButton picture = findViewById(R.id.profilePicture);
+        CircleImageView auth = navigationView.getHeaderView(0).findViewById(R.id.profilePicture);
+        CircleImageView picture = findViewById(R.id.profilePicture);
         if (userPicture != null && !userPicture.equals("")) {
-            Picasso.get().load(userPicture).transform(new CircleTransform()).into(picture);
-            Picasso.get().load(userPicture).transform(new CircleTransform()).into(auth);
+            Picasso.get().load(userPicture).into(picture);
+            Picasso.get().load(userPicture).into(auth);
         } else {
             auth.setImageDrawable(Drawable.createFromPath("@mipmap/ic_launcher_round"));
             picture.setImageDrawable(Drawable.createFromPath("@mipmap/ic_launcher_round"));
@@ -140,7 +158,6 @@ public class SideBar extends AppCompatActivity {
         switch (menuItem.getItemId()) {
             case R.id.inicio:
                 fragmentClass = History.class;
-
                 break;
             case R.id.item1:
                 fragmentClass = Tower.class;
@@ -162,6 +179,9 @@ public class SideBar extends AppCompatActivity {
                 loadUserPicture();
                 menuItem.setVisible(false);
                 fragmentClass = History.class;
+                break;
+            case R.id.def:
+                fragmentClass = SettingsPage.class;
                 break;
             default:
                 fragmentClass = History.class;
