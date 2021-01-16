@@ -33,36 +33,35 @@ import java.net.URL;
 public class Music extends Fragment {
     View v;
     ImageButton firstMusicGroup, secondMusicGroup;
-    Integer musicGroupSelected;
+    Integer getTypeMethod;
     Bundle extras;
     String title, description, img, link;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        extras = new Bundle();
-        Preferences.init(getContext());
-        new GetMusicGroup(-1).execute(API.API_URL + "/musica/cupertinos/");
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_music, container, false);
+        extras = new Bundle();
+        Preferences.init(getContext());
+        new GetMusicGroup(1).execute(API.API_URL + "/musica/");
         firstMusicGroup = v.findViewById(R.id.firstImg);
         secondMusicGroup = v.findViewById(R.id.secondImg);
         firstMusicGroup.setOnClickListener(v -> {
             new GetMusicGroup(0).execute(API.API_URL + "/musica/cupertinos/");
         });
         secondMusicGroup.setOnClickListener(v -> {
-            new GetMusicGroup(1).execute(API.API_URL + "/musica/ciclos/");
+            new GetMusicGroup(0).execute(API.API_URL + "/musica/ciclos/");
         });
         return v;
     }
 
     class GetMusicGroup extends AsyncTask<String, String, String> {
         public GetMusicGroup(int Selected) {
-            musicGroupSelected = Selected;
+            getTypeMethod = Selected;
         }
 
         @Override
@@ -88,16 +87,13 @@ public class Music extends Fragment {
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
             try {
-                JSONObject res = new JSONObject(result);
-                JSONObject result2 = new JSONObject(res.getString("results"));
-                if (musicGroupSelected == 0) {
-                    JSONObject jsonCupertinos = new JSONObject(result2.getString("cupertinos"));
-                    openFragment(jsonCupertinos);
-                } else if (musicGroupSelected == 1) {
-                    JSONObject jsonCiclos = new JSONObject(result2.getString("ciclos"));
-                    openFragment(jsonCiclos);
-                } else if (musicGroupSelected == -1) {
-                    loadLayoutPage(result2);
+                if (getTypeMethod == 0) {
+                    JSONObject resultJSON = new JSONObject(result);
+                    openFragment(resultJSON);
+                } else if (getTypeMethod == 1) {
+                    JSONArray resultArray = new JSONArray(result);
+                    JSONObject resultJSON = resultArray.getJSONObject(0);
+                    loadLayoutPage(resultJSON);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
