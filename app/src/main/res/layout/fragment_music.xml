@@ -22,12 +22,19 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:layout_marginBottom="10dp"
                 android:fontFamily="@font/stratum1_black"
                 android:paddingLeft="20dp"
                 android:text="@string/musicPageTitle"
                 android:textColor="@color/black"
                 android:textSize="26dp" />
+            <ImageView
+                android:id="@+id/underline0"
+                android:layout_width="60dp"
+                android:layout_height="3dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/rec"
+                android:backgroundTint="@color/music" />
 
             <ImageButton
                 android:id="@+id/firstImg"

@@ -33,6 +33,7 @@
                     android:elevation="40dp"
                     android:text="@string/museumTopBtn"
                     android:textColor="@color/white"
+                    android:fontFamily="@font/barlow_medium"
                     android:textSize="13dp"
                     app:backgroundTint="@null" />
 
@@ -54,6 +55,14 @@
                 android:text="@string/museumTitle"
                 android:textColor="@color/black"
                 android:textSize="26dp" />
+
+            <ImageView
+                android:layout_width="60dp"
+                android:layout_height="3dp"
+                android:layout_marginLeft="20dp"
+                android:backgroundTint="@color/museum"
+                android:background="@drawable/rec"></ImageView>
+
 
             <TextView
                 android:id="@+id/description"
@@ -83,6 +92,15 @@
                     android:text="@string/showsTitle"
                     android:textColor="@color/black"
                     android:textSize="26dp" />
+
+                <ImageView
+                    android:layout_width="97dp"
+                    android:layout_height="3dp"
+                    android:layout_alignBottom="@+id/expo"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginBottom="-5dp"
+                    android:background="@drawable/rec"
+                    android:backgroundTint="@color/museum"></ImageView>
 
                 <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"

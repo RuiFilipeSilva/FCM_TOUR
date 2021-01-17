@@ -125,6 +125,7 @@
                 android:layout_width="70dp"
                 android:layout_height="3dp"
                 android:layout_marginLeft="20dp"
+                android:backgroundTint="@color/fcm"
                 android:background="@drawable/rec"></ImageView>
 
             <TextView
