@@ -32,6 +32,7 @@ import android.widget.Toast;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.Controllers.Users;
 import com.example.fcm_tour.Views.AudioPage;
+import com.example.fcm_tour.Views.AudioPlayer;
 import com.example.fcm_tour.Views.Authentication;
 import com.example.fcm_tour.Views.History;
 import com.example.fcm_tour.Views.Library;
@@ -79,9 +80,11 @@ public class SideBar extends AppCompatActivity {
 
         }
         setupDrawerContent(navigationView);
+        navigationView.getHeaderView(0).findViewById(R.id.closeDrawerId).setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.START));
         CircleImageView auth = navigationView.getHeaderView(0).findViewById(R.id.profilePicture);
         auth.setOnClickListener(view -> {
             if(Preferences.readUserToken() == null){
+                AudioPlayer.stopAudio();
                 Intent intent = new Intent(view.getContext(), Authentication.class);
                 startActivity(intent);
             }
@@ -93,6 +96,7 @@ public class SideBar extends AppCompatActivity {
     }
 
     public void openSettings() {
+        AudioPlayer.stopAudio();
         final int homeContainer = R.id.fullpage;
         SettingsPage settingsPage = new SettingsPage();
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -169,6 +173,7 @@ public class SideBar extends AppCompatActivity {
             e.printStackTrace();
         }
         FragmentManager fragmentManager = getSupportFragmentManager();
+        AudioPlayer.stopAudio();
         fragmentManager.beginTransaction().addToBackStack(null);
         fragmentManager.beginTransaction().replace(R.id.fullpage, fragment).commit();
         menuItem.setChecked(true);
