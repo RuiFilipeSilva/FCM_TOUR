@@ -116,12 +116,14 @@ public class AudioPlayer extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         mp.setOnPreparedListener(mp -> {
             prepareAudioLayout();
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
         });
+
 
         mp.setOnCompletionListener(mp -> {
             switch (pageType) {
@@ -144,6 +146,15 @@ public class AudioPlayer extends Fragment {
         return v;
     }
 
+    public static void stopAudio() {
+        if (mp != null) {
+            if (mp.isPlaying() == true) {
+                mp.stop();
+                mp = null;
+            }
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
@@ -162,14 +173,13 @@ public class AudioPlayer extends Fragment {
                     mp.stop();
                     mp = null;
                 }
-                if(isVisible()) {
+                if (isVisible()) {
                     getParentFragmentManager().popBackStack();
                 }
             }
         };
         requireActivity().getOnBackPressedDispatcher().addCallback((LifecycleOwner) getContext(), callback);
     }
-
 
     public void prepareAudioLayout() {
         mp.seekTo(0);
