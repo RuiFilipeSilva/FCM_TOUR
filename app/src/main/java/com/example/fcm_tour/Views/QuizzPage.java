@@ -1,5 +1,6 @@
 package com.example.fcm_tour.Views;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -15,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.fcm_tour.API;
+import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
 
 import org.json.JSONArray;
@@ -32,25 +34,31 @@ import java.util.ArrayList;
 
 public class QuizzPage extends Fragment {
     View v;
-    Button startQuizzbtn, btnA, btnB, btnC, btnD, endQuizzBtn, ignoreQuizz;
+    Button startQuizzbtn, btnA, btnB, btnC, btnD, endQuizzBtn, ignoreQuizz, authBtn;
     String answer, currentAnswer;
     TextView questionTxt, resultQuizzTxt;
     int currentQuestionId, correctAnswerCount;
     String[] questions, optionA, optionB, optionC, optionD, correctAnswers;
     LinearLayout startLayout, quizzLayout, endLayout;
-    String TAG = "SIGA";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Preferences.init(getContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_quizz_page, container, false);
         startLayout = v.findViewById(R.id.startLayout);
-        ignoreQuizz  = v.findViewById(R.id.ignoreQuizz);
+        authBtn = v.findViewById(R.id.authBtn);
+        ignoreQuizz = v.findViewById(R.id.ignoreQuizz);
         startQuizzbtn = v.findViewById(R.id.startQuizzBtn);
+        if (Preferences.readUserToken() != null) {
+            Preferences.removeQuizzState();
+            startQuizzbtn.setVisibility(View.VISIBLE);
+            authBtn.setVisibility(View.GONE);
+        }
         quizzLayout = v.findViewById(R.id.quizzLayout);
         btnA = v.findViewById(R.id.btnA);
         btnB = v.findViewById(R.id.btnB);
@@ -61,6 +69,11 @@ public class QuizzPage extends Fragment {
         endQuizzBtn = v.findViewById(R.id.endQuizzBtn);
         resultQuizzTxt = v.findViewById(R.id.resultTxt);
         new GetQuestions().execute(API.API_URL + "/quizz/");
+        authBtn.setOnClickListener(v -> {
+            Preferences.saveQuizzState();
+            Intent intent = new Intent(v.getContext(), Authentication.class);
+            startActivity(intent);
+        });
         startQuizzbtn.setOnClickListener(v -> {
             startQuizz();
         });
@@ -103,7 +116,6 @@ public class QuizzPage extends Fragment {
     public void checkAnswer() {
         if (answer.equals(currentAnswer)) {
             correctAnswerCount++;
-            Log.d(TAG, "CERTO: " + correctAnswerCount);
             currentQuestionId++;
             displayNextQuestion(currentQuestionId);
         } else {

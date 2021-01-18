@@ -70,6 +70,7 @@ public class Preferences {
         prefsEditor.putString("userPoints", value);
         prefsEditor.commit();
     }
+
     public static void saveUserDate(String value) {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
         prefsEditor.remove("userDate");
@@ -90,6 +91,19 @@ public class Preferences {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
         prefsEditor.remove("pageType");
         prefsEditor.putInt("pageType", value);
+        prefsEditor.commit();
+    }
+
+    public static void saveQuizzState() {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("quizzState");
+        prefsEditor.putBoolean("quizzState", true);
+        prefsEditor.commit();
+    }
+
+    public static void removeQuizzState() {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("quizzState");
         prefsEditor.commit();
     }
 
@@ -148,9 +162,12 @@ public class Preferences {
         return mSharedPref.getInt("pageType", 0);
     }
 
-
     public static Boolean readRoomsAccess() {
         return mSharedPref.getBoolean("roomsAccess", false);
+    }
+
+    public static Boolean readQuizzState() {
+        return mSharedPref.getBoolean("quizzState", false);
     }
 
     public static String readRoomsAccessCode() {

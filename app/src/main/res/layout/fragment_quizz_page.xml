@@ -14,12 +14,21 @@
         android:visibility="visible">
 
         <Button
+            android:id="@+id/authBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginBottom="30dp"
+            android:text="INICIAR SESSÃO" />
+
+        <Button
             android:id="@+id/startQuizzBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginBottom="30dp"
-            android:text="COMEÇAR QUIZZ" />
+            android:text="COMEÇAR QUIZZ"
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/ignoreQuizz"
@@ -66,14 +75,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:fontFamily="@font/barlow_light"
-                    android:tag="A"/>
+                    android:tag="A" />
 
                 <Button
                     android:id="@+id/btnC"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/barlow_light"
-                    android:tag="C"/>
+                    android:tag="C" />
             </LinearLayout>
 
             <LinearLayout
@@ -87,14 +96,14 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="20dp"
                     android:fontFamily="@font/barlow_light"
-                    android:tag="B"/>
+                    android:tag="B" />
 
                 <Button
                     android:id="@+id/btnD"
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/barlow_light"
-                    android:tag="D"/>
+                    android:tag="D" />
 
             </LinearLayout>
         </LinearLayout>

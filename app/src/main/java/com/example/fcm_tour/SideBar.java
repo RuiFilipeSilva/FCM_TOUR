@@ -38,6 +38,7 @@ import com.example.fcm_tour.Views.History;
 import com.example.fcm_tour.Views.Library;
 import com.example.fcm_tour.Views.Museum;
 import com.example.fcm_tour.Views.Music;
+import com.example.fcm_tour.Views.QuizzPage;
 import com.example.fcm_tour.Views.Roullete;
 import com.example.fcm_tour.Views.SettingsPage;
 import com.example.fcm_tour.Views.Tower;
@@ -64,9 +65,13 @@ public class SideBar extends AppCompatActivity {
         Preferences.init(getApplicationContext());
         loadUserPicture();
         drawerLayout = findViewById(R.id.draweLayout);
-        final int homeContainer = R.id.fullpage;
-        History history = new History();
-        openFragment(history, homeContainer);
+        if (Preferences.readQuizzState() == true) {
+            redirectQuizz();
+        } else {
+            final int homeContainer = R.id.fullpage;
+            History history = new History();
+            openFragment(history, homeContainer);
+        }
         final DrawerLayout drawerLayout = findViewById(R.id.draweLayout);
         findViewById(R.id.menu).setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
         navigationView = findViewById(R.id.navigationView);
@@ -75,7 +80,7 @@ public class SideBar extends AppCompatActivity {
             Menu menu = navigationView.getMenu();
             MenuItem nav_dashboard = menu.findItem(R.id.logout);
             nav_dashboard.setVisible(false);
-            MenuItem nav_settings= menu.findItem(R.id.def);
+            MenuItem nav_settings = menu.findItem(R.id.def);
             nav_settings.setTitle("Alterar Idioma");
 
         }
@@ -83,13 +88,13 @@ public class SideBar extends AppCompatActivity {
         navigationView.getHeaderView(0).findViewById(R.id.closeDrawerId).setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.START));
         CircleImageView auth = navigationView.getHeaderView(0).findViewById(R.id.profilePicture);
         auth.setOnClickListener(view -> {
-            if(Preferences.readUserToken() == null){
+            if (Preferences.readUserToken() == null) {
                 AudioPlayer.stopAudio();
                 Intent intent = new Intent(view.getContext(), Authentication.class);
                 startActivity(intent);
-            }
-            else{
-               openSettings();
+            } else {
+                drawerLayout.closeDrawer(GravityCompat.START);
+                openSettings();
             }
 
         });
@@ -156,10 +161,10 @@ public class SideBar extends AppCompatActivity {
                 fragmentClass = History.class;
                 break;
             case R.id.def:
-                if(Preferences.readUserToken() == null){
+                if (Preferences.readUserToken() == null) {
                     fragmentClass = History.class;
 
-                }else {
+                } else {
                     fragmentClass = SettingsPage.class;
                 }
                 break;
@@ -187,15 +192,24 @@ public class SideBar extends AppCompatActivity {
         ft.commit();
     }
 
-    public static void updateImg(){
-        if(Preferences.readUserImg() == null){
+    public static void updateImg() {
+        if (Preferences.readUserImg() == null) {
             CircleImageView auth = navigationView.getHeaderView(0).findViewById(R.id.profilePicture);
             auth.setImageResource(R.drawable.ic_launcher_background);
             picture.setImageResource(R.drawable.ic_launcher_background);
-        }else{
+        } else {
             CircleImageView auth = navigationView.getHeaderView(0).findViewById(R.id.profilePicture);
             Picasso.get().load(Preferences.readUserImg()).into(picture);
             Picasso.get().load(Preferences.readUserImg()).into(auth);
         }
+    }
+
+    public void redirectQuizz() {
+        final int homeContainer = R.id.fullpage;
+        QuizzPage quizzPage = new QuizzPage();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(homeContainer, quizzPage);
+        ft.commit();
     }
 }
