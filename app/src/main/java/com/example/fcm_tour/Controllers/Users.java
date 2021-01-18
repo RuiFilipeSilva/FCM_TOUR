@@ -209,6 +209,11 @@ public class Users {
                 Preferences.saveUserImg(picture);
                 String type = body2.getString("type");
                 Preferences.saveUserType(type);
+                String points = body2.getString("points");
+                Preferences.saveUserPoints(points);
+                String date = body2.getString("date");
+                Preferences.saveUserDate(date);
+
             } catch (UnsupportedEncodingException e) {
                 //Error
             }

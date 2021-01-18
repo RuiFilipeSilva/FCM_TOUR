@@ -95,9 +95,7 @@ public class Awards extends Fragment {
         listView.setOnItemClickListener((parent, view, position, id) -> {
             for (int i = 0; i < numbers.length; i++) {
                 if (position == i) {
-                    Log.d("SIGA", "locationSort: " + numbers[i]);
                     new GetAwardsByNumber().execute(API.API_URL + "/roleta/premios/" + numbers[i]);
-                    Log.d("SIGA", "locationSort: " + API.API_URL + "/roleta/premios/" + numbers[i]);
                     break;
                 }
             }
