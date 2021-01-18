@@ -64,6 +64,19 @@ public class Preferences {
         prefsEditor.commit();
     }
 
+    public static void saveUserPoints(String value) {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("userPoints");
+        prefsEditor.putString("userPoints", value);
+        prefsEditor.commit();
+    }
+    public static void saveUserDate(String value) {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("userDate");
+        prefsEditor.putString("userDate", value);
+        prefsEditor.commit();
+    }
+
     public static void saveRoomsAccess(String code) {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
         prefsEditor.remove("roomsAccess");
@@ -123,9 +136,18 @@ public class Preferences {
         return mSharedPref.getString("userType", null);
     }
 
+    public static String readUserPoints() {
+        return mSharedPref.getString("userPoints", null);
+    }
+
+    public static String readUserDate() {
+        return mSharedPref.getString("userDate", null);
+    }
+
     public static Integer readPageType() {
         return mSharedPref.getInt("pageType", 0);
     }
+
 
     public static Boolean readRoomsAccess() {
         return mSharedPref.getBoolean("roomsAccess", false);
