@@ -8,7 +8,6 @@
         android:title="@string/homePageLabel" />
     <item android:title="FCM">
         <menu>
-            <group
                 android:id="@+id/group1"
                 android:checkableBehavior="single">
                 <item
@@ -27,7 +26,6 @@
                     android:id="@+id/item4"
                     android:icon="@drawable/ic_musica_icon"
                     android:title="@string/musicLabel" />
-            </group>
         </menu>
     </item>
     <item android:title="">
