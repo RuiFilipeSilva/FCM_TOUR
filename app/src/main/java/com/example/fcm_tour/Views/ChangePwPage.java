@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.Controllers.Users;
 import com.example.fcm_tour.R;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.w3c.dom.Text;
 
@@ -27,8 +29,8 @@ import java.util.Set;
 
 public class ChangePwPage extends Fragment {
     static View v;
-    EditText currentPassword, newPassword, confirmPassword;
-    TextView currentPasswordTxt, newPasswordTxt, confirmPasswordTxt;
+    TextInputEditText currentPassword, newPassword, confirmPassword;
+    TextInputLayout currentPasswordTxt, newPasswordTxt, confirmPasswordTxt;
     Button changePwBtn, addPwBtn;
     String userType;
     static FragmentTransaction ft;
