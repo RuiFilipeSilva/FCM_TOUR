@@ -59,6 +59,19 @@
                     app:backgroundTint="@color/white" />
 
                 <Button
+                    android:id="@+id/startQuizzBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginRight="20dp"
+                    android:background="@drawable/rounded_tower"
+                    android:textColor="@color/white"
+                    android:text="Começar Quizz"
+                    android:visibility="invisible"
+                    app:backgroundTint="@color/tower" />
+
+                <Button
                     android:id="@+id/nextBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
