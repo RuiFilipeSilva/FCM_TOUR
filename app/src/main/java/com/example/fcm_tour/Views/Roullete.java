@@ -21,6 +21,7 @@ import android.widget.Toast;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.fcm_tour.API;
@@ -34,6 +35,7 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.text.SimpleDateFormat;
@@ -53,8 +55,8 @@ public class Roullete extends Fragment {
     Button spining;
     Button award;
     TextView points;
-    String date, email, formattedDate;
-    int point;
+    String date, email, formattedDate, myPoints;
+    int point, cupertinos;
     Date c;
     SimpleDateFormat df;
 
@@ -76,16 +78,13 @@ public class Roullete extends Fragment {
         c = Calendar.getInstance().getTime();
         df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         formattedDate = df.format(c);
-        Log.d("SIGA", "onCreateView: " + formattedDate);
-        Log.d("SIGA", "onCreateView: " + date);
-        Log.d("SIGA", "onCreateView: " + formattedDate.equals(date));
         gif = (GifImageView) v.findViewById(R.id.gify);
         ((GifDrawable) gif.getDrawable()).stop();
         spining = (Button) v.findViewById(R.id.spin);
         spining.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                date = Preferences.readUserDate();
                 if (formattedDate.equals(date)) {
                     AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
                     alertDialog.setTitle(R.string.title_alert_award);
@@ -134,6 +133,7 @@ public class Roullete extends Fragment {
         ((GifDrawable) gif.getDrawable()).stop();
         new GetPoints().execute(API.API_URL + "/roleta/girar");
         award.setClickable(true);
+
         changeDate(email, formattedDate, getContext());
     }
 
@@ -173,6 +173,15 @@ public class Roullete extends Fragment {
                             dialog.dismiss();
                         });
                 alertDialog.show();
+                cupertinos = Integer.parseInt(Preferences.readUserPoints());
+                cupertinos = cupertinos + point;
+                Log.d("SIGA", "onPostExecute: "+ cupertinos);
+                myPoints = String.valueOf(cupertinos);
+                Log.d("SIGA", "onPostExecute: " + myPoints);
+                Preferences.write("userPoints", myPoints);
+                points.setText(myPoints);
+                updatePoints(email, myPoints, getContext());
+                Preferences.write("userDate", date);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -181,11 +190,11 @@ public class Roullete extends Fragment {
 
     public static void changeDate(String email, String date, Context context) {
         String postUrl = API.API_URL + "/spin/" + email;
-        Log.d("SIGA", "changeDate: " + email);
-        Log.d("SIGA", "changeDate: " + email);
+        Log.d("SIGA", "changeDate: " + email);;
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         JSONObject postData = new JSONObject();
         try {
+
             postData.put("date", date);
 
         } catch (JSONException e) {
@@ -205,9 +214,50 @@ public class Roullete extends Fragment {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
+                Log.d("SIGA", "getHeaders: Aqui");
                 return headers;
             }
         };
         requestQueue.add(jsonObjectRequest);
+    }
+
+    public static void updatePoints(String email, String newPoints, Context context) {
+        String postUrl = API.API_URL + "/points/" + email;
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("points", newPoints);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.PUT, postUrl, postData,
+                response -> {
+                    try {
+                        Preferences.write("userPoints", newPoints);
+                    } catch (Exception e) {
+                        Log.d("SIGA", "changeDate: " + e);
+                        e.printStackTrace();
+                    }
+                },
+                error -> handleError(error, context)) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                Log.d("SIGA", "getHeaders: Aqui");
+                return headers;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
+    }
+    public static void handleError(VolleyError error, Context context) {
+        Log.d("SIGA", "handleError: " + error);
+        String body = null;
+        try {
+            body = new String(error.networkResponse.data, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+        }
+        Toast toast = Toast.makeText(context, R.string.errorToast + body, Toast.LENGTH_SHORT);
+        toast.show();
     }
 }

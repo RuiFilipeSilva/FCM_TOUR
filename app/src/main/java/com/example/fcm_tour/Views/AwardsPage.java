@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
 import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.picasso.Picasso;
@@ -28,18 +29,21 @@ import com.squareup.picasso.Picasso;
 
 public class AwardsPage extends Fragment {
     Bundle extras, bundle;
-    String name, price, imgs;
+    String name, price, imgs, actualPoints;
     ImageButton comeback;
     EditText nameClient, adress, postalCode, city;
     LinearLayout form;
     Button getAward;
     RelativeLayout alert;
+    Integer points, cupertinos;
+    TextView cup;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         bundle = this.getArguments();
         extras = new Bundle();
+        Preferences.init(getContext());
 
     }
 
@@ -47,27 +51,31 @@ public class AwardsPage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v =inflater.inflate(R.layout.fragment_awards_page, container, false);
+        View v = inflater.inflate(R.layout.fragment_awards_page, container, false);
+
+        actualPoints = Preferences.readUserPoints();
+        cup = v.findViewById(R.id.points);
+        cup.setText(Preferences.readUserPoints());
+        points = Integer.parseInt(actualPoints);
         name = bundle.getString("name");
-        Log.d("SIGA", "onCreateView: " + name);
-        TextView text = (TextView)v.findViewById(R.id.name);
+        TextView text = (TextView) v.findViewById(R.id.name);
         text.setText(name);
         price = bundle.getString("price");
-        TextView prices = (TextView)v.findViewById(R.id.cupertinos);
+        TextView prices = (TextView) v.findViewById(R.id.cupertinos);
         prices.setText(price);
-        int cupertinos = Integer.parseInt(price);
+        cupertinos = Integer.parseInt(price);
         imgs = bundle.getString("img");
-        ImageView img = (ImageView)v.findViewById(R.id.img);
+        ImageView img = (ImageView) v.findViewById(R.id.img);
         Picasso.get().load(imgs).into(img);
-        comeback = (ImageButton)v.findViewById(R.id.back);
+        comeback = (ImageButton) v.findViewById(R.id.back);
 
         form = v.findViewById(R.id.form);
         alert = v.findViewById(R.id.alert);
-        nameClient = (EditText)v.findViewById(R.id.nametxt);
-        adress = (EditText)v.findViewById(R.id.adressTxt);
-        postalCode = (EditText)v.findViewById(R.id.postalCodeTxt);
-        city = (EditText)v.findViewById(R.id.cityTxt);
-        getAward = (Button)v.findViewById(R.id.getAward);
+        nameClient = (EditText) v.findViewById(R.id.nametxt);
+        adress = (EditText) v.findViewById(R.id.adressTxt);
+        postalCode = (EditText) v.findViewById(R.id.postalCodeTxt);
+        city = (EditText) v.findViewById(R.id.cityTxt);
+        getAward = (Button) v.findViewById(R.id.getAward);
 
         comeback.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,15 +86,15 @@ public class AwardsPage extends Fragment {
             }
         });
 
-        if(cupertinos<1000){
+        if (cupertinos <= points) {
             form.setVisibility(View.VISIBLE);
             alert.setVisibility(View.INVISIBLE);
             getAward.setText(R.string.get_awards);
             getAward.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("SIGA", "onClick: AQUI" );
-                    if(nameClient.getText().toString().equals("") || adress.getText().toString().equals("") || postalCode.getText().toString().equals("") || city.getText().toString().equals("")){
+                    Log.d("SIGA", "onClick: AQUI");
+                    if (nameClient.getText().toString().equals("") || adress.getText().toString().equals("") || postalCode.getText().toString().equals("") || city.getText().toString().equals("")) {
                         AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
                         alertDialog.setTitle(R.string.title_get_awards);
                         alertDialog.setMessage(getString(R.string.message_get_award));
@@ -95,12 +103,14 @@ public class AwardsPage extends Fragment {
                                     dialog.dismiss();
                                 });
                         alertDialog.show();
-                    }
-                    else{
+                    } else {
                         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
                         alert.setTitle(R.string.conf_title_get_awards);
                         alert.setMessage(getString(R.string.conf_message_get_awards));
                         alert.setPositiveButton("Confirmar", (dialog, whichButton) -> {
+                            points = points - cupertinos;
+                            actualPoints = String.valueOf(points);
+                            Preferences.write("userPoints", actualPoints);
                             dialog.dismiss();
                             final int homeContainer = R.id.fullpage;
                             Awards awards = new Awards();
@@ -118,8 +128,7 @@ public class AwardsPage extends Fragment {
 
                 }
             });
-        }
-        else{
+        } else {
             form.setVisibility(View.INVISIBLE);
             getAward.setText(R.string.back);
             alert.setVisibility(View.VISIBLE);

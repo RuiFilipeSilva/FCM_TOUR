@@ -40,14 +40,16 @@ import java.net.URL;
 
 public class Awards extends Fragment {
     private static String[] names, prices, imgs, numbers;
-    String name, price, img;
+    String name, price, img, actualPoints;
     Bundle extras;
     ImageButton comeback;
+    TextView cup;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Preferences.init(getContext());
     }
 
     @Override
@@ -55,6 +57,8 @@ public class Awards extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_awards, container, false);
+        cup = v.findViewById(R.id.points);
+        cup.setText(Preferences.readUserPoints());
         extras = new Bundle();
         new GetAwards().execute(API.API_URL + "/roleta/premios");
         comeback = (ImageButton)v.findViewById(R.id.back);

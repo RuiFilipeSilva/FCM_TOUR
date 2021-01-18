@@ -3,6 +3,7 @@ package com.example.fcm_tour.Controllers;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -197,10 +198,12 @@ public class Users {
     public static class JWTUtils {
         public static void decoded(String JWTEncoded) throws Exception {
             try {
+
                 String[] split = JWTEncoded.split("\\.");
                 JSONObject body = new JSONObject(getJson(split[1]));
                 String data = body.getString("data");
                 JSONObject body2 = new JSONObject(data);
+                Log.d("SIGA", "decoded: " + body2);
                 String email = body2.getString("email");
                 Preferences.saveUserEmail(email);
                 String name = body2.getString("username");
