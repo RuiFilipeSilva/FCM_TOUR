@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="25dp"
-        android:hint="@string/nome"
+        android:hint="@string/namePlaceholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView7"
@@ -39,13 +39,12 @@
             android:id="@+id/nametxt"
             android:layout_width="300dp"
             android:layout_height="50dp"
+            android:fontFamily="@font/barlow_light"
             android:textSize="12sp"
             tools:layout_conversion_absoluteHeight="47dp"
             tools:layout_conversion_absoluteWidth="300dp"
             tools:layout_editor_absoluteX="56dp"
-            tools:layout_editor_absoluteY="308dp"
-            android:fontFamily="@font/barlow_light"/>
-
+            tools:layout_editor_absoluteY="308dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -66,14 +65,13 @@
             android:id="@+id/mail"
             android:layout_width="300dp"
             android:layout_height="50dp"
+            android:fontFamily="@font/barlow_light"
             android:inputType="textEmailAddress"
             android:textSize="12sp"
-            android:fontFamily="@font/barlow_light"
             tools:layout_conversion_absoluteHeight="47dp"
             tools:layout_conversion_absoluteWidth="300dp"
             tools:layout_editor_absoluteX="56dp"
             tools:layout_editor_absoluteY="381dp" />
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -82,30 +80,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:hint="@string/palavraPasse"
+        android:hint="@string/password"
+        app:endIconMode="password_toggle"
+        app:helperTextEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textField"
         tools:ignore="MissingConstraints"
         tools:layout_conversion_absoluteHeight="52dp"
-        tools:layout_conversion_absoluteWidth="300dp"
-        app:endIconMode="password_toggle"
-        app:helperTextEnabled="true"
-        app:helperText="@string/helper_text">>
+        tools:layout_conversion_absoluteWidth="300dp">>
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passtxt"
             android:layout_width="300dp"
             android:layout_height="50dp"
+            android:fontFamily="@font/barlow_light"
             android:inputType="textPassword"
             android:textSize="12sp"
-            android:fontFamily="@font/barlow_light"
             tools:layout_conversion_absoluteHeight="47dp"
             tools:layout_conversion_absoluteWidth="300dp"
             tools:layout_editor_absoluteX="56dp"
-            tools:layout_editor_absoluteY="453dp"
-
-        />
+            tools:layout_editor_absoluteY="453dp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -115,56 +110,54 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:hint="@string/confPalavraPasse"
+        android:hint="@string/confirmPassword"
+        app:endIconMode="password_toggle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/pass"
         tools:ignore="MissingConstraints"
         tools:layout_conversion_absoluteHeight="52dp"
-        tools:layout_conversion_absoluteWidth="300dp"
-        app:endIconMode="password_toggle">
+        tools:layout_conversion_absoluteWidth="300dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/confpassTxt"
             android:layout_width="300dp"
             android:layout_height="50dp"
+            android:fontFamily="@font/barlow_light"
             android:inputType="textPassword"
             android:textSize="12sp"
-            android:fontFamily="@font/barlow_light"
             tools:layout_conversion_absoluteHeight="47dp"
             tools:layout_conversion_absoluteWidth="300dp"
             tools:layout_editor_absoluteX="56dp"
             tools:layout_editor_absoluteY="525dp" />
-
-
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/registar"
+        android:id="@+id/register"
         android:layout_width="170dp"
         android:layout_height="40dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/rounded_button"
-        android:text="@string/registar"
+        android:text="@string/register"
+        android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/confpass"
         tools:ignore="MissingConstraints"
         tools:layout_conversion_absoluteHeight="40dp"
-        tools:layout_conversion_absoluteWidth="170dp"
-        />
+        tools:layout_conversion_absoluteWidth="170dp" />
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registar"
+        app:layout_constraintTop_toBottomOf="@+id/register"
         tools:ignore="MissingConstraints"
         tools:layout_conversion_absoluteHeight="39dp"
         tools:layout_conversion_absoluteWidth="411dp">
@@ -172,7 +165,8 @@
         <FrameLayout
             android:id="@+id/fragmentAuth"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -183,16 +177,14 @@
         tools:layout_conversion_absoluteHeight="0dp"
         tools:layout_conversion_absoluteWidth="263dp"
         tools:layout_editor_absoluteX="74dp"
-        tools:layout_editor_absoluteY="762dp">
-
-    </LinearLayout>
+        tools:layout_editor_absoluteY="762dp"></LinearLayout>
 
     <Button
-        android:id="@+id/voltar"
+        android:id="@+id/comeBack"
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-        android:text="@string/voltar"
+        android:text="@string/backBtn"
         android:textColor="@color/grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -209,8 +201,8 @@
         android:layout_marginStart="68dp"
         android:layout_marginBottom="14dp"
         android:gravity="center"
-        android:text="@string/iniciarSessão"
-        app:layout_constraintBottom_toTopOf="@+id/voltar"
+        android:text="@string/hasAlreadyAccount"
+        app:layout_constraintBottom_toTopOf="@+id/comeBack"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -223,8 +215,6 @@
         android:text="@string/login"
         android:textColor="@color/black"
         android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/voltar"
+        app:layout_constraintBottom_toTopOf="@+id/comeBack"
         app:layout_constraintEnd_toEndOf="parent" />
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

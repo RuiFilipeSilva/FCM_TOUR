@@ -12,8 +12,9 @@ public class Preferences {
     }
 
     public static void init(Context context) {
-        if (mSharedPref == null)
+        if (mSharedPref == null) {
             mSharedPref = context.getSharedPreferences(context.getPackageName(), Activity.MODE_PRIVATE);
+        }
     }
 
     public static void write(String key, String value) {
@@ -22,10 +23,9 @@ public class Preferences {
         prefsEditor.commit();
     }
 
-    public static void saveloginType(String value) {
+    public static void Logout() {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
-        prefsEditor.remove("loginType");
-        prefsEditor.putString("loginType", value);
+        prefsEditor.clear();
         prefsEditor.commit();
     }
 
@@ -57,17 +57,60 @@ public class Preferences {
         prefsEditor.commit();
     }
 
-    public static String readUserToken() {
-        return mSharedPref.getString("token", null);
+    public static void saveRoomsAccess() {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("roomsAccess");
+        prefsEditor.putBoolean("roomsAccess", true);
+        prefsEditor.commit();
     }
+
+    public static void saveAudioPageType(int value) {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("pageType");
+        prefsEditor.putInt("pageType", value);
+        prefsEditor.commit();
+    }
+
+    public static void removeRoomsAccess() {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("roomsAccess");
+        prefsEditor.commit();
+    }
+
+    public static void removeRoom() {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("rooms");
+        prefsEditor.commit();
+    }
+
+    public static void removeQR() {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("qrPaint");
+        prefsEditor.commit();
+    }
+
+    public static String readUserToken() { return mSharedPref.getString("token", null); }
+
+    public static String readQrPaint() { return mSharedPref.getString("qrPaint", null); }
+
     public static String readUsername() {
         return mSharedPref.getString("username", null);
     }
+
     public static String readUserEmail() {
         return mSharedPref.getString("userEmail", null);
     }
+
     public static String readUserImg() {
         return mSharedPref.getString("userImg", null);
+    }
+
+    public static Integer readPageType() {
+        return mSharedPref.getInt("pageType", 0);
+    }
+
+    public static Boolean readRoomsAccess() {
+        return mSharedPref.getBoolean("roomsAccess", false);
     }
 
     public static String read(String key, String defValue) {

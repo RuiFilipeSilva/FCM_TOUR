@@ -31,7 +31,8 @@
             android:layout_marginTop="80dp"
             android:background="@drawable/rounded_button"
             android:fontFamily="@font/barlow_medium"
-            android:text="@string/login" />
+            android:text="@string/login"
+            android:textColor="@color/white" />
 
         <Button
             android:id="@+id/register"
@@ -40,14 +41,15 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/rounded_button"
             android:fontFamily="@font/barlow_medium"
-            android:text="@string/registar" />
+            android:text="@string/register"
+            android:textColor="@color/white" />
 
         <FrameLayout
             android:id="@+id/fragmentAuth"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp" />
     </LinearLayout>
-
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,10 +63,7 @@
             android:layout_gravity="bottom"
             android:background="?android:attr/selectableItemBackground"
             android:fontFamily="@font/barlow_medium"
-            android:text="@string/voltar"
+            android:text="@string/backBtn"
             android:textColor="@color/grey" />
-
     </LinearLayout>
-
-
 </RelativeLayout>

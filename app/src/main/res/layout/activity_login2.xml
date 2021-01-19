@@ -11,8 +11,6 @@
     app:layout_constraintStart_toStartOf="parent"
     tools:context=".Views.Login2">
 
-    >
-
     <ImageView
         android:id="@+id/imageView6"
         android:layout_width="match_parent"
@@ -32,6 +30,7 @@
         android:background="@drawable/rounded_button"
         android:gravity="center"
         android:text="@string/login"
+        android:textColor="@color/white"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -66,7 +65,7 @@
         android:layout_marginEnd="145dp"
         android:background="?android:attr/selectableItemBackground"
         android:gravity="center"
-        android:text="@string/registar"
+        android:text="@string/register"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintBottom_toTopOf="@+id/voltar"
@@ -81,7 +80,7 @@
         android:layout_marginStart="145dp"
         android:layout_marginBottom="15dp"
         android:gravity="center"
-        android:text="@string/criarConta"
+        android:text="@string/createAccountLabel"
         app:layout_constraintBottom_toTopOf="@+id/voltar"
         app:layout_constraintEnd_toStartOf="@+id/register"
         app:layout_constraintHorizontal_bias="0.0"
@@ -93,7 +92,7 @@
         android:layout_width="100dp"
         android:layout_height="wrap_content"
         android:background="?android:attr/selectableItemBackground"
-        android:text="@string/voltar"
+        android:text="@string/backBtn"
         android:textColor="@color/grey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -129,22 +128,17 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
-        android:hint="@string/palavraPasse"
+        android:hint="@string/password"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textField"
         tools:ignore="MissingConstraints">
-
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/passwordTxt"
             android:layout_width="300dp"
             android:layout_height="50dp"
             android:inputType="textPassword"
-            android:textSize="12sp"
-
-            />
+            android:textSize="12sp" />
     </com.google.android.material.textfield.TextInputLayout>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>
