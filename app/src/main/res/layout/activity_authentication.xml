@@ -58,11 +58,11 @@
 
         <Button
             android:id="@+id/voltar"
-            android:layout_width="100dp"
+            android:layout_width="90dp"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
             android:background="?android:attr/selectableItemBackground"
-            android:fontFamily="@font/barlow_medium"
+            android:fontFamily="@font/barlow_light"
             android:text="@string/backBtn"
             android:textColor="@color/grey" />
     </LinearLayout>

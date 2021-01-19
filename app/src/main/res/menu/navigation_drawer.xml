@@ -2,10 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:showIn="navigation_view">
-    <item
-        android:id="@+id/inicio"
-        android:icon="@drawable/ic_logo_icon"
-        android:title="@string/homePageLabel" />
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/inicio"
+            android:icon="@drawable/ic_logo_icon"
+            android:title="@string/homePageLabel" />
+    </group>
+
     <item android:title="FCM">
         <menu>
             <group
@@ -30,20 +34,20 @@
             </group>
         </menu>
     </item>
-    <item android:title="">
-        <menu>
-            <item
-                android:id="@+id/roleta"
-                android:icon="@drawable/ic_roleta_icon"
-                android:title="@string/rouletteLabel" />
-            <item
-                android:id="@+id/def"
-                android:icon="@drawable/ic_def_icon"
-                android:title="@string/definitionsLabel" />
-            <item
-                android:id="@+id/logout"
-                android:icon="@drawable/ic_logo_icon"
-                android:title="@string/logoutLabel" />
-        </menu>
-    </item>
+    <group
+        android:id="@+id/group2"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/roleta"
+            android:icon="@drawable/ic_roleta_icon"
+            android:title="@string/rouletteLabel" />
+        <item
+            android:id="@+id/def"
+            android:icon="@drawable/ic_def_icon"
+            android:title="@string/definitionsLabel" />
+        <item
+            android:id="@+id/logout"
+            android:icon="@drawable/ic_logo_icon"
+            android:title="@string/logoutLabel" />
+    </group>
 </menu>

@@ -50,7 +50,7 @@ import java.util.List;
 public class AudioPage extends Fragment {
     View v;
     String title, description, link, getImgs, nextRoomNum, beforeRoomNum;
-    Button btnTxt, btnAudio, nextRoomBtn, beforeRoomBtn, goBackBtn;
+    Button btnTxt, btnAudio, nextRoomBtn, beforeRoomBtn, goBackBtn, startQuizzBtn;
     ImageSlider imageSlider;
     Boolean roomsAccess;
     Integer pageType;
@@ -71,7 +71,7 @@ public class AudioPage extends Fragment {
         Preferences.removeQR();
         goBackBtn = v.findViewById(R.id.goBackBtn);
         goBackBtn.setOnClickListener(v -> {
-            openDescFragment();
+            AudioPlayer.stopAudio();
             goBackFragment();
         });
         nextRoomBtn = v.findViewById(R.id.nextBtn);
@@ -81,6 +81,11 @@ public class AudioPage extends Fragment {
         beforeRoomBtn = v.findViewById(R.id.beforeBtn);
         beforeRoomBtn.setOnClickListener(v -> {
             new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + beforeRoomNum);
+        });
+        startQuizzBtn = v.findViewById(R.id.startQuizzBtn);
+        startQuizzBtn.setOnClickListener(v -> {
+            AudioPlayer.stopAudio();
+            openQuizzFragment();
         });
         btnTxt = v.findViewById(R.id.txtBtn);
         btnAudio = v.findViewById(R.id.audio);
@@ -155,6 +160,15 @@ public class AudioPage extends Fragment {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(audioContainer, audioPlayer);
+        ft.commit();
+    }
+
+    public void openQuizzFragment() {
+        final int quizzContainer = R.id.fullpage;
+        QuizzPage quizzPage = new QuizzPage();
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(quizzContainer, quizzPage);
         ft.commit();
     }
 
@@ -279,10 +293,12 @@ public class AudioPage extends Fragment {
             }
             if (Rooms.getBeforeAfterRooms(titleTxt).get(1) != null) {
                 nextRoomBtn.setVisibility(View.VISIBLE);
+                startQuizzBtn.setVisibility(View.GONE);
                 nextRoomNum = Rooms.getBeforeAfterRooms(titleTxt).get(3);
                 nextRoomBtn.setText(Rooms.getBeforeAfterRooms(titleTxt).get(1));
             } else {
                 nextRoomBtn.setVisibility(View.INVISIBLE);
+                startQuizzBtn.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -293,7 +309,7 @@ public class AudioPage extends Fragment {
         switch (pageType) {
             case 0:
                 if (roomsAccess == true) {
-                    Preferences.saveRoomsAccess();
+                    Preferences.saveRoomsAccess(Preferences.readRoomsAccessCode());
                 }
                 final int roomContainer = R.id.fullpage;
                 RoomPage rooms = new RoomPage();

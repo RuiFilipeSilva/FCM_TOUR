@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.fcm_tour.API;
 import com.example.fcm_tour.R;
 import com.squareup.picasso.Picasso;
 
@@ -42,8 +43,8 @@ public class Library extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View v =  inflater.inflate(R.layout.fragment_library, container, false);
-        new Library.GetLibrary().execute("https://fcm-tour.herokuapp.com/biblioteca");
+        View v = inflater.inflate(R.layout.fragment_library, container, false);
+        new Library.GetLibrary().execute(API.API_URL + "/biblioteca");
 
         Button libraryBtn = v.findViewById(R.id.btnCollections);
         libraryBtn.setOnClickListener(v1 -> {

@@ -42,7 +42,7 @@ public class Rooms extends Fragment {
     private static String[] numbers, names, imgs;
     private static int[] colors, icons;
     private static View actualView;
-    String description, link, title, imgsList;
+    String description, link, title, imgsList, currentTicket;
     Bundle extras;
 
     @Override
@@ -55,8 +55,8 @@ public class Rooms extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         actualView = inflater.inflate(R.layout.fragment_rooms, container, false);
         extras = new Bundle();
-        Preferences.removeRoomsAccess();
-        new GetRooms().execute(API.API_URL + "/torre/salas");
+        currentTicket = Preferences.readRoomsAccessCode();
+        loadRoomsLayout();
         return actualView;
     }
 
@@ -251,11 +251,16 @@ public class Rooms extends Fragment {
         }
     }
 
-    public static void getRoomsAccess(Context v) {
-        Preferences.saveRoomsAccess();
+    public static void getRoomsAccess(String code) {
+        Preferences.saveRoomsAccess(code);
         MyAdapter adapter = new MyAdapter(actualView.getContext(), names, numbers, imgs, colors, icons);
-        ListView listView = (ListView) actualView.findViewById(R.id.listCards);
+        ListView listView = actualView.findViewById(R.id.listCards);
         listView.setAdapter(adapter);
+    }
+
+    public void loadRoomsLayout() {
+        new GetRooms().execute(API.API_URL + "/torre/salas");
+        new ValidateTicket().execute(API.API_URL + "/ticket/" + currentTicket);
     }
 
     private void openFragment(AudioPage audioPage, int homeContainer) {
@@ -314,5 +319,55 @@ public class Rooms extends Fragment {
         result.add(String.valueOf(beforeNum));
         result.add(String.valueOf(afterNum));
         return result;
+    }
+
+    class ValidateTicket extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... fileUrl) {
+            StringBuilder stringBuilder = new StringBuilder();
+            try {
+                URL url = new URL(fileUrl[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+                InputStream in = connection.getInputStream();
+                stringBuilder = new StringBuilder();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    stringBuilder.append(line);
+                }
+            } catch (Exception e) {
+                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
+            }
+            return stringBuilder.toString();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            try {
+                JSONObject jsonResponse = new JSONObject(result);
+                String state = jsonResponse.getString("state");
+                String code = jsonResponse.getString("code");
+                if (state.equals("Ticket válido")) {
+                    Preferences.saveRoomsAccess(code);
+                    MyAdapter adapter = new MyAdapter(actualView.getContext(), names, numbers, imgs, colors, icons);
+                    ListView listView = actualView.findViewById(R.id.listCards);
+                    listView.setAdapter(adapter);
+                } else {
+                    Preferences.removeRoomsAccess();
+                    MyAdapter adapter = new MyAdapter(actualView.getContext(), names, numbers, imgs, colors, icons);
+                    ListView listView = actualView.findViewById(R.id.listCards);
+                    listView.setAdapter(adapter);
+                    RoomPage.showQrCodeScanners();
+                }
+            } catch (JSONException e) {
+                Preferences.removeRoomsAccess();
+                MyAdapter adapter = new MyAdapter(actualView.getContext(), names, numbers, imgs, colors, icons);
+                ListView listView = actualView.findViewById(R.id.listCards);
+                listView.setAdapter(adapter);
+                RoomPage.showQrCodeScanners();
+            }
+        }
     }
 }

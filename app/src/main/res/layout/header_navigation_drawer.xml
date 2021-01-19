@@ -19,7 +19,9 @@
         tools:ignore="MissingConstraints"
         tools:layout_editor_absoluteY="6dp">
 
+
         <ImageButton
+            android:id="@+id/closeDrawerId"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -29,11 +31,15 @@
             android:background="@color/white"
             android:src="@drawable/ic_sidebarmenu2" />
 
-        <ImageButton
-            android:id="@+id/iconProfile"
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/profilePicture"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_alignParentRight="true"
-            android:background="@mipmap/ic_launcher_round" />
+            app:civ_border_width="1dp"
+            android:clickable="true"
+            app:civ_border_color="#FF000000"/>
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

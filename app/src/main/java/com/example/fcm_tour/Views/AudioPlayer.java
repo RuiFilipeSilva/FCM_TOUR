@@ -116,12 +116,14 @@ public class AudioPlayer extends Fragment {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         mp.setOnPreparedListener(mp -> {
             prepareAudioLayout();
             if (dialog != null && dialog.isShowing()) {
                 dialog.dismiss();
             }
         });
+
 
         mp.setOnCompletionListener(mp -> {
             switch (pageType) {
@@ -144,10 +146,19 @@ public class AudioPlayer extends Fragment {
         return v;
     }
 
+    public static void stopAudio() {
+        if (mp != null) {
+            if (mp.isPlaying() == true) {
+                mp.stop();
+                mp = null;
+            }
+        }
+    }
+
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if(mp != null) {
+        if (mp != null) {
             mp.stop();
             mp = null;
         }
@@ -158,15 +169,17 @@ public class AudioPlayer extends Fragment {
             @Override
             public void handleOnBackPressed() {
                 // Handle the back button event
-                mp.stop();
-                mp = null;
-                getFragmentManager().popBackStack();
+                if (mp != null) {
+                    mp.stop();
+                    mp = null;
+                }
+                if (isVisible()) {
+                    getParentFragmentManager().popBackStack();
+                }
             }
         };
-
         requireActivity().getOnBackPressedDispatcher().addCallback((LifecycleOwner) getContext(), callback);
     }
-
 
     public void prepareAudioLayout() {
         mp.seekTo(0);
@@ -226,7 +239,7 @@ public class AudioPlayer extends Fragment {
         llParam.gravity = Gravity.CENTER;
         TextView tvText = new TextView(getContext());
         tvText.setText(R.string.dialogAudioText);
-        tvText.setTextColor(Color.parseColor("#000000"));
+        tvText.setTextColor(getResources().getColor(R.color.dialogTextColor));
         tvText.setTextSize(20);
         tvText.setLayoutParams(llParam);
         ll.addView(progressBar);

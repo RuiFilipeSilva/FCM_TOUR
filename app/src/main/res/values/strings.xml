@@ -80,6 +80,7 @@
     <!--RoomPage-->
     <string name="roomPageTitle">SALAS</string>
     <string name="insertTicketAlertTitle">Código do Bilhete</string>
+    <string name="ticketCodeMsg">Insira o código que se encontra no bilhete</string>
 
     <!--Rooms-->
     <string name="noAccessAlertTitle">Não têm acesso para entrar</string>
@@ -107,6 +108,10 @@
     <string name="definitionsLabel">Definições</string>
     <string name="logoutLabel">Terminar Sessão</string>
 
+    <!--changePWPage-->
+    <string name="changePwToast">Password alterada com sucesso!</string>
+    <string name="addPwToast">Password adicionada com sucesso!</string>
+
     <!--Outros-->
     <string name="FB_APP_ID">3302524869853214</string>
     <string name="fb_login_protocol_scheme">fb3302524869853214</string>
@@ -118,6 +123,34 @@
     <string name="title_activity_a_r__sculptures">AR_Sculptures</string>
     <string name="qrCodeState">Ticket válido</string>
     <string name="alertDialogTitle">Bilhete Válido</string>
+    <string name="alert_roulette">Não pode entrar</string>
+    <string name="message_roulette">Para aceder à Roleta tem de iniciar sessão</string>
+
+    <!--Roullete-->
+    <string name="spin">Rodar</string>
+    <string name="awards">🏆 Prêmios</string>
+    <string name="title_alert_award">Roleta</string>
+    <string name="message_award">Parabéns ganhou </string>
+    <string name="message_award_2"> Cupertinos</string>
+    <string name="title_roulette">Roleta</string>
+    <string name="title_awards">Prémios</string>
+    <string name="tilte_alert_error">Não é Possível Rodar</string>
+    <string name="message_alert_error">Não pode rodar mais hoje! Apareça amanhã para poder rodar e coletar mais cupertinos</string>
+
+    <!--AwardsPage-->
+    <string name="name_form">Nome</string>
+    <string name="adress_form">Morada</string>
+    <string name="postal_code_form">Código Postal</string>
+    <string name="city_form">Cidade</string>
+    <string name="get_awards">Redimir</string>
+    <string name="title_get_awards">ERRO</string>
+    <string name="message_get_award">Alguns campos não foram Preenchidos</string>
+    <string name="conf_title_get_awards">Confirmação</string>
+    <string name="conf_message_get_awards">Confirma que deseja receber este prémio?</string>
+    <string name="toast_get_awards">A sua encomenda já está a ser processada</string>
+    <string name="back">Voltar</string>
+    <string name="no_cupertinos">Não têm cupertinos suficientes para adquirir este prémio, volte aqui todos os dia e jogo na roleta para pode coletar mais cupertinos!</string>
+
 
     <!--This string is used for square devices and overridden by hello_world in    values-round/strings.xml for round devices.-->
     <string name="hello_world">Hello Square World!</string>

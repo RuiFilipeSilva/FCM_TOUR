@@ -15,14 +15,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="20dp"
             android:layout_marginTop="50dp"
             android:fontFamily="@font/stratum1_black"
             android:text="@string/sculpturesPageTitle"
             android:textColor="@color/black"
-            android:textSize="40dp"></TextView>
-
+            android:textSize="35dp"></TextView>
+        <ImageView
+            android:layout_width="140dp"
+            android:layout_height="3dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/rec"
+            android:backgroundTint="@color/museum" />
         <FrameLayout
             android:id="@+id/listSculptures"
             android:layout_width="match_parent"
