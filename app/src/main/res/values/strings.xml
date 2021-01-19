@@ -80,6 +80,7 @@
     <!--RoomPage-->
     <string name="roomPageTitle">SALAS</string>
     <string name="insertTicketAlertTitle">Código do Bilhete</string>
+    <string name="ticketCodeMsg">Insira o código que se encontra no bilhete</string>
 
     <!--Rooms-->
     <string name="noAccessAlertTitle">Não têm acesso para entrar</string>

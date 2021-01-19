@@ -21,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
@@ -131,7 +132,7 @@ public class Collections extends Fragment {
                     stringBuilder.append(line);
                 }
             } catch (Exception e) {
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
+                Toast.makeText(getContext(), "Exception: " + e,Toast.LENGTH_LONG);
             }
             return stringBuilder.toString();
         }

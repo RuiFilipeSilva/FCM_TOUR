@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
@@ -76,7 +77,8 @@ public class RoomPage extends Fragment {
                     stringBuilder.append(line);
                 }
             } catch (Exception e) {
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
+                Toast.makeText(getContext(), "Exception: " + e, Toast.LENGTH_LONG);
+
             }
             return stringBuilder.toString();
         }
@@ -96,7 +98,7 @@ public class RoomPage extends Fragment {
                 } else {
                     AlertDialog alertDialog2 = new AlertDialog.Builder(getContext()).create();
                     alertDialog2.setTitle(R.string.noResultsDialog);
-                    alertDialog2.setMessage("Não foi encontrado nenhum bilhete com esse número");
+                    alertDialog2.setMessage(getString(R.string.invalidMessageCode));
                     alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             (dialog, which) -> {
                                 dialog.dismiss();
@@ -107,7 +109,7 @@ public class RoomPage extends Fragment {
             } catch (JSONException e) {
                 AlertDialog alertDialog2 = new AlertDialog.Builder(getContext()).create();
                 alertDialog2.setTitle(R.string.noResultsDialog);
-                alertDialog2.setMessage("Não foi encontrado nenhum bilhete com esse número");
+                alertDialog2.setMessage(getString(R.string.invalidMessageCode));
                 alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         (dialog, which) -> {
                             dialog.dismiss();
@@ -122,7 +124,7 @@ public class RoomPage extends Fragment {
     public void AlertDialogInsertTicket() {
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
         alert.setTitle(R.string.insertTicketAlertTitle);
-        alert.setMessage("Insira o código que se encontra no bilhete");
+        alert.setMessage(getString(R.string.ticketCodeMsg));
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

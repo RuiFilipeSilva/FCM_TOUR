@@ -239,7 +239,7 @@ public class AudioPlayer extends Fragment {
         llParam.gravity = Gravity.CENTER;
         TextView tvText = new TextView(getContext());
         tvText.setText(R.string.dialogAudioText);
-        tvText.setTextColor(Color.parseColor("#000000"));
+        tvText.setTextColor(getResources().getColor(R.color.dialogTextColor));
         tvText.setTextSize(20);
         tvText.setLayoutParams(llParam);
         ll.addView(progressBar);
