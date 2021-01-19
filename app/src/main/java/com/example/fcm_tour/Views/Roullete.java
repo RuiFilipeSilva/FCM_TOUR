@@ -87,8 +87,8 @@ public class Roullete extends Fragment {
                 date = Preferences.readUserDate();
                 if (formattedDate.equals(date)) {
                     AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
-                    alertDialog.setTitle(R.string.title_alert_award);
-                    alertDialog.setMessage(getString(R.string.message_award));
+                    alertDialog.setTitle(R.string.tilte_alert_error);
+                    alertDialog.setMessage(getString(R.string.message_alert_error));
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             (dialog, which) -> {
                                 dialog.dismiss();
@@ -167,10 +167,11 @@ public class Roullete extends Fragment {
                 point = Integer.parseInt(state);
                 AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
                 alertDialog.setTitle(R.string.title_alert_award);
-                alertDialog.setMessage(getString(R.string.message_award) + " " + state + "" + getString(R.string.message_award_2));
+                alertDialog.setMessage(getString(R.string.message_award) + " " + state + " " + getString(R.string.message_award_2));
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         (dialog, which) -> {
                             dialog.dismiss();
+                            points.setText(myPoints);;
                         });
                 alertDialog.show();
                 cupertinos = Integer.parseInt(Preferences.readUserPoints());
@@ -179,9 +180,7 @@ public class Roullete extends Fragment {
                 myPoints = String.valueOf(cupertinos);
                 Log.d("SIGA", "onPostExecute: " + myPoints);
                 Preferences.write("userPoints", myPoints);
-                points.setText(myPoints);
                 updatePoints(email, myPoints, getContext());
-                Preferences.write("userDate", date);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

@@ -7,7 +7,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -15,6 +17,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Shader;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.Image;
 import android.net.Uri;
@@ -27,6 +30,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fcm_tour.Controllers.Preferences;
@@ -34,6 +38,7 @@ import com.example.fcm_tour.Controllers.Users;
 import com.example.fcm_tour.Views.AudioPage;
 import com.example.fcm_tour.Views.AudioPlayer;
 import com.example.fcm_tour.Views.Authentication;
+import com.example.fcm_tour.Views.Awards;
 import com.example.fcm_tour.Views.History;
 import com.example.fcm_tour.Views.Library;
 import com.example.fcm_tour.Views.Museum;
@@ -152,7 +157,28 @@ public class SideBar extends AppCompatActivity {
                 fragmentClass = Music.class;
                 break;
             case R.id.roleta:
-                fragmentClass = Roullete.class;
+                if (Preferences.readUserToken() != null){
+                    fragmentClass = Roullete.class;
+                }
+                else{
+                    AlertDialog.Builder alert = new AlertDialog.Builder(SideBar.this,R.style.MyDialogTheme);
+                    alert.setTitle(R.string.alert_roulette);
+                    alert.setMessage(getString(R.string.message_roulette));
+
+                    alert.setPositiveButton("Iniciar Sessão", (dialog, whichButton) -> {
+                        Intent intent = new Intent(SideBar.this, Authentication.class);
+                        startActivity(intent);
+                        dialog.dismiss();
+                    });
+                    alert.setNegativeButton("Cancelar",
+                            (dialog, which) -> {
+                                dialog.dismiss();
+                                return;
+                            });
+                    alert.show();
+                    fragmentClass = History.class;
+
+                }
                 break;
             case R.id.logout:
                 Users.Logout();
@@ -163,7 +189,6 @@ public class SideBar extends AppCompatActivity {
             case R.id.def:
                 if (Preferences.readUserToken() == null) {
                     fragmentClass = History.class;
-
                 } else {
                     fragmentClass = SettingsPage.class;
                 }

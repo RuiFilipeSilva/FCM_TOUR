@@ -122,6 +122,8 @@
     <string name="title_activity_a_r__sculptures">AR_Sculptures</string>
     <string name="qrCodeState">Ticket válido</string>
     <string name="alertDialogTitle">Bilhete Válido</string>
+    <string name="alert_roulette">Não pode entrar</string>
+    <string name="message_roulette">Para aceder à Roleta tem de iniciar sessão</string>
 
     <!--Roullete-->
     <string name="spin">Rodar</string>
@@ -131,6 +133,10 @@
     <string name="message_award_2"> Cupertinos</string>
     <string name="title_roulette">Roleta</string>
     <string name="title_awards">Prémios</string>
+    <string name="tilte_alert_error">Não é Possível Rodar</string>
+    <string name="message_alert_error">Não pode rodar mais hoje! Apareça amanhã para poder rodar e coletar mais cupertinos</string>
+
+    <!--AwardsPage-->
     <string name="name_form">Nome</string>
     <string name="adress_form">Morada</string>
     <string name="postal_code_form">Código Postal</string>
