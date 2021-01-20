@@ -7,6 +7,7 @@
     android:background="@color/white"
     tools:context=".Views.AudioPage">
 
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -52,45 +53,21 @@
                     android:layout_marginTop="20dp"
                     android:background="@drawable/rounded_tower"
                     android:elevation="40dp"
+                    android:fontFamily="@font/barlow_medium"
                     android:text="@string/collectionsBtn"
                     android:textColor="@color/black"
                     android:textSize="13dp"
-                    android:fontFamily="@font/barlow_medium"
                     app:backgroundTint="@color/white" />
 
                 <Button
                     android:id="@+id/startQuizzBtn"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="50dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentBottom="true"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/rounded_tower"
-                    android:textColor="@color/white"
-                    android:text="Começar Quizz"
-                    android:visibility="invisible"
-                    app:backgroundTint="@color/tower" />
-
-                <Button
-                    android:id="@+id/nextBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/rounded_tower"
-                    android:textColor="@color/white"
-                    android:visibility="invisible"
-                    app:backgroundTint="@color/tower" />
-
-                <Button
-                    android:id="@+id/beforeBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginLeft="20dp"
-                    android:background="@drawable/rounded_tower"
+                    android:text="Iniciar Quizz"
                     android:textColor="@color/white"
                     android:visibility="invisible"
                     app:backgroundTint="@color/tower" />
@@ -122,9 +99,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="76dp"
-                android:layout_weight="6"></FrameLayout>
+                android:layout_weight="6"/>
         </LinearLayout>
     </ScrollView>
+
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -152,5 +130,73 @@
             android:layout_marginBottom="-10dp"
             android:background="@drawable/botao_descricao_amarelo"
             app:backgroundTint="@null" />
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/navigateRoomsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="20dp"
+        android:elevation="40dp"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/beforeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/previousbtn"
+            android:clickable="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:src="@drawable/arrow_left"
+            app:backgroundTint="@color/tower">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/arrow_left" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:text="Anterior"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/nextBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_marginStart="0dp"
+            android:layout_toEndOf="@+id/beforeBtn"
+            android:background="@drawable/nextbtn"
+            android:clickable="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:src="@drawable/arrow_right"
+            app:backgroundTint="@color/tower">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginRight="5dp"
+                android:text="Seguinte"
+                android:textColor="@color/white" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/arrow_right" />
+
+        </LinearLayout>
     </RelativeLayout>
 </FrameLayout>

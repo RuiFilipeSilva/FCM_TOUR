@@ -203,7 +203,6 @@ public class Users {
                 JSONObject body = new JSONObject(getJson(split[1]));
                 String data = body.getString("data");
                 JSONObject body2 = new JSONObject(data);
-                Log.d("SIGA", "decoded: " + body2);
                 String email = body2.getString("email");
                 Preferences.saveUserEmail(email);
                 String name = body2.getString("username");

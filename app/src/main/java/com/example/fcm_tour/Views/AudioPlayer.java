@@ -38,7 +38,7 @@ import java.io.IOException;
 public class AudioPlayer extends Fragment {
     ImageButton playBtn;
     SeekBar positionBar;
-    TextView elapsedTimeLabel, remainingTimeLabel;
+    TextView elapsedTimeLabel;
     static MediaPlayer mp;
     int totalTime;
     String link;
@@ -82,7 +82,6 @@ public class AudioPlayer extends Fragment {
                 break;
         }
         elapsedTimeLabel = v.findViewById(R.id.elapsedTimeLabel);
-        remainingTimeLabel = v.findViewById(R.id.remainingTimeLabel);
         playBtn.setOnClickListener(v1 -> {
             if (!mp.isPlaying()) {
                 mp.start();
@@ -267,8 +266,6 @@ public class AudioPlayer extends Fragment {
             positionBar.setProgress(currentPosition);
             String elapsedTime = createTimeLabel(currentPosition);
             elapsedTimeLabel.setText(elapsedTime);
-            String remainingTime = "- " + createTimeLabel(totalTime - currentPosition);
-            remainingTimeLabel.setText(remainingTime);
             return true;
         }
     });

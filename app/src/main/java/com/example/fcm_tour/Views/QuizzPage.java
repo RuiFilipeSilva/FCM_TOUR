@@ -1,5 +1,6 @@
 package com.example.fcm_tour.Views;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -14,10 +15,19 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
+import com.example.fcm_tour.Controllers.Users;
 import com.example.fcm_tour.R;
+import com.example.fcm_tour.SideBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,10 +36,16 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.example.fcm_tour.Controllers.Users.handleError;
+import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class QuizzPage extends Fragment {
@@ -54,11 +70,6 @@ public class QuizzPage extends Fragment {
         authBtn = v.findViewById(R.id.authBtn);
         ignoreQuizz = v.findViewById(R.id.ignoreQuizz);
         startQuizzbtn = v.findViewById(R.id.startQuizzBtn);
-        if (Preferences.readUserToken() != null) {
-            Preferences.removeQuizzState();
-            startQuizzbtn.setVisibility(View.VISIBLE);
-            authBtn.setVisibility(View.GONE);
-        }
         quizzLayout = v.findViewById(R.id.quizzLayout);
         btnA = v.findViewById(R.id.btnA);
         btnB = v.findViewById(R.id.btnB);
@@ -68,7 +79,12 @@ public class QuizzPage extends Fragment {
         endLayout = v.findViewById(R.id.endLayout);
         endQuizzBtn = v.findViewById(R.id.endQuizzBtn);
         resultQuizzTxt = v.findViewById(R.id.resultTxt);
-        new GetQuestions().execute(API.API_URL + "/quizz/");
+        if (Preferences.readUserToken() != null) {
+            Preferences.removeQuizzState();
+            startQuizzbtn.setVisibility(View.VISIBLE);
+            authBtn.setVisibility(View.GONE);
+            GetQuestions(getContext());
+        }
         authBtn.setOnClickListener(v -> {
             Preferences.saveQuizzState();
             Intent intent = new Intent(v.getContext(), Authentication.class);
@@ -137,61 +153,55 @@ public class QuizzPage extends Fragment {
         }
     }
 
-    class GetQuestions extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... fileUrl) {
-            StringBuilder stringBuilder = new StringBuilder();
-            try {
-                URL url = new URL(fileUrl[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                InputStream in = connection.getInputStream();
-                stringBuilder = new StringBuilder();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-            } catch (Exception e) {
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
-            }
-            return stringBuilder.toString();
-        }
+    public void GetQuestions(Context context) {
+        String postUrl = API.API_URL + "/quizz";
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                JSONArray jsonResponse = new JSONArray(result);
-                questions = new String[jsonResponse.length()];
-                optionA = new String[jsonResponse.length()];
-                optionB = new String[jsonResponse.length()];
-                optionC = new String[jsonResponse.length()];
-                optionD = new String[jsonResponse.length()];
-                correctAnswers = new String[jsonResponse.length()];
-                currentQuestionId = 0;
-                for (int i = 0; i < jsonResponse.length(); i++) {
-                    JSONObject jsonObject = jsonResponse.getJSONObject(i);
-                    String jsonQuestion = jsonObject.getString("question");
-                    String optionsResponse = jsonObject.getString("options");
-                    JSONObject optionsJSON = new JSONObject(optionsResponse);
-                    String A = optionsJSON.getString("A");
-                    String B = optionsJSON.getString("B");
-                    String C = optionsJSON.getString("C");
-                    String D = optionsJSON.getString("D");
-                    String jsonAnswer = jsonObject.getString("answer");
-                    questions[i] = jsonQuestion;
-                    optionA[i] = A;
-                    optionB[i] = B;
-                    optionC[i] = C;
-                    optionD[i] = D;
-                    correctAnswers[i] = jsonAnswer;
-                }
-                displayNextQuestion(0);
-            } catch (JSONException e) {
-                e.printStackTrace();
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
+                response -> {
+                    try {
+                        JSONArray jsonResponse = response.getJSONArray("questions");
+                        questions = new String[jsonResponse.length()];
+                        optionA = new String[jsonResponse.length()];
+                        optionB = new String[jsonResponse.length()];
+                        optionC = new String[jsonResponse.length()];
+                        optionD = new String[jsonResponse.length()];
+                        correctAnswers = new String[jsonResponse.length()];
+                        currentQuestionId = 0;
+                        for (int i = 0; i < jsonResponse.length(); i++) {
+                            JSONObject jsonObject = jsonResponse.getJSONObject(i);
+                            String jsonQuestion = jsonObject.getString("question");
+                            String optionsResponse = jsonObject.getString("options");
+                            JSONObject optionsJSON = new JSONObject(optionsResponse);
+                            String A = optionsJSON.getString("A");
+                            String B = optionsJSON.getString("B");
+                            String C = optionsJSON.getString("C");
+                            String D = optionsJSON.getString("D");
+                            String jsonAnswer = jsonObject.getString("answer");
+                            questions[i] = jsonQuestion;
+                            optionA[i] = A;
+                            optionB[i] = B;
+                            optionC[i] = C;
+                            optionD[i] = D;
+                            correctAnswers[i] = jsonAnswer;
+                        }
+                        displayNextQuestion(0);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> Toast.makeText(getContext(), "Erro: " + error, Toast.LENGTH_SHORT).show()) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/json; charset=UTF-8");
+                params.put("Authorization", "Bearer " + Preferences.readUserToken());
+                return params;
             }
-        }
+        };
+        requestQueue.add(jsonObjectRequest);
     }
 
     public void openHomeFragment() {

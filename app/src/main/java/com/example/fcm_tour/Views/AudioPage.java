@@ -2,6 +2,9 @@ package com.example.fcm_tour.Views;
 
 import android.annotation.SuppressLint;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
@@ -17,6 +20,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -50,7 +54,9 @@ import java.util.List;
 public class AudioPage extends Fragment {
     View v;
     String title, description, link, getImgs, nextRoomNum, beforeRoomNum;
-    Button btnTxt, btnAudio, nextRoomBtn, beforeRoomBtn, goBackBtn, startQuizzBtn;
+    Button btnTxt, btnAudio, goBackBtn, startQuizzBtn;
+    LinearLayout nextRoomBtn, previousRoomBtn;
+    RelativeLayout navigateRoomsLayout;
     ImageSlider imageSlider;
     Boolean roomsAccess;
     Integer pageType;
@@ -69,6 +75,7 @@ public class AudioPage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_audio_page, container, false);
         Preferences.removeQR();
+        navigateRoomsLayout = v.findViewById(R.id.navigateRoomsLayout);
         goBackBtn = v.findViewById(R.id.goBackBtn);
         goBackBtn.setOnClickListener(v -> {
             AudioPlayer.stopAudio();
@@ -78,8 +85,8 @@ public class AudioPage extends Fragment {
         nextRoomBtn.setOnClickListener(v -> {
             new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + nextRoomNum);
         });
-        beforeRoomBtn = v.findViewById(R.id.beforeBtn);
-        beforeRoomBtn.setOnClickListener(v -> {
+        previousRoomBtn = v.findViewById(R.id.beforeBtn);
+        previousRoomBtn.setOnClickListener(v -> {
             new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + beforeRoomNum);
         });
         startQuizzBtn = v.findViewById(R.id.startQuizzBtn);
@@ -282,24 +289,30 @@ public class AudioPage extends Fragment {
         openDescFragment();
     }
 
+    @SuppressLint("ResourceType")
     public void verifyRooms(String titleTxt) {
         if (roomsAccess == true) {
+            navigateRoomsLayout.setVisibility(View.VISIBLE);
             if (Rooms.getBeforeAfterRooms(titleTxt).get(0) != null) {
-                beforeRoomBtn.setVisibility(View.VISIBLE);
+                previousRoomBtn.setClickable(true);
                 beforeRoomNum = Rooms.getBeforeAfterRooms(titleTxt).get(2);
-                beforeRoomBtn.setText(Rooms.getBeforeAfterRooms(titleTxt).get(0));
+                previousRoomBtn.getBackground().setColorFilter(Color.parseColor(getString(R.color.tower)), PorterDuff.Mode.SRC_ATOP);
             } else {
-                beforeRoomBtn.setVisibility(View.INVISIBLE);
+                previousRoomBtn.setClickable(false);
+                previousRoomBtn.getBackground().setColorFilter(Color.parseColor(getString(R.color.grey_light)), PorterDuff.Mode.SRC_ATOP);
             }
             if (Rooms.getBeforeAfterRooms(titleTxt).get(1) != null) {
-                nextRoomBtn.setVisibility(View.VISIBLE);
-                startQuizzBtn.setVisibility(View.GONE);
+                nextRoomBtn.setClickable(true);
                 nextRoomNum = Rooms.getBeforeAfterRooms(titleTxt).get(3);
-                nextRoomBtn.setText(Rooms.getBeforeAfterRooms(titleTxt).get(1));
+                nextRoomBtn.getBackground().setColorFilter(Color.parseColor(getString(R.color.tower)), PorterDuff.Mode.SRC_ATOP);
+                startQuizzBtn.setVisibility(View.GONE);
             } else {
-                nextRoomBtn.setVisibility(View.INVISIBLE);
+                nextRoomBtn.setClickable(false);
+                nextRoomBtn.getBackground().setColorFilter(Color.parseColor(getString(R.color.grey_light)), PorterDuff.Mode.SRC_ATOP);
                 startQuizzBtn.setVisibility(View.VISIBLE);
             }
+        } else {
+            navigateRoomsLayout.setVisibility(View.GONE);
         }
     }
 

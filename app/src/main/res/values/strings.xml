@@ -20,8 +20,7 @@
 
     <!--AudioPlayer-->
     <string name="dialogAudioText">A carregar áudio...</string>
-    <string name="startTime">0:11</string>
-    <string name="timeLeft">-1:49</string>
+    <string name="startTime">0:00</string>
 
     <!--Authentication-->
     <string name="login">Iniciar Sessão</string>
