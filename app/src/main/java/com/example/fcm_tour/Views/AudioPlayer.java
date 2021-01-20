@@ -243,7 +243,7 @@ public class AudioPlayer extends Fragment {
         tvText.setLayoutParams(llParam);
         ll.addView(progressBar);
         ll.addView(tvText);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
         builder.setCancelable(true);
         builder.setView(ll);
         dialog = builder.create();

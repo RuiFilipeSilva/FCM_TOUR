@@ -273,7 +273,7 @@ public class Rooms extends Fragment {
     }
 
     public void AlertDialogInsertTicket() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
         alert.setTitle(R.string.noAccessAlertTitle);
         alert.setMessage("Digitalize o seu bilhete para ter acesso");
         alert.setPositiveButton("Digitalize o Código", (dialog, whichButton) -> {
