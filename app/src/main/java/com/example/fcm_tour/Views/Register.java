@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.example.fcm_tour.Controllers.Users;
 import com.example.fcm_tour.MainActivity;
@@ -29,6 +30,9 @@ public class Register extends AppCompatActivity {
         SocialMediaAuth socialMediaAuth = new SocialMediaAuth();
         openFragment(socialMediaAuth, container);
         btnComeBack = findViewById(R.id.comeBack);
+        if (btnComeBack.getText().toString().equals("Return V")) {
+            btnComeBack.getLayoutParams().width = 280;
+        }
         btnComeBack.setOnClickListener(v -> {
             comeBack = new Intent(v.getContext(), SideBar.class);
             startActivity(comeBack);

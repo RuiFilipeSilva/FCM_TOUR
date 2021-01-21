@@ -76,7 +76,7 @@
     <!--Register-->
     <string name="namePlaceholder">Nome</string>
     <string name="confirmPassword">Confirmar Palavra-Passe</string>
-    <string name="hasAlreadyAccount">Já possui uma conta?</string>
+    <string name="hasAlreadyAccount">Já tem uma conta?</string>
 
     <!--RoomPage-->
     <string name="roomPageTitle">SALAS</string>
