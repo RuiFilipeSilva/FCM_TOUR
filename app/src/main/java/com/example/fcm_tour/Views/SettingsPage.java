@@ -63,44 +63,37 @@ import java.util.Map;
 
 
 public class SettingsPage extends Fragment {
-    private static final String ROOT_URL = "http://seoforworld.com/api/v1/file-upload.php";
     private static final int REQUEST_PERMISSIONS = 100;
-    private static final int PICK_IMAGE_REQUEST =1 ;
+    private static final int PICK_IMAGE_REQUEST = 1;
     private static final int RESULT_OK = -1;
     private Bitmap bitmap;
     private String filePath;
     AlertDialog dialog;
-    ImageView imageView;
-    TextView textView;
     View v;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_settings_page, container, false);
         loadUserInfo();
-
         CardView logout = v.findViewById(R.id.remove);
         logout.setOnClickListener(v -> {
             logout();
         });
-
         CardView delete = v.findViewById(R.id.delete);
         delete.setOnClickListener(v -> {
-            AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
-            alertDialog.setTitle("ATENÇÃO");
-            alertDialog.setMessage("Pretende eliminar a sua conta?");
-            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Eliminar",
+            AlertDialog alertDialog = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme).create();
+            alertDialog.setTitle(R.string.deleteAccountDialogTitle);
+            alertDialog.setMessage(getString(R.string.deleteAccountDialogMsg));
+            alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, getString(R.string.deleteBtn),
                     (dialog, which) -> {
                         DeleteUser(getContext());
                     });
-            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, "Cancelar",
+            alertDialog.setButton(AlertDialog.BUTTON_NEGATIVE, getString(R.string.cancelBtn),
                     (dialog, which) -> {
                         dialog.dismiss();
                     });
@@ -111,7 +104,7 @@ public class SettingsPage extends Fragment {
         changePassword.setOnClickListener(v -> {
             final int homeContainer = R.id.fullpage;
             ChangePwPage changePwPage = new ChangePwPage();
-            FragmentManager fragmentManager = getFragmentManager();
+            FragmentManager fragmentManager = getParentFragmentManager();
             FragmentTransaction ft = fragmentManager.beginTransaction();
             ft.addToBackStack(null);
             ft.replace(homeContainer, changePwPage);
@@ -132,7 +125,6 @@ public class SettingsPage extends Fragment {
                             REQUEST_PERMISSIONS);
                 }
             } else {
-                Log.e("Else", "Else");
                 showFileChooser();
             }
         });
@@ -144,7 +136,7 @@ public class SettingsPage extends Fragment {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+        startActivityForResult(Intent.createChooser(intent, getString(R.string.titleIntent)), PICK_IMAGE_REQUEST);
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -160,13 +152,10 @@ public class SettingsPage extends Fragment {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-            }
-            else
-            {
-                Toast.makeText( getContext(),"no image selected", Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getContext(), R.string.noImageSelected, Toast.LENGTH_LONG).show();
             }
         }
-
     }
 
     public String getPath(Uri uri) {
@@ -192,21 +181,9 @@ public class SettingsPage extends Fragment {
 
     private void uploadBitmap(final Bitmap bitmap) {
         VolleyMultipartRequest volleyMultipartRequest = new VolleyMultipartRequest(Request.Method.PUT, API.API_URL + "/profile/" + Preferences.readUserEmail(),
-                new Response.Listener<NetworkResponse>() {
-                    @Override
-                    public void onResponse(NetworkResponse response) {
-                        new android.os.Handler().postDelayed(
-                                () ->  new GetImage().execute(API.API_URL + "/profile/" + Preferences.readUserEmail()), 1000);
-                    }
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show();
-                        Log.e("GotError",""+error.getMessage());
-                    }
-                }) {
-
+                response -> new android.os.Handler().postDelayed(
+                        () -> new GetImage().execute(API.API_URL + "/profile/" + Preferences.readUserEmail()), 1000),
+                error -> Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_LONG).show()) {
             @Override
             protected Map<String, VolleyMultipartRequest.DataPart> getByteData() {
                 Map<String, DataPart> params = new HashMap<>();
@@ -215,16 +192,12 @@ public class SettingsPage extends Fragment {
                 return params;
             }
         };
-
-        //adding the request to volley
         Volley.newRequestQueue(getContext()).add(volleyMultipartRequest);
     }
 
     public void DeleteUser(Context context) {
         String postUrl = API.API_URL + "/delete/" + Preferences.readUserEmail();
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-
-
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.DELETE, postUrl, null,
                 response -> {
                     try {
@@ -232,12 +205,10 @@ public class SettingsPage extends Fragment {
                         Intent homePage = new Intent(context, SideBar.class);
                         homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(homePage);
-                        Toast toast = Toast.makeText(context, "Conta Eliminada", Toast.LENGTH_SHORT);
-                        toast.show();
+                        Toast.makeText(context, R.string.deleteAccountToastMsg, Toast.LENGTH_SHORT).show();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-
                 },
                 error -> handleError(error, context)) {
             @Override
@@ -258,21 +229,17 @@ public class SettingsPage extends Fragment {
             body = new String(error.networkResponse.data, "UTF-8");
         } catch (UnsupportedEncodingException e) {
         }
-        Toast toast = Toast.makeText(context, R.string.errorToast + body, Toast.LENGTH_SHORT);
-        toast.show();
+        Toast.makeText(context, R.string.errorToast + body, Toast.LENGTH_SHORT).show();
     }
 
     public void loadUserInfo() {
         String userPicture = Preferences.readUserImg();
         ImageView picture = v.findViewById(R.id.profilePicture);
         Picasso.get().load(userPicture).into(picture);
-
         TextView username = v.findViewById(R.id.userName);
         username.setText(Preferences.readUsername());
-
         TextView email = v.findViewById(R.id.userEmail);
         email.setText(Preferences.readUserEmail());
-
     }
 
     public void logout() {
@@ -280,12 +247,11 @@ public class SettingsPage extends Fragment {
         Users.Logout();
         final int homeContainer = R.id.fullpage;
         History history = new History();
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(homeContainer, history);
         ft.commit();
     }
-
 
     public void setProgressDialog() {
         int llPadding = 30;
@@ -306,13 +272,13 @@ public class SettingsPage extends Fragment {
                 ViewGroup.LayoutParams.WRAP_CONTENT);
         llParam.gravity = Gravity.CENTER;
         TextView tvText = new TextView(getContext());
-        tvText.setText("A carregar imagem...");
+        tvText.setText(R.string.loadingImageTxt);
         tvText.setTextColor(Color.parseColor("#000000"));
         tvText.setTextSize(20);
         tvText.setLayoutParams(llParam);
         ll.addView(progressBar);
         ll.addView(tvText);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
         builder.setCancelable(true);
         builder.setView(ll);
         dialog = builder.create();
@@ -351,14 +317,11 @@ public class SettingsPage extends Fragment {
         @Override
         protected void onPostExecute(String result) {
             super.onPostExecute(result);
-            View v = getView();
-            Log.d("SIGA", "onPostExecute: " + result);
-            Toast.makeText(getContext(), "IMAGEM ATUALIZADA", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.imageUpdatedSuccess, Toast.LENGTH_SHORT).show();
             Preferences.saveUserImg(result);
             loadUserInfo();
             SideBar.updateImg();
             dialog.dismiss();
         }
     }
-
 }

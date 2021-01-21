@@ -101,6 +101,19 @@ public class Preferences {
         prefsEditor.commit();
     }
 
+    public static void saveLanguage(String value) {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("language");
+        prefsEditor.putString("language", value);
+        prefsEditor.commit();
+    }
+
+    public static void removeLanguage() {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("language");
+        prefsEditor.commit();
+    }
+
     public static void removeQuizzState() {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
         prefsEditor.remove("quizzState");
@@ -156,6 +169,10 @@ public class Preferences {
 
     public static String readUserDate() {
         return mSharedPref.getString("userDate", null);
+    }
+
+    public static String readLanguage() {
+        return mSharedPref.getString("language", null);
     }
 
     public static Integer readPageType() {

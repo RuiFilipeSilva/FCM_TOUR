@@ -22,10 +22,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
+import com.google.gson.JsonObject;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -37,6 +43,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Awards extends Fragment {
     private static String[] names, prices, imgs, numbers;
@@ -60,7 +68,7 @@ public class Awards extends Fragment {
         cup = v.findViewById(R.id.points);
         cup.setText(Preferences.readUserPoints());
         extras = new Bundle();
-        new GetAwards().execute(API.API_URL + "/roleta/premios");
+        GetAwards(getContext());
         comeback = (ImageButton)v.findViewById(R.id.back);
         comeback.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,7 +107,7 @@ public class Awards extends Fragment {
         listView.setOnItemClickListener((parent, view, position, id) -> {
             for (int i = 0; i < numbers.length; i++) {
                 if (position == i) {
-                    new GetAwardsByNumber().execute(API.API_URL + "/roleta/premios/" + numbers[i]);
+                    GetAwardsByNumber(getContext(),numbers[i]);
                     break;
                 }
             }
@@ -139,90 +147,77 @@ public class Awards extends Fragment {
         }
     }
 
-    class GetAwards extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... fileUrl) {
-            StringBuilder stringBuilder = new StringBuilder();
-            try {
-                URL url = new URL(fileUrl[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                InputStream in = connection.getInputStream();
-                stringBuilder = new StringBuilder();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-            } catch (Exception e) {
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
+    public void GetAwards(Context context) {
+        String postUrl = API.API_URL + "/roleta/premios";
+        Log.d("SIGA", "GetAwards: " + postUrl);
+        Log.d("SIGA", "GetAwards: " + Preferences.readUserToken());
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
+                response -> {
+                    try {
+                        //Log.d("SIGA", "GetAwards: " + response);
+                        JSONArray jsonResponse = response.getJSONArray("items");
+                        JSONObject jsonobject = jsonResponse.getJSONObject(0);
+                        JSONArray arrayItems = jsonobject.getJSONArray("items");
+                        locationSort(arrayItems);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> Toast.makeText(getContext(),"ERRO" + error, Toast.LENGTH_LONG)) {
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "Bearer " + Preferences.readUserToken());
+                return headers;
             }
-            return stringBuilder.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                JSONArray jsonResponse = new JSONArray(result);
-                locationSort(jsonResponse);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+        };
+        requestQueue.add(jsonObjectRequest);
     }
 
 
-
-    class GetAwardsByNumber extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... fileUrl) {
-            StringBuilder stringBuilder = new StringBuilder();
-            try {
-                URL url = new URL(fileUrl[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                InputStream in = connection.getInputStream();
-                stringBuilder = new StringBuilder();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-            } catch (Exception e) {
+    public void GetAwardsByNumber(Context context, String number) {
+        String postUrl = API.API_URL + "/roleta/premios/" + number;
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
+                response -> {
+                    try {
+                        Log.d("SIGA", "GetAwardsByNumber: " + response);
+                        name = response.getString("name");
+                        price = response.getString("price");
+                        img = response.getString("img");
+                        extras.putString("name", name);
+                        extras.putString("price", price);
+                        extras.putString("img", img);
+                        final int homeContainer = R.id.fullpage;
+                        AwardsPage awardsPage = new AwardsPage();
+                        awardsPage.setArguments(extras);
+                        openFragment(awardsPage, homeContainer);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> Toast.makeText(getContext(),"ERRO" + error, Toast.LENGTH_LONG)) {
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "Bearer " + Preferences.readUserToken());
+                return headers;
             }
-            return stringBuilder.toString();
-        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                JSONObject awards = new JSONObject(result);
-                name = awards.getString("name");
-                price = awards.getString("price");
-                img = awards.getString("img");
-                extras.putString("name", name);
-                extras.putString("price", price);
-                extras.putString("img", img);
-                final int homeContainer = R.id.fullpage;
-                AwardsPage awardsPage = new AwardsPage();
-                awardsPage.setArguments(extras);
-                openFragment(awardsPage, homeContainer);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        private void openFragment(AwardsPage awardsPage, int homeContainer) {
-            FragmentManager fragmentManager = getFragmentManager();
-            FragmentTransaction ft = fragmentManager.beginTransaction();
-            ft.setCustomAnimations(R.anim.from_left, R.anim.to_right);
-            ft.addToBackStack(null);
-            ft.replace(homeContainer, awardsPage);
-            ft.commit();
-        }
+        };
+        requestQueue.add(jsonObjectRequest);
+    }
 
-
+    private void openFragment(AwardsPage awardsPage, int homeContainer) {
+        FragmentManager fragmentManager = getFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.setCustomAnimations(R.anim.from_left, R.anim.to_right);
+        ft.addToBackStack(null);
+        ft.replace(homeContainer, awardsPage);
+        ft.commit();
     }
     private void backFragment(Roullete roullete, int homeContainer) {
         FragmentManager fragmentManager = getFragmentManager();

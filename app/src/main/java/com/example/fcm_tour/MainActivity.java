@@ -1,6 +1,7 @@
 package com.example.fcm_tour;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -21,6 +22,7 @@ import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.Controllers.Users;
 import com.example.fcm_tour.Views.Authentication;
 import com.example.fcm_tour.Views.History;
+import com.example.fcm_tour.Views.Language;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -32,6 +34,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -48,8 +51,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loading() {
-        Intent intent = new Intent(this, SideBar.class);
-        startActivity(intent);
-        finish();
+        if(Preferences.readLanguage() == null){
+            Intent intent = new Intent(this, Language.class);
+            startActivity(intent);
+            finish();
+        }
+        else{
+            if(Preferences.readLanguage().equals("EN")){
+                String lang = "en";
+                Locale locale = new Locale(lang);
+                Locale.setDefault(locale);
+                Configuration config = new Configuration();
+                config.locale = locale;
+                getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
+            }
+            Intent intent = new Intent(this, SideBar.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }

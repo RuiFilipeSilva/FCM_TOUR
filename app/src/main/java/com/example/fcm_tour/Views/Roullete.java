@@ -52,8 +52,7 @@ import static com.example.fcm_tour.Views.SettingsPage.handleError;
 
 public class Roullete extends Fragment {
     GifImageView gif;
-    Button spining;
-    Button award;
+    Button spining, award;
     TextView points;
     String date, email, formattedDate, myPoints;
     int point, cupertinos;
@@ -69,7 +68,6 @@ public class Roullete extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_roullete, container, false);
         email = Preferences.readUserEmail();
         points = v.findViewById(R.id.points);
@@ -78,50 +76,36 @@ public class Roullete extends Fragment {
         c = Calendar.getInstance().getTime();
         df = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
         formattedDate = df.format(c);
-        gif = (GifImageView) v.findViewById(R.id.gify);
+        gif = v.findViewById(R.id.gify);
         ((GifDrawable) gif.getDrawable()).stop();
-        spining = (Button) v.findViewById(R.id.spin);
-        spining.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                date = Preferences.readUserDate();
-                if (formattedDate.equals(date)) {
-                    AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
-                    alertDialog.setTitle(R.string.tilte_alert_error);
-                    alertDialog.setMessage(getString(R.string.message_alert_error));
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            (dialog, which) -> {
-                                dialog.dismiss();
-                            });
-                    alertDialog.show();
-
-
-                } else {
-                    ((GifDrawable) gif.getDrawable()).start();
-                    award.setClickable(false);
-                    new android.os.Handler().postDelayed(
-                            () -> loading(), 7000);
-
-                }
+        spining = v.findViewById(R.id.spin);
+        spining.setOnClickListener(v12 -> {
+            date = Preferences.readUserDate();
+            if (formattedDate.equals(date)) {
+                AlertDialog alertDialog = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme).create();
+                alertDialog.setTitle(R.string.tilte_alert_error);
+                alertDialog.setMessage(getString(R.string.message_alert_error));
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        (dialog, which) -> dialog.dismiss());
+                alertDialog.show();
+            } else {
+                ((GifDrawable) gif.getDrawable()).start();
+                award.setClickable(false);
+                new android.os.Handler().postDelayed(
+                        () -> loading(), 7000);
             }
         });
-
         award = v.findViewById(R.id.awards);
-        award.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int homeContainer = R.id.fullpage;
-                Awards award = new Awards();
-                openFragment(award, homeContainer);
-            }
+        award.setOnClickListener(v1 -> {
+            final int homeContainer = R.id.fullpage;
+            Awards award = new Awards();
+            openFragment(award, homeContainer);
         });
-
-
         return v;
     }
 
     private void openFragment(Awards awards, int homeContainer) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.setCustomAnimations(R.anim.from_left, R.anim.to_right);
         ft.addToBackStack(null);
@@ -131,71 +115,55 @@ public class Roullete extends Fragment {
 
     public void loading() {
         ((GifDrawable) gif.getDrawable()).stop();
-        new GetPoints().execute(API.API_URL + "/roleta/girar");
+        GetPoints(getContext());
         award.setClickable(true);
-
         changeDate(email, formattedDate, getContext());
     }
 
-    class GetPoints extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... fileUrl) {
-            StringBuilder stringBuilder = new StringBuilder();
-            try {
-                URL url = new URL(fileUrl[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                InputStream in = connection.getInputStream();
-                stringBuilder = new StringBuilder();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-            } catch (Exception e) {
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
+    public void GetPoints(Context context) {
+        String postUrl = API.API_URL + "/roleta/girar";
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
+                response -> {
+                    try {
+                        String state = response.getString("award");
+                        point = Integer.parseInt(state);
+                        AlertDialog alertDialog = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme).create();
+                        alertDialog.setTitle(R.string.title_alert_award);
+                        alertDialog.setMessage(getString(R.string.message_award) + " " + state + " " + getString(R.string.message_award_2));
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                (dialog, which) -> {
+                                    dialog.dismiss();
+                                    points.setText(myPoints);
+                                });
+                        alertDialog.show();
+                        cupertinos = Integer.parseInt(Preferences.readUserPoints());
+                        cupertinos = cupertinos + point;
+                        myPoints = String.valueOf(cupertinos);
+                        Preferences.write("userPoints", myPoints);
+                        updatePoints(email, myPoints, getContext());
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> handleError(error, context)) {
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "Bearer " + Preferences.readUserToken());
+                return headers;
             }
-            return stringBuilder.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                JSONObject jsonResponse = new JSONObject(result);
-                String state = jsonResponse.getString("award");
-                point = Integer.parseInt(state);
-                AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
-                alertDialog.setTitle(R.string.title_alert_award);
-                alertDialog.setMessage(getString(R.string.message_award) + " " + state + " " + getString(R.string.message_award_2));
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        (dialog, which) -> {
-                            dialog.dismiss();
-                            points.setText(myPoints);;
-                        });
-                alertDialog.show();
-                cupertinos = Integer.parseInt(Preferences.readUserPoints());
-                cupertinos = cupertinos + point;
-                Log.d("SIGA", "onPostExecute: "+ cupertinos);
-                myPoints = String.valueOf(cupertinos);
-                Log.d("SIGA", "onPostExecute: " + myPoints);
-                Preferences.write("userPoints", myPoints);
-                updatePoints(email, myPoints, getContext());
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+        };
+        requestQueue.add(jsonObjectRequest);
     }
 
     public static void changeDate(String email, String date, Context context) {
         String postUrl = API.API_URL + "/spin/" + email;
-        Log.d("SIGA", "changeDate: " + email);;
         RequestQueue requestQueue = Volley.newRequestQueue(context);
         JSONObject postData = new JSONObject();
         try {
-
             postData.put("date", date);
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -204,7 +172,6 @@ public class Roullete extends Fragment {
                     try {
                         Preferences.write("userDate", date);
                     } catch (Exception e) {
-                        Log.d("SIGA", "changeDate: " + e);
                         e.printStackTrace();
                     }
                 },
@@ -213,7 +180,7 @@ public class Roullete extends Fragment {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
-                Log.d("SIGA", "getHeaders: Aqui");
+                headers.put("Authorization", "Bearer " + Preferences.readUserToken());
                 return headers;
             }
         };
@@ -234,7 +201,6 @@ public class Roullete extends Fragment {
                     try {
                         Preferences.write("userPoints", newPoints);
                     } catch (Exception e) {
-                        Log.d("SIGA", "changeDate: " + e);
                         e.printStackTrace();
                     }
                 },
@@ -243,14 +209,14 @@ public class Roullete extends Fragment {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
-                Log.d("SIGA", "getHeaders: Aqui");
+                headers.put("Authorization", "Bearer " + Preferences.readUserToken());
                 return headers;
             }
         };
         requestQueue.add(jsonObjectRequest);
     }
+
     public static void handleError(VolleyError error, Context context) {
-        Log.d("SIGA", "handleError: " + error);
         String body = null;
         try {
             body = new String(error.networkResponse.data, "UTF-8");

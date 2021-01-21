@@ -109,7 +109,7 @@ public class PaintingQrCodes extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(result);
                 String state = jsonObject.getString("number");
                 if (state.equals(numberResult)) {
-                    AlertDialog alertDialog = new AlertDialog.Builder(PaintingQrCodes.this).create();
+                    AlertDialog alertDialog = new AlertDialog.Builder(PaintingQrCodes.this, R.style.MyDialogTheme).create();
                     alertDialog.setTitle(R.string.validResultDialog);
                     alertDialog.setMessage(getString(R.string.validMessageDialog));
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -121,7 +121,7 @@ public class PaintingQrCodes extends AppCompatActivity {
                             });
                     alertDialog.show();
                 } else {
-                    AlertDialog alertDialog = new AlertDialog.Builder(PaintingQrCodes.this).create();
+                    AlertDialog alertDialog = new AlertDialog.Builder(PaintingQrCodes.this, R.style.MyDialogTheme).create();
                     alertDialog.setTitle(R.string.noResultsDialog);
                     alertDialog.setMessage(getString(R.string.invalidMessageCode));
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -132,7 +132,7 @@ public class PaintingQrCodes extends AppCompatActivity {
                     alertDialog.show();
                 }
             } catch (JSONException e) {
-                AlertDialog alertDialog2 = new AlertDialog.Builder(PaintingQrCodes.this).create();
+                AlertDialog alertDialog2 = new AlertDialog.Builder(PaintingQrCodes.this, R.style.MyDialogTheme).create();
                 alertDialog2.setTitle(R.string.noResultsDialog);
                 alertDialog2.setMessage(getString(R.string.invalidMessageTicket));
                 alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",

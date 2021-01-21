@@ -86,8 +86,7 @@ public class SideBar extends AppCompatActivity {
             MenuItem nav_dashboard = menu.findItem(R.id.logout);
             nav_dashboard.setVisible(false);
             MenuItem nav_settings = menu.findItem(R.id.def);
-            nav_settings.setTitle("Alterar Idioma");
-
+            nav_settings.setTitle(R.string.changeLanguage);
         }
         setupDrawerContent(navigationView);
         navigationView.getHeaderView(0).findViewById(R.id.closeDrawerId).setOnClickListener(v -> drawerLayout.closeDrawer(GravityCompat.START));
@@ -157,15 +156,13 @@ public class SideBar extends AppCompatActivity {
                 fragmentClass = Music.class;
                 break;
             case R.id.roleta:
-                if (Preferences.readUserToken() != null){
+                if (Preferences.readUserToken() != null) {
                     fragmentClass = Roullete.class;
-                }
-                else{
-                    AlertDialog.Builder alert = new AlertDialog.Builder(SideBar.this,R.style.MyDialogTheme);
+                } else {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(SideBar.this, R.style.MyDialogTheme);
                     alert.setTitle(R.string.alert_roulette);
                     alert.setMessage(getString(R.string.message_roulette));
-
-                    alert.setPositiveButton("Iniciar Sessão", (dialog, whichButton) -> {
+                    alert.setPositiveButton(R.string.login, (dialog, whichButton) -> {
                         Intent intent = new Intent(SideBar.this, Authentication.class);
                         startActivity(intent);
                         dialog.dismiss();
@@ -177,7 +174,6 @@ public class SideBar extends AppCompatActivity {
                             });
                     alert.show();
                     fragmentClass = History.class;
-
                 }
                 break;
             case R.id.logout:

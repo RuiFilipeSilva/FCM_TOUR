@@ -108,9 +108,8 @@ public class AwardsPage extends Fragment {
             getAward.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("SIGA", "onClick: AQUI");
                     if (nameClient.getText().toString().equals("") || adress.getText().toString().equals("") || postalCode.getText().toString().equals("") || city.getText().toString().equals("")) {
-                        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+                        AlertDialog alertDialog = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme).create();
                         alertDialog.setTitle(R.string.title_get_awards);
                         alertDialog.setMessage(getString(R.string.message_get_award));
                         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -119,7 +118,7 @@ public class AwardsPage extends Fragment {
                                 });
                         alertDialog.show();
                     } else {
-                        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+                        AlertDialog.Builder alert = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
                         alert.setTitle(R.string.conf_title_get_awards);
                         alert.setMessage(getString(R.string.conf_message_get_awards));
                         alert.setPositiveButton("Confirmar", (dialog, whichButton) -> {
@@ -188,7 +187,6 @@ public class AwardsPage extends Fragment {
                     try {
                         Preferences.write("userPoints", newPoints);
                     } catch (Exception e) {
-                        Log.d("SIGA", "changeDate: " + e);
                         e.printStackTrace();
                     }
                 },
@@ -197,14 +195,12 @@ public class AwardsPage extends Fragment {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
-                Log.d("SIGA", "getHeaders: Aqui");
                 return headers;
             }
         };
         requestQueue.add(jsonObjectRequest);
     }
     public static void handleError(VolleyError error, Context context) {
-        Log.d("SIGA", "handleError: " + error);
         String body = null;
         try {
             body = new String(error.networkResponse.data, "UTF-8");

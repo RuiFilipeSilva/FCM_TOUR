@@ -8,7 +8,7 @@
     <string name="errorToast">Erro:</string>
 
     <!--AR_Sculptures-->
-    <string name="ARexception">Model can`t be Loaded</string>
+    <string name="ARexception">O Modelo não consegue ser carregado!</string>
 
     <!--AudioPage-->
     <string name="goBackMusic">Música</string>
@@ -17,17 +17,18 @@
     <string name="goBackCollections">Acervos</string>
     <string name="collectionsBtn">Acervos</string>
     <string name="titleTextView">1900</string>
+    <string name="nextBtn">Seguinte</string>
+    <string name="previousBtn">Anterior</string>
 
     <!--AudioPlayer-->
     <string name="dialogAudioText">A carregar áudio...</string>
-    <string name="startTime">0:11</string>
-    <string name="timeLeft">-1:49</string>
+    <string name="startTime">0:00</string>
+    <string name="descriptionAudioPlayer">DESCRIÇÃO</string>
 
     <!--Authentication-->
     <string name="login">Iniciar Sessão</string>
     <string name="register">Registar</string>
     <string name="backBtn">Voltar V</string>
-
     <!--Collections-->
     <string name="imageViewTxt1">00</string>
 
@@ -83,7 +84,9 @@
     <string name="ticketCodeMsg">Insira o código que se encontra no bilhete</string>
 
     <!--Rooms-->
-    <string name="noAccessAlertTitle">Não têm acesso para entrar</string>
+    <string name="noAccessAlertTitle">Não tem acesso para entrar!</string>
+    <string name="scanTicketAccessTxt">Digitalize o seu bilhete para ter acesso</string>
+    <string name="scanCodeTxt">Digitalize o Código</string>
 
     <!--SculpturePage-->
     <string name="sculpturesPageTitle">ESCULTURAS</string>
@@ -109,8 +112,13 @@
     <string name="logoutLabel">Terminar Sessão</string>
 
     <!--changePWPage-->
-    <string name="changePwToast">Password alterada com sucesso!</string>
-    <string name="addPwToast">Password adicionada com sucesso!</string>
+    <string name="changePwToast">Palavra-passe alterada com sucesso!</string>
+    <string name="addPwToast">Palavra-passe adicionada com sucesso!</string>
+    <string name="currentPassword">Palavra-passe actual</string>
+    <string name="newPassword">Nova Palavra-passe</string>
+    <string name="confNewPassword">Confirmar nova Palavra-passe</string>
+    <string name="changePasswordBtn">Mudar Palavra-passe</string>
+    <string name="addPasswordBtn">Adicionar Palavra-passe</string>
 
     <!--Outros-->
     <string name="FB_APP_ID">3302524869853214</string>
@@ -121,7 +129,7 @@
     <string name="navigation_drawer_open">Open Navigation</string>
     <string name="navigation_drawer_close">Close Navigation</string>
     <string name="title_activity_a_r__sculptures">AR_Sculptures</string>
-    <string name="qrCodeState">Ticket válido</string>
+    <string name="qrCodeState">Bilhete válido</string>
     <string name="alertDialogTitle">Bilhete Válido</string>
     <string name="alert_roulette">Não pode entrar</string>
     <string name="message_roulette">Para aceder à Roleta tem de iniciar sessão</string>
@@ -151,8 +159,33 @@
     <string name="back">Voltar</string>
     <string name="no_cupertinos">Não têm cupertinos suficientes para adquirir este prémio, volte aqui todos os dia e jogo na roleta para pode coletar mais cupertinos!</string>
 
+    <!--Quizz-->
+    <string name="quizzWonPrize">Parabéns, todas as tuas respostas estão corretas! Demonstras-te ser um verdadeiro sabedor da literatura portuguesa, como recompensa a Fundação Cupertino de Miranda vai oferecer-te um prémio! Envia-mos-te um email para poderes reclamar o prémio no balcão.</string>
+    <string name="quizzParticipation">Obrigado por teres participado neste quizz, infelizmente não acertaste todas as respostas. Tens que estar mais atento para a próxima! :)</string>
+    <string name="startQuizzBtn">Iniciar Quizz</string>
+    <string name="goToHomePage">Página Inicial</string>
+
+    <!--SideBar-->
+    <string name="changeLanguage">Alterar Idioma</string>
+
+    <!--SettingsPage-->
+    <string name="usernameTxt">Nome de utilizador</string>
+    <string name="emailPlaceholder">username@gmail.com</string>
+    <string name="changePassword">Alterar Palavra-passe</string>
+    <string name="noImageSelected">Nenhuma imagem selecionada!</string>
+    <string name="currentLang">PT</string>
+    <string name="deleteAccount">Eliminar Conta</string>
+    <string name="deleteAccountDialogTitle">ATENÇÃO</string>
+    <string name="deleteAccountDialogMsg">Pretende eliminar a sua conta?</string>
+    <string name="deleteBtn">Eliminar</string>
+    <string name="cancelBtn">Cancelar</string>
+    <string name="titleIntent">Selecionar Imagem</string>
+    <string name="deleteAccountToastMsg">Conta Eliminada</string>
+    <string name="loadingImageTxt">A carregar imagem...</string>
+    <string name="imageUpdatedSuccess">Imagem atualizada</string>
 
     <!--This string is used for square devices and overridden by hello_world in    values-round/strings.xml for round devices.-->
     <string name="hello_world">Hello Square World!</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_language">Language</string>
 </resources>
