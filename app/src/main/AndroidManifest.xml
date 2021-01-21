@@ -36,6 +36,9 @@
             android:name=".Views.Register"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".Views.Language"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".Views.Authentication"
             android:screenOrientation="portrait" />
         <activity

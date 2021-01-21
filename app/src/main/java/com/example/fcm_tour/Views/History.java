@@ -1,5 +1,7 @@
 package com.example.fcm_tour.Views;
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -14,7 +16,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
@@ -27,13 +35,17 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class History extends Fragment {
     ImageButton towerBtn, museumBtn, libraryBtn, musicBtn;
     Bundle extras;
     String name, description, img, link;
+    View v;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,9 +55,9 @@ public class History extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_history, container, false);
+        v = inflater.inflate(R.layout.fragment_history, container, false);
         Preferences.init(getContext());
-        new History.GetMuseum().execute(API.API_URL + "/home");
+        GetMuseum(getContext());
         towerBtn = v.findViewById(R.id.tower);
         towerBtn.setOnClickListener(v1 -> {
             final int homeContainer = R.id.fullpage;
@@ -108,7 +120,47 @@ public class History extends Fragment {
         ft.commit();
     }
 
-    class GetMuseum extends AsyncTask<String, String, String> {
+
+    public void GetMuseum(Context context) {
+        String postUrl = API.API_URL + "/home";
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
+                response -> {
+                    try {
+                        Log.d("SIGA", String.valueOf(response));
+                        String TEMP = response.getString("description");
+                        String img = response.getString("cover");
+                        Log.d("SIGA", "GetMuseum: "+ img + TEMP);
+                        ImageView imgChuck = v.findViewById(R.id.coverHistory);
+                        Picasso.get().load(img).into(imgChuck);
+                        TextView text = v.findViewById(R.id.textview2);
+                        text.setText(TEMP);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> handleError(error, context)) {
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<String, String>();
+                headers.put("Content-Type", "application/json");
+                headers.put("language", Preferences.readLanguage());
+                return headers;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public static void handleError(VolleyError error, Context context) {
+        String body = null;
+        try {
+            body = new String(error.networkResponse.data, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+        }
+        Toast toast = Toast.makeText(context, R.string.errorToast + body, Toast.LENGTH_SHORT);
+        toast.show();
+    }
+    /*class GetMuseum extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... fileUrl) {
             StringBuilder stringBuilder = new StringBuilder();
@@ -145,7 +197,7 @@ public class History extends Fragment {
                 e.printStackTrace();
             }
         }
-    }
+    }*/
 
     class TicketScan extends AsyncTask<String, String, String> {
         @Override
