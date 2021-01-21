@@ -23,6 +23,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
@@ -38,6 +42,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Rooms extends Fragment {
     private static String[] numbers, names, imgs;
@@ -72,13 +78,13 @@ public class Rooms extends Fragment {
         for (int i = 0; i <= result.length() - 1; i++) {
             JSONObject room = result.getJSONObject(i);
             String img = room.getString("cover");
-            /*String name;
+            String name;
             if (i == 0 && Preferences.readLanguage().equals("EN")) {
                 name = "Beginning";
             } else {
                 name = room.getString("name");
-            }*/
-            String name = room.getString("name");
+            }
+            //String name = room.getString("name");
             String number = room.getString("number");
             if (i == 0) {
                 int color = R.color.tower;
@@ -106,7 +112,7 @@ public class Rooms extends Fragment {
                         Preferences.removeRoom();
                         Preferences.write("room", numbers[i]);
                         extras.putString("nextRoom", names[i + 1]);
-                        new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + numbers[i]);
+                        GetRoomsByNumber(getContext(), numbers[i]);
                         break;
                     } else {
                         access = false;
@@ -118,7 +124,7 @@ public class Rooms extends Fragment {
                         if (i < names.length - 1) {
                             extras.putString("nextRoom", names[i + 1]);
                         }
-                        new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + numbers[i]);
+                        GetRoomsByNumber(getContext(), numbers[i]);
                     }
                 }
             }
@@ -180,6 +186,44 @@ public class Rooms extends Fragment {
         }
     }
 
+    public void GetRoomsByNumber(Context context, String number) {
+        String postUrl = API.API_URL + "/torre/salas/" + number;
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
+                response -> {
+                    try {
+                        imgsList = response.getString("imgs");
+                        description = response.getString("description");
+                        link = response.getString("audio");
+                        title = response.getString("name");
+                        if(title.equals("Início") && Preferences.readLanguage().equals("EN")) {
+                            title = "Beginning";
+                        }
+                        extras.putString("imgsList", imgsList);
+                        extras.putString("title", title);
+                        extras.putString("description", description);
+                        extras.putString("link", link);
+                        Preferences.saveAudioPageType(0);
+                        final int homeContainer = R.id.fullpage;
+                        AudioPage audioPage = new AudioPage();
+                        audioPage.setArguments(extras);
+                        openFragment(audioPage, homeContainer);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> Toast.makeText(context, "Erro" + error, Toast.LENGTH_LONG).show()) {
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("language", Preferences.readLanguage());
+                return headers;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
+    }
+
     class GetRooms extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... fileUrl) {
@@ -206,51 +250,6 @@ public class Rooms extends Fragment {
             try {
                 JSONArray jsonResponse = new JSONArray(result);
                 locationSort(jsonResponse);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    class GetRoomsByNumber extends AsyncTask<String, String, String> {
-
-        @Override
-        protected String doInBackground(String... fileUrl) {
-            StringBuilder stringBuilder = new StringBuilder();
-            try {
-                URL url = new URL(fileUrl[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                InputStream in = connection.getInputStream();
-                stringBuilder = new StringBuilder();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-            } catch (Exception e) {
-            }
-            return stringBuilder.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                JSONObject rooms = new JSONObject(result);
-                imgsList = rooms.getString("imgs");
-                description = rooms.getString("description");
-                link = rooms.getString("audio");
-                title = rooms.getString("name");
-                extras.putString("imgsList", imgsList);
-                extras.putString("title", title);
-                extras.putString("description", description);
-                extras.putString("link", link);
-                Preferences.saveAudioPageType(0);
-                final int homeContainer = R.id.fullpage;
-                AudioPage audioPage = new AudioPage();
-                audioPage.setArguments(extras);
-                openFragment(audioPage, homeContainer);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

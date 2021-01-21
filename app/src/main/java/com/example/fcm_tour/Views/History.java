@@ -2,6 +2,7 @@ package com.example.fcm_tour.Views;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -26,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
+import com.example.fcm_tour.SideBar;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -71,7 +73,7 @@ public class History extends Fragment {
             openMuseumFragment(museumPage, homeContainer);
         });
         if (Preferences.readQrPaint() != null) {
-            new History.TicketScan().execute(API.API_URL + "/museu/quadros/" + Preferences.readQrPaint());
+            TicketScan(Preferences.readQrPaint());
         }
         libraryBtn = v.findViewById(R.id.library);
         libraryBtn.setOnClickListener(v1 -> {
@@ -89,7 +91,7 @@ public class History extends Fragment {
     }
 
     private void openTowerFragment(Tower towerPage, int homeContainer) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.addToBackStack(null);
         ft.replace(homeContainer, towerPage);
@@ -97,7 +99,7 @@ public class History extends Fragment {
     }
 
     private void openMuseumFragment(Museum museumPage, int homeContainer) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.addToBackStack(null);
         ft.replace(homeContainer, museumPage);
@@ -105,7 +107,7 @@ public class History extends Fragment {
     }
 
     private void openLibraryFragment(Library library, int homeContainer) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.addToBackStack(null);
         ft.replace(homeContainer, library);
@@ -113,7 +115,7 @@ public class History extends Fragment {
     }
 
     private void openMusicFragment(Music musicPage, int homeContainer) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.addToBackStack(null);
         ft.replace(homeContainer, musicPage);
@@ -158,92 +160,45 @@ public class History extends Fragment {
         Toast toast = Toast.makeText(context, R.string.errorToast + body, Toast.LENGTH_SHORT);
         toast.show();
     }
-    /*class GetMuseum extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... fileUrl) {
-            StringBuilder stringBuilder = new StringBuilder();
-            try {
-                URL url = new URL(fileUrl[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                InputStream in = connection.getInputStream();
-                stringBuilder = new StringBuilder();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-            } catch (Exception e) {
-            }
-            return stringBuilder.toString();
-        }
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            View v = getView();
-            try {
-                JSONArray jsonResponse = new JSONArray(result);
-                JSONObject jsonObjetcs = jsonResponse.getJSONObject(0);
-                String TEMP = jsonObjetcs.getString("description");
-                String img = jsonObjetcs.getString("cover");
-                ImageView imgChuck = v.findViewById(R.id.cover);
-                Picasso.get().load(img).into(imgChuck);
-                TextView text = v.findViewById(R.id.textview2);
-                text.setText(TEMP);
-            } catch (JSONException e) {
-                e.printStackTrace();
+    public void TicketScan(String number) {
+        String postUrl = API.API_URL + "/museu/quadros/" + number;
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
+                response -> {
+                    try {
+                        name = response.getString("name");
+                        description = response.getString("description");
+                        img = response.getString("img");
+                        link = response.getString("audio");
+                        extras.putString("title", name);
+                        extras.putString("description", description);
+                        extras.putString("img", img);
+                        extras.putString("link", link);
+                        extras.putBoolean("paitingQr", true);
+                        Preferences.saveAudioPageType(1);
+                        openPaintingPage();
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> Toast.makeText(getContext(), "Erro: " + error, Toast.LENGTH_SHORT).show()) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/json; charset=UTF-8");
+                params.put("language", Preferences.readLanguage());
+                return params;
             }
-        }
-    }*/
-
-    class TicketScan extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... fileUrl) {
-            StringBuilder stringBuilder = new StringBuilder();
-            try {
-                URL url = new URL(fileUrl[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                InputStream in = connection.getInputStream();
-                stringBuilder = new StringBuilder();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-            } catch (Exception e) {
-            }
-            return stringBuilder.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-                name = jsonObject.getString("name");
-                description = jsonObject.getString("description");
-                img = jsonObject.getString("img");
-                link = jsonObject.getString("audio");
-                extras.putString("title", name);
-                extras.putString("description", description);
-                extras.putString("img", img);
-                extras.putString("link", link);
-                extras.putBoolean("paitingQr", true);
-                Preferences.saveAudioPageType(1);
-                openPaintingPage();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+        };
+        requestQueue.add(jsonObjectRequest);
     }
 
     public void openPaintingPage() {
         final int homeContainer = R.id.fullpage;
         AudioPage audioPage = new AudioPage();
         audioPage.setArguments(this.extras);
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.addToBackStack(null);
         ft.replace(homeContainer, audioPage);

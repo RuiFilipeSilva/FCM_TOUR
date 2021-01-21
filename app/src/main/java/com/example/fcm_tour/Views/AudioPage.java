@@ -1,6 +1,7 @@
 package com.example.fcm_tour.Views;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -26,7 +27,12 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.fcm_tour.API;
@@ -48,7 +54,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class AudioPage extends Fragment {
@@ -83,11 +91,11 @@ public class AudioPage extends Fragment {
         });
         nextRoomBtn = v.findViewById(R.id.nextBtn);
         nextRoomBtn.setOnClickListener(v -> {
-            new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + nextRoomNum);
+            GetRoomsByNumber(nextRoomNum);
         });
         previousRoomBtn = v.findViewById(R.id.beforeBtn);
         previousRoomBtn.setOnClickListener(v -> {
-            new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + beforeRoomNum);
+            GetRoomsByNumber(beforeRoomNum);
         });
         startQuizzBtn = v.findViewById(R.id.startQuizzBtn);
         startQuizzBtn.setOnClickListener(v -> {
@@ -237,40 +245,34 @@ public class AudioPage extends Fragment {
         openDescFragment();
     }
 
-    class GetRoomsByNumber extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... fileUrl) {
-            StringBuilder stringBuilder = new StringBuilder();
-            try {
-                URL url = new URL(fileUrl[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                InputStream in = connection.getInputStream();
-                stringBuilder = new StringBuilder();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-            } catch (Exception e) {
+    public void GetRoomsByNumber(String number) {
+        String postUrl = API.API_URL + "/torre/salas/" + number;
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
+                response -> {
+                    try {
+                        getImgs = response.getString("imgs");
+                        description = response.getString("description");
+                        link = response.getString("audio");
+                        title = response.getString("name");
+                        if (title.equals("Início") && Preferences.readLanguage().equals("EN")) {
+                            title = "Beginning";
+                        }
+                        loadNextRoomInfo();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> Toast.makeText(getContext(), "Erro" + error, Toast.LENGTH_LONG).show()) {
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("language", Preferences.readLanguage());
+                return headers;
             }
-            return stringBuilder.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                JSONObject rooms = new JSONObject(result);
-                getImgs = rooms.getString("imgs");
-                description = rooms.getString("description");
-                link = rooms.getString("audio");
-                title = rooms.getString("name");
-                loadNextRoomInfo();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+        };
+        requestQueue.add(jsonObjectRequest);
     }
 
     public void loadNextRoomInfo() throws JSONException {

@@ -12,8 +12,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.fcm_tour.MainActivity;
 import com.example.fcm_tour.R;
 import com.example.fcm_tour.SideBar;
+import com.example.fcm_tour.Views.Language;
 import com.example.fcm_tour.Views.Login2;
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Views.ChangePwPage;
@@ -98,9 +100,15 @@ public class Users {
                         token = response.get("token").toString();
                         JWTUtils.decoded(token);
                         Preferences.saveUserToken(token);
-                        Intent homePage = new Intent(context, SideBar.class);
-                        homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(homePage);
+                        if (Preferences.readLanguage() == null) {
+                            Intent languague = new Intent(context, Language.class);
+                            languague.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(languague);
+                        } else {
+                            Intent homePage = new Intent(context, SideBar.class);
+                            homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(homePage);
+                        }
                         Toast toast = Toast.makeText(context, R.string.welcomeToast, Toast.LENGTH_SHORT);
                         toast.show();
                     } catch (JSONException e) {
@@ -138,9 +146,15 @@ public class Users {
                         token = response.get("token").toString();
                         JWTUtils.decoded(token);
                         Preferences.saveUserToken(token);
-                        Intent homePage = new Intent(context, SideBar.class);
-                        homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(homePage);
+                        if (Preferences.readLanguage() == null) {
+                            Intent languague = new Intent(context, Language.class);
+                            languague.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(languague);
+                        } else {
+                            Intent homePage = new Intent(context, SideBar.class);
+                            homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(homePage);
+                        }
                         Toast toast = Toast.makeText(context, R.string.welcomeToast, Toast.LENGTH_SHORT);
                         toast.show();
                     } catch (Exception e) {
@@ -174,9 +188,15 @@ public class Users {
                         token = response.get("token").toString();
                         JWTUtils.decoded(token);
                         Preferences.saveUserToken(token);
-                        Intent homePage = new Intent(context, SideBar.class);
-                        homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(homePage);
+                        if (Preferences.readLanguage() == null) {
+                            Intent languague = new Intent(context, Language.class);
+                            languague.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(languague);
+                        } else {
+                            Intent homePage = new Intent(context, SideBar.class);
+                            homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            context.startActivity(homePage);
+                        }
                         Toast toast = Toast.makeText(context, R.string.welcomeToast, Toast.LENGTH_SHORT);
                         toast.show();
                     } catch (Exception e) {

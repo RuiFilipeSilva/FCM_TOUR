@@ -27,11 +27,16 @@ public class Language extends AppCompatActivity {
         PT.setOnClickListener(v -> {
             Preferences.removeLanguage();
             Preferences.saveLanguage("PT");
+            String lang = "pt";
+            Locale locale = new Locale(lang);
+            Locale.setDefault(locale);
+            Configuration config = new Configuration();
+            config.locale = locale;
+            getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
             Intent intent = new Intent(this, SideBar.class);
             startActivity(intent);
             finish();
         });
-
 
         EN = findViewById(R.id.EN);
         EN.setOnClickListener(v -> {
@@ -47,6 +52,5 @@ public class Language extends AppCompatActivity {
             startActivity(intent);
             finish();
         });
-
     }
 }

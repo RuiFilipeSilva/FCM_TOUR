@@ -2,12 +2,7 @@ package com.example.fcm_tour.Views;
 
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,35 +12,24 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
-import com.example.fcm_tour.Controllers.Users;
 import com.example.fcm_tour.R;
-import com.example.fcm_tour.SideBar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Array;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.example.fcm_tour.Controllers.Users.handleError;
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class QuizzPage extends Fragment {
@@ -158,20 +142,18 @@ public class QuizzPage extends Fragment {
     public void GetQuestions(Context context) {
         String postUrl = API.API_URL + "/quizz";
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, postUrl, null,
                 response -> {
                     try {
-                        JSONArray jsonResponse = response.getJSONArray("questions");
-                        questions = new String[jsonResponse.length()];
-                        optionA = new String[jsonResponse.length()];
-                        optionB = new String[jsonResponse.length()];
-                        optionC = new String[jsonResponse.length()];
-                        optionD = new String[jsonResponse.length()];
-                        correctAnswers = new String[jsonResponse.length()];
+                        questions = new String[response.length()];
+                        optionA = new String[response.length()];
+                        optionB = new String[response.length()];
+                        optionC = new String[response.length()];
+                        optionD = new String[response.length()];
+                        correctAnswers = new String[response.length()];
                         currentQuestionId = 0;
-                        for (int i = 0; i < jsonResponse.length(); i++) {
-                            JSONObject jsonObject = jsonResponse.getJSONObject(i);
+                        for (int i = 0; i < response.length(); i++) {
+                            JSONObject jsonObject = response.getJSONObject(i);
                             String jsonQuestion = jsonObject.getString("question");
                             String optionsResponse = jsonObject.getString("options");
                             JSONObject optionsJSON = new JSONObject(optionsResponse);
@@ -194,12 +176,15 @@ public class QuizzPage extends Fragment {
                         e.printStackTrace();
                     }
                 },
-                error -> Toast.makeText(getContext(), "Erro: " + error, Toast.LENGTH_SHORT).show()) {
+                error -> {
+                    Toast.makeText(getContext(), "Erro: " + error, Toast.LENGTH_SHORT).show();
+                }) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> params = new HashMap<>();
                 params.put("Content-Type", "application/json; charset=UTF-8");
                 params.put("Authorization", "Bearer " + Preferences.readUserToken());
+                params.put("language", Preferences.readLanguage());
                 return params;
             }
         };
@@ -212,6 +197,7 @@ public class QuizzPage extends Fragment {
         JSONObject postData = new JSONObject();
         try {
             postData.put("email", Preferences.readUserEmail());
+            postData.put("type", 0);
         } catch (JSONException e) {
             e.printStackTrace();
         }

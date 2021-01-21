@@ -1,5 +1,6 @@
 package com.example.fcm_tour.Views;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -14,7 +15,13 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
@@ -29,11 +36,12 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Music extends Fragment {
     View v;
     ImageButton firstMusicGroup, secondMusicGroup;
-    Integer getTypeMethod;
     Bundle extras;
     String title, description, img, link;
 
@@ -47,58 +55,82 @@ public class Music extends Fragment {
         v = inflater.inflate(R.layout.fragment_music, container, false);
         extras = new Bundle();
         Preferences.init(getContext());
-        new GetMusicGroup(1).execute(API.API_URL + "/musica/");
+        GetMusic(getContext());
         firstMusicGroup = v.findViewById(R.id.firstImg);
         secondMusicGroup = v.findViewById(R.id.secondImg);
-        firstMusicGroup.setOnClickListener(v -> {
-            new GetMusicGroup(0).execute(API.API_URL + "/musica/cupertinos/");
-        });
-        secondMusicGroup.setOnClickListener(v -> {
-            new GetMusicGroup(0).execute(API.API_URL + "/musica/ciclos/");
-        });
+        firstMusicGroup.setOnClickListener(v -> GetCiclos(getContext()));
+        secondMusicGroup.setOnClickListener(v -> GetCupertinos(getContext()));
         return v;
     }
 
-    class GetMusicGroup extends AsyncTask<String, String, String> {
-        public GetMusicGroup(int Selected) {
-            getTypeMethod = Selected;
-        }
-
-        @Override
-        protected String doInBackground(String... fileUrl) {
-            StringBuilder stringBuilder = new StringBuilder();
-            try {
-                URL url = new URL(fileUrl[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                InputStream in = connection.getInputStream();
-                stringBuilder = new StringBuilder();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-            } catch (Exception e) {
+    public void GetMusic(Context context) {
+        String postUrl = API.API_URL + "/musica/";
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, postUrl, null,
+                response -> {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(0);
+                        loadLayoutPage(jsonObject);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> Toast.makeText(context, "Erro: " + error, Toast.LENGTH_SHORT).show()) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/json; charset=UTF-8");
+                params.put("language", Preferences.readLanguage());
+                return params;
             }
-            return stringBuilder.toString();
-        }
+        };
+        requestQueue.add(jsonObjectRequest);
+    }
 
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                if (getTypeMethod == 0) {
-                    JSONObject resultJSON = new JSONObject(result);
-                    openFragment(resultJSON);
-                } else if (getTypeMethod == 1) {
-                    JSONArray resultArray = new JSONArray(result);
-                    JSONObject resultJSON = resultArray.getJSONObject(0);
-                    loadLayoutPage(resultJSON);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+    public void GetCiclos(Context context) {
+        String postUrl = API.API_URL + "/musica/ciclos/";
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
+                response -> {
+                    try {
+                        openFragment(response);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> Toast.makeText(context, "Erro: " + error, Toast.LENGTH_SHORT).show()) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/json; charset=UTF-8");
+                params.put("language", Preferences.readLanguage());
+                return params;
             }
-        }
+        };
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void GetCupertinos(Context context) {
+        String postUrl = API.API_URL + "/musica/cupertinos/";
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
+                response -> {
+                    try {
+                        openFragment(response);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> Toast.makeText(context, "Erro: " + error, Toast.LENGTH_SHORT).show()) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/json; charset=UTF-8");
+                params.put("language", Preferences.readLanguage());
+                return params;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
     }
 
     private void openFragment(JSONObject result) throws JSONException {

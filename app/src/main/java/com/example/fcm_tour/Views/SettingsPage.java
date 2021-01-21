@@ -245,12 +245,8 @@ public class SettingsPage extends Fragment {
     public void logout() {
         SideBar.updateImg();
         Users.Logout();
-        final int homeContainer = R.id.fullpage;
-        History history = new History();
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.replace(homeContainer, history);
-        ft.commit();
+        Intent intent = new Intent(v.getContext(), SideBar.class);
+        startActivity(intent);
     }
 
     public void setProgressDialog() {

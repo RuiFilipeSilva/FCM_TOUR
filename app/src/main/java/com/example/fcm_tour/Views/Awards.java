@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.fcm_tour.API;
@@ -48,10 +49,11 @@ import java.util.Map;
 
 public class Awards extends Fragment {
     private static String[] names, prices, imgs, numbers;
-    String name, price, img, actualPoints;
+    String name, price, img;
     Bundle extras;
     ImageButton comeback;
     TextView cup;
+    View v;
 
 
     @Override
@@ -61,30 +63,22 @@ public class Awards extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_awards, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        v = inflater.inflate(R.layout.fragment_awards, container, false);
         cup = v.findViewById(R.id.points);
         cup.setText(Preferences.readUserPoints());
         extras = new Bundle();
         GetAwards(getContext());
-        comeback = (ImageButton)v.findViewById(R.id.back);
-        comeback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int homeContainer = R.id.fullpage;
-                Roullete roullete = new Roullete();
-                backFragment(roullete, homeContainer);
-            }
+        comeback = (ImageButton) v.findViewById(R.id.back);
+        comeback.setOnClickListener(v -> {
+            final int homeContainer = R.id.fullpage;
+            Roullete roullete = new Roullete();
+            backFragment(roullete, homeContainer);
         });
-
         return v;
-
     }
 
     private void locationSort(JSONArray result) throws JSONException {
-        View v = getView();
         ListView listView = v.findViewById(R.id.listAwards);
         names = new String[result.length()];
         prices = new String[result.length()];
@@ -103,11 +97,10 @@ public class Awards extends Fragment {
         }
         MyAdapter adapter = new MyAdapter(getContext(), names, prices, imgs, numbers);
         listView.setAdapter(adapter);
-        Log.d("SIGA", "locationSort: "+ numbers);
         listView.setOnItemClickListener((parent, view, position, id) -> {
             for (int i = 0; i < numbers.length; i++) {
                 if (position == i) {
-                    GetAwardsByNumber(getContext(),numbers[i]);
+                    GetAwardsByNumber(getContext(), numbers[i]);
                     break;
                 }
             }
@@ -149,27 +142,22 @@ public class Awards extends Fragment {
 
     public void GetAwards(Context context) {
         String postUrl = API.API_URL + "/roleta/premios";
-        Log.d("SIGA", "GetAwards: " + postUrl);
-        Log.d("SIGA", "GetAwards: " + Preferences.readUserToken());
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest(Request.Method.GET, postUrl, null,
                 response -> {
                     try {
-                        //Log.d("SIGA", "GetAwards: " + response);
-                        JSONArray jsonResponse = response.getJSONArray("items");
-                        JSONObject jsonobject = jsonResponse.getJSONObject(0);
-                        JSONArray arrayItems = jsonobject.getJSONArray("items");
-                        locationSort(arrayItems);
+                        locationSort(response);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 },
-                error -> Toast.makeText(getContext(),"ERRO" + error, Toast.LENGTH_LONG)) {
+                error -> Toast.makeText(getContext(), "ERRO" + error, Toast.LENGTH_LONG)) {
             @Override
             public Map<String, String> getHeaders() {
-                HashMap<String, String> headers = new HashMap<String, String>();
+                HashMap<String, String> headers = new HashMap<>();
                 headers.put("Content-Type", "application/json");
                 headers.put("Authorization", "Bearer " + Preferences.readUserToken());
+                headers.put("language", Preferences.readLanguage());
                 return headers;
             }
         };
@@ -183,7 +171,6 @@ public class Awards extends Fragment {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
                 response -> {
                     try {
-                        Log.d("SIGA", "GetAwardsByNumber: " + response);
                         name = response.getString("name");
                         price = response.getString("price");
                         img = response.getString("img");
@@ -198,12 +185,13 @@ public class Awards extends Fragment {
                         e.printStackTrace();
                     }
                 },
-                error -> Toast.makeText(getContext(),"ERRO" + error, Toast.LENGTH_LONG)) {
+                error -> Toast.makeText(getContext(), "ERRO" + error, Toast.LENGTH_LONG)) {
             @Override
             public Map<String, String> getHeaders() {
-                HashMap<String, String> headers = new HashMap<String, String>();
+                HashMap<String, String> headers = new HashMap<>();
                 headers.put("Content-Type", "application/json");
                 headers.put("Authorization", "Bearer " + Preferences.readUserToken());
+                headers.put("language", Preferences.readLanguage());
                 return headers;
             }
 
@@ -212,15 +200,16 @@ public class Awards extends Fragment {
     }
 
     private void openFragment(AwardsPage awardsPage, int homeContainer) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.setCustomAnimations(R.anim.from_left, R.anim.to_right);
         ft.addToBackStack(null);
         ft.replace(homeContainer, awardsPage);
         ft.commit();
     }
+
     private void backFragment(Roullete roullete, int homeContainer) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.setCustomAnimations(R.anim.from_right, R.anim.to_left);
         ft.addToBackStack(null);

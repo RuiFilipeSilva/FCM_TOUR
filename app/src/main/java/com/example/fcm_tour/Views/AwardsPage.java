@@ -52,6 +52,7 @@ public class AwardsPage extends Fragment {
     RelativeLayout alert;
     Integer points, cupertinos;
     TextView cup;
+    View v;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,10 +64,8 @@ public class AwardsPage extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_awards_page, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        v = inflater.inflate(R.layout.fragment_awards_page, container, false);
         email = Preferences.readUserEmail();
         actualPoints = Preferences.readUserPoints();
         cup = v.findViewById(R.id.points);
@@ -83,7 +82,6 @@ public class AwardsPage extends Fragment {
         ImageView img = (ImageView) v.findViewById(R.id.img);
         Picasso.get().load(imgs).into(img);
         comeback = (ImageButton) v.findViewById(R.id.back);
-
         form = v.findViewById(R.id.form);
         alert = v.findViewById(R.id.alert);
         nameClient = v.findViewById(R.id.nametxt);
@@ -92,80 +90,67 @@ public class AwardsPage extends Fragment {
         city = v.findViewById(R.id.cityTxt);
         getAward = v.findViewById(R.id.getAward);
         nameClient.setText(Preferences.readUsername());
-        comeback.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final int homeContainer = R.id.fullpage;
-                Awards awards = new Awards();
-                backFragment(awards, homeContainer);
-            }
+        comeback.setOnClickListener(v13 -> {
+            final int homeContainer = R.id.fullpage;
+            Awards awards = new Awards();
+            backFragment(awards, homeContainer);
         });
-
         if (cupertinos <= points) {
             form.setVisibility(View.VISIBLE);
             alert.setVisibility(View.INVISIBLE);
             getAward.setText(R.string.get_awards);
-            getAward.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (nameClient.getText().toString().equals("") || adress.getText().toString().equals("") || postalCode.getText().toString().equals("") || city.getText().toString().equals("")) {
-                        AlertDialog alertDialog = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme).create();
-                        alertDialog.setTitle(R.string.title_get_awards);
-                        alertDialog.setMessage(getString(R.string.message_get_award));
-                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                                (dialog, which) -> {
-                                    dialog.dismiss();
-                                });
-                        alertDialog.show();
-                    } else {
-                        AlertDialog.Builder alert = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
-                        alert.setTitle(R.string.conf_title_get_awards);
-                        alert.setMessage(getString(R.string.conf_message_get_awards));
-                        alert.setPositiveButton("Confirmar", (dialog, whichButton) -> {
-                            points = points - cupertinos;
-                            actualPoints = String.valueOf(points);
-                            Preferences.write("userPoints", actualPoints);
-                            cup.setText(actualPoints);
-                            updatePoints(email, actualPoints, getContext());
-                            dialog.dismiss();
-                            final int homeContainer = R.id.fullpage;
-                            Awards awards = new Awards();
-                            backFragment(awards, homeContainer);
-                            Toast.makeText(getContext(), R.string.toast_get_awards, Toast.LENGTH_LONG).show();
-                        });
-                        alert.setNegativeButton("Cancelar",
-                                (dialog, which) -> {
-                                    dialog.dismiss();
-                                    return;
-                                });
+            getAward.setOnClickListener(v1 -> {
+                if (nameClient.getText().toString().equals("") || adress.getText().toString().equals("") || postalCode.getText().toString().equals("") || city.getText().toString().equals("")) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme).create();
+                    alertDialog.setTitle(R.string.title_get_awards);
+                    alertDialog.setMessage(getString(R.string.message_get_award));
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            (dialog, which) -> {
+                                dialog.dismiss();
+                            });
+                    alertDialog.show();
+                } else {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
+                    alert.setTitle(R.string.conf_title_get_awards);
+                    alert.setMessage(getString(R.string.conf_message_get_awards));
+                    alert.setPositiveButton(R.string.confirmOrder, (dialog, whichButton) -> {
+                        points = points - cupertinos;
+                        actualPoints = String.valueOf(points);
+                        Preferences.write("userPoints", actualPoints);
+                        cup.setText(actualPoints);
+                        updatePoints(email, actualPoints, getContext());
+                        sendEmail(getContext());
+                        dialog.dismiss();
+                        final int homeContainer = R.id.fullpage;
+                        Awards awards = new Awards();
+                        backFragment(awards, homeContainer);
+                        Toast.makeText(getContext(), R.string.toast_get_awards, Toast.LENGTH_LONG).show();
+                    });
+                    alert.setNegativeButton(R.string.cancelBtn,
+                            (dialog, which) -> {
+                                dialog.dismiss();
+                                return;
+                            });
 
-                        alert.show();
-                    }
-
+                    alert.show();
                 }
+
             });
         } else {
             form.setVisibility(View.INVISIBLE);
             getAward.setText(R.string.back);
             alert.setVisibility(View.VISIBLE);
-            getAward.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final int homeContainer = R.id.fullpage;
-                    Awards awards = new Awards();
-                    backFragment(awards, homeContainer);
-
-                }
+            getAward.setOnClickListener(v12 -> {
+                final int homeContainer = R.id.fullpage;
+                Awards awards = new Awards();
+                backFragment(awards, homeContainer);
             });
-
         }
-
-
         return v;
     }
 
     private void backFragment(Awards awards, int homeContainer) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.setCustomAnimations(R.anim.from_right, R.anim.to_left);
         ft.addToBackStack(null);
@@ -192,14 +177,35 @@ public class AwardsPage extends Fragment {
                 },
                 error -> handleError(error, context)) {
             @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                HashMap<String, String> headers = new HashMap<String, String>();
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
                 headers.put("Content-Type", "application/json");
+                headers.put("Authorization", "Bearer " + Preferences.readUserToken());
                 return headers;
             }
         };
         requestQueue.add(jsonObjectRequest);
     }
+
+    public static void sendEmail(Context context) {
+        String postUrl = API.API_URL + "/premio";
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("email", Preferences.readUserEmail());
+            postData.put("type", 1);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData,
+                response -> {
+                },
+                error -> {
+                    Toast.makeText(context, "Erro" + error, Toast.LENGTH_LONG).show();
+                });
+        requestQueue.add(jsonObjectRequest);
+    }
+
     public static void handleError(VolleyError error, Context context) {
         String body = null;
         try {

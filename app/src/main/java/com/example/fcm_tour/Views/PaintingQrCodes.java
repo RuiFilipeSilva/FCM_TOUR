@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
@@ -14,6 +15,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.budiyev.android.codescanner.CodeScanner;
 import com.budiyev.android.codescanner.CodeScannerView;
 import com.budiyev.android.codescanner.DecodeCallback;
@@ -31,6 +36,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PaintingQrCodes extends AppCompatActivity {
     public CodeScanner mCodeScanner;
@@ -48,7 +55,7 @@ public class PaintingQrCodes extends AppCompatActivity {
         mCodeScanner = new CodeScanner(this, scannerView);
         mCodeScanner.setDecodeCallback(result -> runOnUiThread(() -> {
             numberResult = result.getText();
-            new TicketScan().execute(API.API_URL + "/museu/quadros/" + result.getText());
+            TicketScan(numberResult);
         }));
         scannerView.setOnClickListener(view -> mCodeScanner.startPreview());
     }
@@ -82,67 +89,58 @@ public class PaintingQrCodes extends AppCompatActivity {
         }
     }
 
-    class TicketScan extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... fileUrl) {
-            StringBuilder stringBuilder = new StringBuilder();
-            try {
-                URL url = new URL(fileUrl[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                InputStream in = connection.getInputStream();
-                stringBuilder = new StringBuilder();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-            } catch (Exception e) {
+    public void TicketScan(String number) {
+        String postUrl = API.API_URL + "/museu/quadros/" + number;
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
+                response -> {
+                    try {
+                        String state = response.getString("number");
+                        if (state.equals(numberResult)) {
+                            AlertDialog alertDialog = new AlertDialog.Builder(PaintingQrCodes.this, R.style.MyDialogTheme).create();
+                            alertDialog.setTitle(R.string.validResultDialog);
+                            alertDialog.setMessage(getString(R.string.validMessageDialog));
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                    (dialog, which) -> {
+                                        Preferences.write("qrPaint", numberResult);
+                                        dialog.dismiss();
+                                        Intent i = new Intent(getApplicationContext(), SideBar.class);
+                                        startActivity(i);
+                                    });
+                            alertDialog.show();
+                        } else {
+                            AlertDialog alertDialog = new AlertDialog.Builder(PaintingQrCodes.this, R.style.MyDialogTheme).create();
+                            alertDialog.setTitle(R.string.noResultsDialog);
+                            alertDialog.setMessage(getString(R.string.invalidMessageCode));
+                            alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                    (dialog, which) -> {
+                                        dialog.dismiss();
+                                        mCodeScanner.startPreview();
+                                    });
+                            alertDialog.show();
+                        }
+                    } catch (JSONException e) {
+                        AlertDialog alertDialog2 = new AlertDialog.Builder(PaintingQrCodes.this, R.style.MyDialogTheme).create();
+                        alertDialog2.setTitle(R.string.noResultsDialog);
+                        alertDialog2.setMessage(getString(R.string.invalidMessageTicket));
+                        alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                (dialog, which) -> {
+                                    dialog.dismiss();
+                                    mCodeScanner.startPreview();
+                                });
+                        alertDialog2.show();
+                        e.printStackTrace();
+                    }
+                },
+                error -> Toast.makeText(getApplicationContext(), "Erro: " + error, Toast.LENGTH_SHORT).show()) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("Content-Type", "application/json; charset=UTF-8");
+                params.put("language", Preferences.readLanguage());
+                return params;
             }
-            return stringBuilder.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                JSONObject jsonObject = new JSONObject(result);
-                String state = jsonObject.getString("number");
-                if (state.equals(numberResult)) {
-                    AlertDialog alertDialog = new AlertDialog.Builder(PaintingQrCodes.this, R.style.MyDialogTheme).create();
-                    alertDialog.setTitle(R.string.validResultDialog);
-                    alertDialog.setMessage(getString(R.string.validMessageDialog));
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            (dialog, which) -> {
-                                Preferences.write("qrPaint", numberResult);
-                                dialog.dismiss();
-                                Intent i = new Intent(getApplicationContext(), SideBar.class);
-                                startActivity(i);
-                            });
-                    alertDialog.show();
-                } else {
-                    AlertDialog alertDialog = new AlertDialog.Builder(PaintingQrCodes.this, R.style.MyDialogTheme).create();
-                    alertDialog.setTitle(R.string.noResultsDialog);
-                    alertDialog.setMessage(getString(R.string.invalidMessageCode));
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            (dialog, which) -> {
-                                dialog.dismiss();
-                                mCodeScanner.startPreview();
-                            });
-                    alertDialog.show();
-                }
-            } catch (JSONException e) {
-                AlertDialog alertDialog2 = new AlertDialog.Builder(PaintingQrCodes.this, R.style.MyDialogTheme).create();
-                alertDialog2.setTitle(R.string.noResultsDialog);
-                alertDialog2.setMessage(getString(R.string.invalidMessageTicket));
-                alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        (dialog, which) -> {
-                            dialog.dismiss();
-                            mCodeScanner.startPreview();
-                        });
-                alertDialog2.show();
-                e.printStackTrace();
-            }
-        }
+        };
+        requestQueue.add(jsonObjectRequest);
     }
 }
