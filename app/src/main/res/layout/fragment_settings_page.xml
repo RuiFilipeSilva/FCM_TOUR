@@ -11,12 +11,10 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
-
         <RelativeLayout
             android:id="@+id/relative"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
 
             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/profilePicture"
@@ -28,7 +26,6 @@
                 app:civ_border_color="#FF000000"
                 app:civ_border_width="2dp" />
 
-
             <ImageButton
                 android:id="@+id/editImg"
                 android:layout_width="40dp"
@@ -39,7 +36,6 @@
                 android:background="@null"
                 android:scaleType="centerCrop"
                 android:src="@drawable/asset_1" />
-
 
             <View
                 android:layout_width="match_parent"
@@ -60,10 +56,10 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:textColor="@color/black"
                     android:fontFamily="@font/barlow_medium"
                     android:padding="5dp"
-                    android:text="Username" />
+                    android:text="@string/usernameTxt"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/userName"
@@ -72,9 +68,9 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="25dp"
                     android:fontFamily="@font/barlow_light"
-                    android:paddingTop="10dp"
                     android:paddingLeft="5dp"
-                    android:text="Username" />
+                    android:paddingTop="10dp"
+                    android:text="@string/usernameTxt" />
             </androidx.cardview.widget.CardView>
 
             <View
@@ -84,13 +80,11 @@
                 android:layout_marginBottom="0dp"
                 android:background="#CDCDCD" />
 
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/email"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_below="@+id/username"
-
                 app:cardElevation="0dp">
 
                 <TextView
@@ -100,8 +94,8 @@
                     android:layout_marginTop="10dp"
                     android:fontFamily="@font/barlow_medium"
                     android:padding="5dp"
-                    android:textColor="@color/black"
-                    android:text="E-mail" />
+                    android:text="@string/email"
+                    android:textColor="@color/black" />
 
                 <TextView
                     android:id="@+id/userEmail"
@@ -110,10 +104,9 @@
                     android:layout_marginLeft="20dp"
                     android:layout_marginTop="25dp"
                     android:fontFamily="@font/barlow_light"
-                    android:paddingTop="10dp"
                     android:paddingLeft="5dp"
-                    android:text="username@gmail.com" />
-
+                    android:paddingTop="10dp"
+                    android:text="@string/emailPlaceholder" />
             </androidx.cardview.widget.CardView>
 
             <View
@@ -138,10 +131,9 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="15dp"
                     android:fontFamily="@font/barlow_medium"
-                    android:textColor="@color/black"
                     android:padding="5dp"
-                    android:text="Alterar Palavra-passe" />
-
+                    android:text="@string/changePassword"
+                    android:textColor="@color/black" />
             </androidx.cardview.widget.CardView>
 
             <View
@@ -156,7 +148,6 @@
                 android:layout_height="0.5dp"
                 android:layout_above="@+id/language"
                 android:background="#CDCDCD" />
-
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/language"
@@ -174,7 +165,7 @@
                     android:layout_marginLeft="15dp"
                     android:fontFamily="@font/barlow_medium"
                     android:padding="5dp"
-                    android:text="Alterar Idioma"
+                    android:text="@string/changeLanguage"
                     android:textColor="@color/black" />
 
                 <TextView
@@ -182,12 +173,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginRight="20dp"
-                    android:gravity="end"
                     android:fontFamily="@font/barlow_medium"
+                    android:gravity="end"
                     android:padding="5dp"
-                    android:text="PT"
+                    android:text="@string/currentLang"
                     android:textColor="@color/grey" />
-
             </androidx.cardview.widget.CardView>
 
             <View
@@ -197,7 +187,6 @@
                 android:layout_marginBottom="0dp"
                 android:background="#CDCDCD" />
 
-
             <View
                 android:layout_width="match_parent"
                 android:layout_height="0.5dp"
@@ -205,14 +194,12 @@
                 android:layout_marginBottom="0dp"
                 android:background="#CDCDCD" />
 
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/remove"
                 android:layout_width="match_parent"
                 android:layout_height="70dp"
                 android:layout_below="@+id/language"
                 android:clickable="true"
-
                 app:cardElevation="0dp">
 
                 <TextView
@@ -222,9 +209,8 @@
                     android:layout_marginLeft="15dp"
                     android:fontFamily="@font/barlow_medium"
                     android:padding="5dp"
-                    android:text="Terminar Sessão"
+                    android:text="@string/logoutLabel"
                     android:textColor="#F33939" />
-
             </androidx.cardview.widget.CardView>
 
             <View
@@ -249,7 +235,7 @@
                     android:layout_marginLeft="15dp"
                     android:fontFamily="@font/barlow_medium"
                     android:padding="5dp"
-                    android:text="Eliminar Conta"
+                    android:text="@string/deleteAccount"
                     android:textColor="#F33939" />
             </androidx.cardview.widget.CardView>
 

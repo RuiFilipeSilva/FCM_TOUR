@@ -126,18 +126,20 @@ public class QuizzPage extends Fragment {
     public void endQuizz() {
         quizzLayout.setVisibility(View.GONE);
         endLayout.setVisibility(View.VISIBLE);
-        resultQuizzTxt.setText("RESPOSTAS CORRETAS: " + correctAnswerCount + "/n bla bla bla bla bla bla bla bla bla bla bla blabla bla bla");
+        if (correctAnswerCount == 5) {
+            sendEmail(getContext());
+            resultQuizzTxt.setText(R.string.quizzWonPrize);
+        } else {
+            resultQuizzTxt.setText(R.string.quizzParticipation);
+        }
     }
 
     public void checkAnswer() {
         if (answer.equals(currentAnswer)) {
             correctAnswerCount++;
-            currentQuestionId++;
-            displayNextQuestion(currentQuestionId);
-        } else {
-            currentQuestionId++;
-            displayNextQuestion(currentQuestionId);
         }
+        currentQuestionId++;
+        displayNextQuestion(currentQuestionId);
     }
 
     public void displayNextQuestion(int index) {
@@ -201,6 +203,22 @@ public class QuizzPage extends Fragment {
                 return params;
             }
         };
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public static void sendEmail(Context context) {
+        String postUrl = API.API_URL + "/premio";
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put("email", Preferences.readUserEmail());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, postUrl, postData,
+                response -> {
+                },
+                error -> Toast.makeText(context, "Erro" + error, Toast.LENGTH_LONG).show());
         requestQueue.add(jsonObjectRequest);
     }
 

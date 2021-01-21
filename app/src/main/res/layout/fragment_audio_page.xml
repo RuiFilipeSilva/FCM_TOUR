@@ -67,7 +67,7 @@
                     android:layout_alignParentBottom="true"
                     android:layout_marginRight="20dp"
                     android:background="@drawable/rounded_tower"
-                    android:text="Iniciar Quizz"
+                    android:text="@string/startQuizzBtn"
                     android:textColor="@color/white"
                     android:visibility="invisible"
                     app:backgroundTint="@color/tower" />
@@ -165,7 +165,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
-                android:text="Anterior"
+                android:text="@string/previousBtn"
                 android:textColor="@color/white" />
 
         </LinearLayout>
@@ -188,7 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginRight="5dp"
-                android:text="Seguinte"
+                android:text="@string/nextBtn"
                 android:textColor="@color/white" />
 
             <ImageView

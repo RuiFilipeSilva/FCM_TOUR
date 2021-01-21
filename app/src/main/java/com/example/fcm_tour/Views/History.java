@@ -127,10 +127,8 @@ public class History extends Fragment {
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
                 response -> {
                     try {
-                        Log.d("SIGA", String.valueOf(response));
                         String TEMP = response.getString("description");
                         String img = response.getString("cover");
-                        Log.d("SIGA", "GetMuseum: "+ img + TEMP);
                         ImageView imgChuck = v.findViewById(R.id.coverHistory);
                         Picasso.get().load(img).into(imgChuck);
                         TextView text = v.findViewById(R.id.textview2);

@@ -108,7 +108,6 @@ public class AwardsPage extends Fragment {
             getAward.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("SIGA", "onClick: AQUI");
                     if (nameClient.getText().toString().equals("") || adress.getText().toString().equals("") || postalCode.getText().toString().equals("") || city.getText().toString().equals("")) {
                         AlertDialog alertDialog = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme).create();
                         alertDialog.setTitle(R.string.title_get_awards);
@@ -188,7 +187,6 @@ public class AwardsPage extends Fragment {
                     try {
                         Preferences.write("userPoints", newPoints);
                     } catch (Exception e) {
-                        Log.d("SIGA", "changeDate: " + e);
                         e.printStackTrace();
                     }
                 },
@@ -197,14 +195,12 @@ public class AwardsPage extends Fragment {
             public Map<String, String> getHeaders() throws AuthFailureError {
                 HashMap<String, String> headers = new HashMap<String, String>();
                 headers.put("Content-Type", "application/json");
-                Log.d("SIGA", "getHeaders: Aqui");
                 return headers;
             }
         };
         requestQueue.add(jsonObjectRequest);
     }
     public static void handleError(VolleyError error, Context context) {
-        Log.d("SIGA", "handleError: " + error);
         String body = null;
         try {
             body = new String(error.networkResponse.data, "UTF-8");

@@ -18,10 +18,14 @@
     <string name="goBackCollections">Collections</string>
     <string name="collectionsBtn">Collections</string>
     <string name="titleTextView">1900</string>
+    <string name="nextBtn">Next</string>
+    <string name="previousBtn">Previous</string>
 
     <!--AudioPlayer-->
     <string name="dialogAudioText">Loading audio...</string>
     <string name="startTime">0:00</string>
+    <string name="descriptionAudioPlayer">DESCRIPTION</string>
+
 
     <!--Authentication-->
     <string name="login">Login In</string>
@@ -69,7 +73,6 @@
 
     <!--QrScan-->
     <string name="validTicketMsg">Ticket valid!</string>
-
     <string name="validMessageQrScan">You now have access to all the rooms!</string>
 
     <!--Register-->
@@ -84,6 +87,8 @@
 
     <!--Rooms-->
     <string name="noAccessAlertTitle">You do not have access!</string>
+    <string name="scanTicketAccessTxt">Scan your ticket to gain access</string>
+    <string name="scanCodeTxt">Scan the code</string>
 
     <!--SculpturePage-->
     <string name="sculpturesPageTitle">SCULPTURES</string>
@@ -111,6 +116,12 @@
     <!--changePWPage-->
     <string name="changePwToast">Password successfully changed!</string>
     <string name="addPwToast">Password successfully added!</string>
+    <string name="currentPassword">Current Password</string>
+    <string name="newPassword">New Password</string>
+    <string name="confNewPassword">Confirm New Password</string>
+    <string name="changePasswordBtn">Change Password</string>
+    <string name="addPasswordBtn">Add Password</string>
+
 
     <!--Outros-->
     <string name="FB_APP_ID">3302524869853214</string>
@@ -150,6 +161,33 @@
     <string name="toast_get_awards">Your order is already being prepared</string>
     <string name="back">Return</string>
     <string name="no_cupertinos">You do not have enough Cupertinos to get this prize, come back here every day and play roulette so you can collect more Cupertinos!</string>
+
+    <!--Quizz-->
+    <string name="quizzWonPrize">Congratulations, all your answers are correct! You have shown yourself to be a true connoisseur of Portuguese literature, as a reward the Fundação Cupertino de Miranda will offer you a prize!
+    We will send you an email in order to claim the prize at the main counter.</string>
+    <string name="quizzParticipation">Thank you for participating in this quizz, unfortunately you didn`t get all the answers right. You have to be more attentive to the next one! :)</string>
+    <string name="startQuizzBtn">Start Quizz</string>
+    <string name="goToHomePage">Home Page</string>
+
+
+    <!--SideBar-->
+    <string name="changeLanguage">Change Language</string>
+
+    <!--SettingsPage-->
+    <string name="usernameTxt">Username</string>
+    <string name="emailPlaceholder">username@gmail.com</string>
+    <string name="changePassword">Change Password</string>
+    <string name="deleteAccount">Delete Account</string>
+    <string name="currentLang">EN</string>
+    <string name="noImageSelected">No image selected!</string>
+    <string name="deleteAccountDialogTitle">ATTENTION</string>
+    <string name="deleteAccountDialogMsg">Do you want to delete your account?</string>
+    <string name="deleteBtn">Delete</string>
+    <string name="cancelBtn">Cancel</string>
+    <string name="titleIntent">Select Picture</string>
+    <string name="deleteAccountToastMsg">Account deleted!</string>
+    <string name="loadingImageTxt">Loading image...</string>
+    <string name="imageUpdatedSuccess">Image Updated</string>
 
 
     <!--This string is used for square devices and overridden by hello_world in    values-round/strings.xml for round devices.-->

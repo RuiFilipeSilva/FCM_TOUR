@@ -55,7 +55,7 @@ public class RoomPage extends Fragment {
     }
 
     private void openFragment(Rooms rooms, int homeContainer) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(homeContainer, rooms);
         ft.commit();
@@ -91,6 +91,7 @@ public class RoomPage extends Fragment {
                 String state = jsonResponse.getString("state");
                 String code = jsonResponse.getString("code");
                 if (state.equals("Ticket válido")) {
+                    hideQrCodeScanners();
                     Preferences.saveRoomsAccess(code);
                     final int homeContainer = R.id.listRooms;
                     Rooms rooms = new Rooms();
@@ -149,5 +150,12 @@ public class RoomPage extends Fragment {
         v.findViewById(R.id.cardViewQr).setVisibility(View.VISIBLE);
         v.findViewById(R.id.keyBoard).setVisibility(View.VISIBLE);
         v.findViewById(R.id.cardViewKeyboard).setVisibility(View.VISIBLE);
+    }
+
+    public void hideQrCodeScanners() {
+        v.findViewById(R.id.qrCode).setVisibility(View.INVISIBLE);
+        v.findViewById(R.id.cardViewQr).setVisibility(View.INVISIBLE);
+        v.findViewById(R.id.keyBoard).setVisibility(View.INVISIBLE);
+        v.findViewById(R.id.cardViewKeyboard).setVisibility(View.INVISIBLE);
     }
 }

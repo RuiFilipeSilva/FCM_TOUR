@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginBottom="30dp"
-            android:text="INICIAR SESSÃO" />
+            android:text="@string/login" />
 
         <Button
             android:id="@+id/startQuizzBtn"
@@ -27,7 +27,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginBottom="30dp"
-            android:text="COMEÇAR QUIZZ"
+            android:text="@string/startQuizzBtn"
             android:visibility="gone" />
 
         <Button
@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="PÁGINA INICIAL" />
+            android:text="@string/goToHomePage" />
 
     </LinearLayout>
 

@@ -98,7 +98,6 @@ public class AudioPage extends Fragment {
         btnAudio = v.findViewById(R.id.audio);
         btnTxt.setOnClickListener(v1 -> openDescFragment());
         btnAudio.setOnClickListener(v12 -> openAudioFragment());
-
         pageType = Preferences.readPageType();
         try {
             loadRoomInfo();
@@ -133,7 +132,7 @@ public class AudioPage extends Fragment {
         final int descriptionContainer = R.id.audioPageFrame;
         Description description = new Description();
         description.setArguments(extras);
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(descriptionContainer, description);
         ft.commit();
@@ -164,7 +163,7 @@ public class AudioPage extends Fragment {
         final int audioContainer = R.id.audioPageFrame;
         AudioPlayer audioPlayer = new AudioPlayer();
         audioPlayer.setArguments(extras);
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(audioContainer, audioPlayer);
         ft.commit();
@@ -291,7 +290,7 @@ public class AudioPage extends Fragment {
 
     @SuppressLint("ResourceType")
     public void verifyRooms(String titleTxt) {
-        if (roomsAccess == true) {
+        if (roomsAccess == true && pageType == 0) {
             navigateRoomsLayout.setVisibility(View.VISIBLE);
             if (Rooms.getBeforeAfterRooms(titleTxt).get(0) != null) {
                 previousRoomBtn.setClickable(true);
@@ -327,7 +326,7 @@ public class AudioPage extends Fragment {
                 final int roomContainer = R.id.fullpage;
                 RoomPage rooms = new RoomPage();
                 rooms.setArguments(extras);
-                fragmentManager = getFragmentManager();
+                fragmentManager = getParentFragmentManager();
                 ft = fragmentManager.beginTransaction();
                 ft.setCustomAnimations(R.anim.from_right, R.anim.to_left);
                 ft.addToBackStack(null);
@@ -338,7 +337,7 @@ public class AudioPage extends Fragment {
                 final int museumContainer = R.id.fullpage;
                 Museum museum = new Museum();
                 museum.setArguments(extras);
-                fragmentManager = getFragmentManager();
+                fragmentManager = getParentFragmentManager();
                 ft = fragmentManager.beginTransaction();
                 ft.setCustomAnimations(R.anim.from_right, R.anim.to_left);
                 ft.addToBackStack(null);
@@ -349,7 +348,7 @@ public class AudioPage extends Fragment {
                 final int collectionsContainer = R.id.fullpage;
                 CollectionsPage collectionsPage = new CollectionsPage();
                 collectionsPage.setArguments(extras);
-                fragmentManager = getFragmentManager();
+                fragmentManager = getParentFragmentManager();
                 ft = fragmentManager.beginTransaction();
                 ft.setCustomAnimations(R.anim.from_right, R.anim.to_left);
                 ft.addToBackStack(null);
@@ -360,7 +359,7 @@ public class AudioPage extends Fragment {
                 final int musicContainer = R.id.fullpage;
                 Music music = new Music();
                 music.setArguments(extras);
-                fragmentManager = getFragmentManager();
+                fragmentManager = getParentFragmentManager();
                 ft = fragmentManager.beginTransaction();
                 ft.setCustomAnimations(R.anim.from_right, R.anim.to_left);
                 ft.addToBackStack(null);

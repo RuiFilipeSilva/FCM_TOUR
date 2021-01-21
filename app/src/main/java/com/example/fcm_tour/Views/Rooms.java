@@ -21,6 +21,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
@@ -71,6 +72,12 @@ public class Rooms extends Fragment {
         for (int i = 0; i <= result.length() - 1; i++) {
             JSONObject room = result.getJSONObject(i);
             String img = room.getString("cover");
+            /*String name;
+            if (i == 0 && Preferences.readLanguage().equals("EN")) {
+                name = "Beginning";
+            } else {
+                name = room.getString("name");
+            }*/
             String name = room.getString("name");
             String number = room.getString("number");
             if (i == 0) {
@@ -189,7 +196,6 @@ public class Rooms extends Fragment {
                     stringBuilder.append(line);
                 }
             } catch (Exception e) {
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
             }
             return stringBuilder.toString();
         }
@@ -264,7 +270,7 @@ public class Rooms extends Fragment {
     }
 
     private void openFragment(AudioPage audioPage, int homeContainer) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.setCustomAnimations(R.anim.from_left, R.anim.to_right);
         ft.addToBackStack(null);
@@ -275,13 +281,13 @@ public class Rooms extends Fragment {
     public void AlertDialogInsertTicket() {
         AlertDialog.Builder alert = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
         alert.setTitle(R.string.noAccessAlertTitle);
-        alert.setMessage("Digitalize o seu bilhete para ter acesso");
-        alert.setPositiveButton("Digitalize o Código", (dialog, whichButton) -> {
+        alert.setMessage(R.string.scanTicketAccessTxt);
+        alert.setPositiveButton(R.string.scanCodeTxt, (dialog, whichButton) -> {
             dialog.dismiss();
             Intent intent = new Intent(getContext(), QrScan.class);
             startActivity(intent);
         });
-        alert.setNegativeButton("Voltar",
+        alert.setNegativeButton(R.string.back,
                 (dialog, which) -> {
                     dialog.dismiss();
                     return;
@@ -337,7 +343,7 @@ public class Rooms extends Fragment {
                     stringBuilder.append(line);
                 }
             } catch (Exception e) {
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
+                Toast.makeText(getContext(), "Exception: " + e, Toast.LENGTH_SHORT).show();
             }
             return stringBuilder.toString();
         }

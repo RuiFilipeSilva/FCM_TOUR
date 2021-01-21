@@ -114,7 +114,7 @@ public class Music extends Fragment {
         final int homeContainer = R.id.fullpage;
         AudioPage audioPage = new AudioPage();
         audioPage.setArguments(extras);
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.setCustomAnimations(R.anim.from_left, R.anim.to_right);
         ft.addToBackStack(null);
