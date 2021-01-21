@@ -82,7 +82,7 @@ public class Roullete extends Fragment {
         spining.setOnClickListener(v12 -> {
             date = Preferences.readUserDate();
             if (formattedDate.equals(date)) {
-                AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+                AlertDialog alertDialog = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme).create();
                 alertDialog.setTitle(R.string.tilte_alert_error);
                 alertDialog.setMessage(getString(R.string.message_alert_error));
                 alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -128,7 +128,7 @@ public class Roullete extends Fragment {
                     try {
                         String state = response.getString("award");
                         point = Integer.parseInt(state);
-                        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+                        AlertDialog alertDialog = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme).create();
                         alertDialog.setTitle(R.string.title_alert_award);
                         alertDialog.setMessage(getString(R.string.message_award) + " " + state + " " + getString(R.string.message_award_2));
                         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",

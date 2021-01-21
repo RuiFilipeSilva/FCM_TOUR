@@ -93,7 +93,7 @@ public class SettingsPage extends Fragment {
 
         CardView delete = v.findViewById(R.id.delete);
         delete.setOnClickListener(v -> {
-            AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+            AlertDialog alertDialog = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme).create();
             alertDialog.setTitle("ATENÇÃO");
             alertDialog.setMessage("Pretende eliminar a sua conta?");
             alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Eliminar",
@@ -312,7 +312,7 @@ public class SettingsPage extends Fragment {
         tvText.setLayoutParams(llParam);
         ll.addView(progressBar);
         ll.addView(tvText);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
         builder.setCancelable(true);
         builder.setView(ll);
         dialog = builder.create();

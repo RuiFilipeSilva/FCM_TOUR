@@ -110,7 +110,7 @@ public class AwardsPage extends Fragment {
                 public void onClick(View v) {
                     Log.d("SIGA", "onClick: AQUI");
                     if (nameClient.getText().toString().equals("") || adress.getText().toString().equals("") || postalCode.getText().toString().equals("") || city.getText().toString().equals("")) {
-                        AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+                        AlertDialog alertDialog = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme).create();
                         alertDialog.setTitle(R.string.title_get_awards);
                         alertDialog.setMessage(getString(R.string.message_get_award));
                         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -119,7 +119,7 @@ public class AwardsPage extends Fragment {
                                 });
                         alertDialog.show();
                     } else {
-                        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+                        AlertDialog.Builder alert = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
                         alert.setTitle(R.string.conf_title_get_awards);
                         alert.setMessage(getString(R.string.conf_message_get_awards));
                         alert.setPositiveButton("Confirmar", (dialog, whichButton) -> {
