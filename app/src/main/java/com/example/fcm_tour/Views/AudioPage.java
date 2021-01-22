@@ -70,6 +70,7 @@ public class AudioPage extends Fragment {
     Integer pageType;
     Bundle extras, bundle;
     ImageView imgView, underline;
+    TextView nextBtnTxt;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -84,6 +85,7 @@ public class AudioPage extends Fragment {
         v = inflater.inflate(R.layout.fragment_audio_page, container, false);
         Preferences.removeQR();
         navigateRoomsLayout = v.findViewById(R.id.navigateRoomsLayout);
+        nextBtnTxt = v.findViewById(R.id.nextBtnTxt);
         goBackBtn = v.findViewById(R.id.goBackBtn);
         goBackBtn.setOnClickListener(v -> {
             AudioPlayer.stopAudio();
@@ -304,10 +306,12 @@ public class AudioPage extends Fragment {
             }
             if (Rooms.getBeforeAfterRooms(titleTxt).get(1) != null) {
                 nextRoomBtn.setClickable(true);
+                nextBtnTxt.setText(R.string.nextBtn);
                 nextRoomNum = Rooms.getBeforeAfterRooms(titleTxt).get(3);
                 nextRoomBtn.getBackground().setColorFilter(Color.parseColor(getString(R.color.tower)), PorterDuff.Mode.SRC_ATOP);
                 startQuizzBtn.setVisibility(View.GONE);
             } else {
+                nextBtnTxt.setText("Quizz");
                 nextRoomBtn.setClickable(false);
                 nextRoomBtn.getBackground().setColorFilter(Color.parseColor(getString(R.color.grey_light)), PorterDuff.Mode.SRC_ATOP);
                 startQuizzBtn.setVisibility(View.VISIBLE);

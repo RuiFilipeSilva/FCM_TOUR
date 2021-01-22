@@ -184,6 +184,7 @@
             app:backgroundTint="@color/tower">
 
             <TextView
+                android:id="@+id/nextBtnTxt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
