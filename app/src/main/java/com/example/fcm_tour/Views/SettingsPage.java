@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -46,6 +47,7 @@ import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.Controllers.Users;
 import com.example.fcm_tour.Controllers.VolleyMultipartRequest;
+import com.example.fcm_tour.MainActivity;
 import com.example.fcm_tour.R;
 import com.example.fcm_tour.SideBar;
 import com.squareup.picasso.Picasso;
@@ -59,6 +61,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 
@@ -109,6 +112,11 @@ public class SettingsPage extends Fragment {
             ft.addToBackStack(null);
             ft.replace(homeContainer, changePwPage);
             ft.commit();
+        });
+
+        CardView language = v.findViewById(R.id.language);
+        language.setOnClickListener(v -> {
+            changeLanguage();
         });
 
         ImageButton editProfilePicture = v.findViewById(R.id.editImg);
@@ -319,5 +327,13 @@ public class SettingsPage extends Fragment {
             SideBar.updateImg();
             dialog.dismiss();
         }
+    }
+
+    public void changeLanguage() {
+
+        Preferences.removeLanguage();
+        Intent intent = new Intent(getContext(), Language.class);
+        startActivity(intent);
+
     }
 }

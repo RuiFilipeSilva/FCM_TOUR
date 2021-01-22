@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
@@ -40,6 +41,7 @@ import com.example.fcm_tour.Views.AudioPlayer;
 import com.example.fcm_tour.Views.Authentication;
 import com.example.fcm_tour.Views.Awards;
 import com.example.fcm_tour.Views.History;
+import com.example.fcm_tour.Views.Language;
 import com.example.fcm_tour.Views.Library;
 import com.example.fcm_tour.Views.Museum;
 import com.example.fcm_tour.Views.Music;
@@ -55,6 +57,8 @@ import com.facebook.login.LoginManager;
 import com.google.android.material.navigation.NavigationView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
+
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -180,11 +184,16 @@ public class SideBar extends AppCompatActivity {
                 Users.Logout();
                 loadUserPicture();
                 menuItem.setVisible(false);
+                Intent intent = new Intent(this, SideBar.class);
+                startActivity(intent);
                 fragmentClass = History.class;
                 break;
             case R.id.def:
                 if (Preferences.readUserToken() == null) {
+                    Preferences.removeLanguage();
                     fragmentClass = History.class;
+                    Intent intent2 = new Intent(this, Language.class);
+                    startActivity(intent2);
                 } else {
                     fragmentClass = SettingsPage.class;
                 }
@@ -233,4 +242,5 @@ public class SideBar extends AppCompatActivity {
         ft.replace(homeContainer, quizzPage);
         ft.commit();
     }
+
 }

@@ -64,6 +64,9 @@ public class SocialMediaAuth extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_social_media_auth, container, false);
         googleBtn = v.findViewById(R.id.sign_in_button);
+        TextView textView = (TextView) googleBtn.getChildAt(0);
+        textView.setText("Google");
+        textView.setPadding(0,8,0,0);
         googleBtn.setOnClickListener((v1 -> {
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             startActivityForResult(signInIntent, RC_GET_TOKEN);
@@ -71,6 +74,7 @@ public class SocialMediaAuth extends Fragment {
         facebookBtn = v.findViewById(R.id.login_button);
         facebookBtn.setFragment(this);
         facebookBtn.setReadPermissions(Arrays.asList("public_profile", "email"));
+        //facebookBtn.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
         facebookBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
