@@ -13,5 +13,6 @@
         android:layout_height="match_parent"
         android:fontFamily="@font/barlow_light"
         android:textColor="@color/black"
+        android:paddingBottom="70dp"
         android:textSize="16dp" />
 </FrameLayout>

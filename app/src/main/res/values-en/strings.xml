@@ -139,7 +139,7 @@
 
     <!--Roullete-->
     <string name="spin">Spin</string>
-    <string name="awards">🏆 Prizes</string>
+    <string name="awards">Prizes</string>
     <string name="title_alert_award">Roulette</string>
     <string name="message_award">Congratulations you won </string>
     <string name="message_award_2"> Cupertinos</string>

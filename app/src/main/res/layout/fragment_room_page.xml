@@ -24,9 +24,9 @@
                 android:layout_marginTop="50dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
+                android:visibility="invisible"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="3dp"
-                android:visibility="invisible">
+                app:cardElevation="3dp">
 
                 <ImageButton
                     android:id="@+id/qrCode"
@@ -44,9 +44,9 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 android:layout_toStartOf="@+id/cardViewQr"
+                android:visibility="invisible"
                 app:cardCornerRadius="8dp"
-                app:cardElevation="3dp"
-                android:visibility="invisible">
+                app:cardElevation="3dp">
 
                 <ImageButton
                     android:id="@+id/keyBoard"
@@ -79,11 +79,9 @@
                 android:backgroundTint="@color/tower" />
         </RelativeLayout>
 
-
-
         <FrameLayout
             android:id="@+id/listRooms"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"></FrameLayout>
+            android:layout_height="match_parent" />
     </LinearLayout>
 </FrameLayout>

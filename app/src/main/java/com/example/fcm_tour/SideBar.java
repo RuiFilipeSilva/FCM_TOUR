@@ -123,12 +123,20 @@ public class SideBar extends AppCompatActivity {
         navigationView = findViewById(R.id.navigationView);
         CircleImageView auth = navigationView.getHeaderView(0).findViewById(R.id.profilePicture);
         picture = findViewById(R.id.profilePicture);
+        picture.setOnClickListener(v -> {
+            if(Preferences.readUserToken() != null) {
+                openSettings();
+            } else {
+                Intent i = new Intent(this, Authentication.class);
+                startActivity(i);
+            }
+        });
         if (userPicture != null && !userPicture.equals("")) {
             Picasso.get().load(userPicture).into(picture);
             Picasso.get().load(userPicture).into(auth);
         } else {
-            auth.setImageResource(R.drawable.ic_launcher_background);
-            picture.setImageResource(R.drawable.ic_launcher_background);
+            auth.setImageResource(R.drawable.user);
+            picture.setImageResource(R.drawable.user);
         }
     }
 
