@@ -136,7 +136,7 @@
 
     <!--Roullete-->
     <string name="spin">Rodar</string>
-    <string name="awards">🏆 Prêmios</string>
+    <string name="awards">Prêmios</string>
     <string name="title_alert_award">Roleta</string>
     <string name="message_award">Parabéns ganhou </string>
     <string name="message_award_2"> Cupertinos</string>

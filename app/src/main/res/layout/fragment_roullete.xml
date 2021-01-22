@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Views.Roullete">
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/ic_backgroundbottom_01"
         android:layout_gravity="bottom"
-        />
+        android:background="@drawable/ic_backgroundbottom_01" />
+
     <ImageView
         android:layout_width="78dp"
         android:layout_height="3dp"
@@ -19,91 +20,92 @@
         android:background="@drawable/rec"
         android:backgroundTint="@color/tower" />
 
-<LinearLayout
-    android:layout_marginTop="50dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center_horizontal"
-    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_roulette"
-            android:fontFamily="@font/stratum1_black"
-            android:textSize="40dp"
-            android:layout_marginRight="20dp"
-            android:textColor="@color/black"
+            android:layout_gravity="start"
             android:layout_marginStart="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_gravity="start"
-            />
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/stratum1_black"
+            android:text="@string/title_roulette"
+            android:textColor="@color/black"
+            android:textSize="40dp" />
+
         <ImageView
             android:layout_width="78dp"
             android:layout_height="3dp"
+            android:layout_gravity="start"
             android:layout_marginLeft="20dp"
             android:background="@drawable/rec"
-            android:backgroundTint="@color/roulette"
-            android:layout_gravity="start"/>
+            android:backgroundTint="@color/roulette" />
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="40dp"
-        android:fontFamily="@font/stratum1_black"
-        android:text="1300"
-        android:textColor="@color/black"
-        android:textSize="30dp"
-        android:id="@+id/points"/>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
 
-    <ImageView
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="10dp"
-        android:src="@drawable/ic_coin_01" />
-    </RelativeLayout>
-    <pl.droidsonroids.gif.GifImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/giphy_roullete"
-        tools:ignore="MissingConstraints"
-        android:id="@+id/gify"
-        android:layout_marginTop="25dp"/>
+            <TextView
+                android:id="@+id/points"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="60dp"
+                android:fontFamily="@font/stratum1_black"
+                android:text="1300"
+                android:textColor="@color/black"
+                android:textSize="30dp" />
 
-    <Button
-        android:layout_marginTop="80dp"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:text="@string/spin"
-        android:id="@+id/spin"
-        android:background="@drawable/rounded_roullete"
-        android:elevation="40dp"
-        android:textColor="@color/white"
-        android:textSize="13dp"
-        app:backgroundTint="@null"
-        android:fontFamily="@font/barlow_medium"
-        />
-    <Button
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="10dp"
-        android:text="@string/awards"
-        android:id="@+id/awards"
-        android:background="@drawable/rounded_roullete"
-        android:elevation="40dp"
-        android:textColor="@color/white"
-        android:textSize="13dp"
-        app:backgroundTint="@null"
-        android:fontFamily="@font/barlow_medium"/>
-</LinearLayout>
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="30dp"
+                android:src="@drawable/ic_coin_01" />
+        </RelativeLayout>
 
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/gify"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:src="@drawable/giphy_roullete"
+            tools:ignore="MissingConstraints" />
+
+        <Button
+            android:id="@+id/spin"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="80dp"
+            android:background="@drawable/rounded_roullete"
+            android:elevation="40dp"
+            android:fontFamily="@font/barlow_medium"
+            android:text="@string/spin"
+            android:textColor="@color/white"
+            android:textSize="13dp"
+            app:backgroundTint="@null" />
+
+        <Button
+            android:id="@+id/awards"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_roullete"
+            android:elevation="40dp"
+            android:fontFamily="@font/barlow_medium"
+            android:text="@string/awards"
+            android:textColor="@color/white"
+            android:textSize="13dp"
+            app:backgroundTint="@null" />
+    </LinearLayout>
 </FrameLayout>
