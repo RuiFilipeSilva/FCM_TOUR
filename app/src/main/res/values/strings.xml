@@ -107,6 +107,7 @@
     <string name="museumLabel">Museu</string>
     <string name="libraryLabel">Biblioteca</string>
     <string name="musicLabel">Música</string>
+    <string name="shopLabel">Loja</string>
     <string name="rouletteLabel">Roleta</string>
     <string name="definitionsLabel">Definições</string>
     <string name="logoutLabel">Terminar Sessão</string>
