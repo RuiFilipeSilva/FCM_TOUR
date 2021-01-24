@@ -13,16 +13,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
+
+import org.w3c.dom.Text;
 
 
 public class Checkout extends Fragment {
     Button comeBack, checkout;
     View v;
     EditText nameClient;
+    TextView total;
     Bundle bundle;
 
     @Override
@@ -36,6 +40,8 @@ public class Checkout extends Fragment {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_checkout, container, false);
         //String[] titles = bundle.getStringArray("titles");
+        total = v.findViewById(R.id.total);
+        total.setText(Preferences.readShoppingCartPrice());
         nameClient = v.findViewById(R.id.nametxt);
         nameClient.setText(Preferences.readUsername());
         comeBack = v.findViewById(R.id.comeBack);
