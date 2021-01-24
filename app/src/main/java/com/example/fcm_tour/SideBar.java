@@ -48,6 +48,7 @@ import com.example.fcm_tour.Views.Music;
 import com.example.fcm_tour.Views.QuizzPage;
 import com.example.fcm_tour.Views.Roullete;
 import com.example.fcm_tour.Views.SettingsPage;
+import com.example.fcm_tour.Views.Shop;
 import com.example.fcm_tour.Views.Tower;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -124,7 +125,7 @@ public class SideBar extends AppCompatActivity {
         CircleImageView auth = navigationView.getHeaderView(0).findViewById(R.id.profilePicture);
         picture = findViewById(R.id.profilePicture);
         picture.setOnClickListener(v -> {
-            if(Preferences.readUserToken() != null) {
+            if (Preferences.readUserToken() != null) {
                 openSettings();
             } else {
                 Intent i = new Intent(this, Authentication.class);
@@ -179,7 +180,31 @@ public class SideBar extends AppCompatActivity {
                         startActivity(intent);
                         dialog.dismiss();
                     });
-                    alert.setNegativeButton("Cancelar",
+                    alert.setNegativeButton(R.string.cancelBtn,
+                            (dialog, which) -> {
+                                dialog.dismiss();
+                                return;
+                            });
+                    alert.show();
+                    fragmentClass = History.class;
+                }
+                break;
+
+            case R.id.shop:
+                if (Preferences.readUserToken() != null) {
+                    Intent i = new Intent(this, Shop.class);
+                    startActivity(i);
+                    fragmentClass = History.class;
+                } else {
+                    AlertDialog.Builder alert = new AlertDialog.Builder(SideBar.this, R.style.MyDialogTheme);
+                    alert.setTitle(R.string.alert_roulette);
+                    alert.setMessage(getString(R.string.message_shop));
+                    alert.setPositiveButton(R.string.login, (dialog, whichButton) -> {
+                        Intent intent = new Intent(SideBar.this, Authentication.class);
+                        startActivity(intent);
+                        dialog.dismiss();
+                    });
+                    alert.setNegativeButton(R.string.cancelBtn,
                             (dialog, which) -> {
                                 dialog.dismiss();
                                 return;

@@ -137,6 +137,7 @@
     <string name="alertDialogTitle">Ticket valid</string>
     <string name="alert_roulette">Can not enter</string>
     <string name="message_roulette">To have access to the roulette you must log in first</string>
+    <string name="message_shop">To have access to the shop you must log in first</string>
 
     <!--Roullete-->
     <string name="spin">Spin</string>
@@ -189,8 +190,14 @@
     <string name="deleteAccountToastMsg">Account deleted!</string>
     <string name="loadingImageTxt">Loading image...</string>
     <string name="imageUpdatedSuccess">Image Updated</string>
-
     <string name="confirmOrder">Confirmar</string>
+
+    <!--Shop-->
+    <string name="addToCardBtn">Add to Card</string>
+    <string name="leaveShop">Leave</string>
+
+    <!--ProductPage-->
+    <string name="catalogBtn">Catálogo</string>
 
     <!--This string is used for square devices and overridden by hello_world in    values-round/strings.xml for round devices.-->
     <string name="hello_world">Hello Square World!</string>
