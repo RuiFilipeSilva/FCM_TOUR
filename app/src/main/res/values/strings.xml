@@ -201,6 +201,13 @@
     <!--Shopping Cart-->
     <string name="shopping_cart">CARRINHO</string>
 
+    <!--Payments-->
+    <string name="payment">PAGAMENTO</string>
+    <string name="finishPayment">Efetuar Pagamento</string>
+    <string name="total">Total</string>
+    <string name="conf_tittle_pay">Confirmação da sua encomenda</string>
+    <string name="conf_message_pay">Após confirmar a sua encomenda receberá no seu email a referência para efetuar o seu pagamento</string>
+
     <!--This string is used for square devices and overridden by hello_world in    values-round/strings.xml for round devices.-->
     <string name="hello_world">Hello Square World!</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -42,7 +42,7 @@ import java.util.Map;
 public class ShoppingCart extends Fragment {
     View v;
     RecyclerView recyclerView;
-    Bundle extras;
+    Bundle extras, extrasCheck;
     MyAdapter adapter;
     List<String> numbers, titles, images, prices;
     TextView totalPrice;
@@ -61,9 +61,13 @@ public class ShoppingCart extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
         extras = new Bundle();
+        extrasCheck = new Bundle();
         recyclerView = v.findViewById(R.id.recyclerView);
         checkoutBtn = v.findViewById(R.id.checkout);
         checkoutBtn.setOnClickListener(v -> {
+            ArrayList arrayList = new ArrayList<String>(titles);
+            Log.d("SIGA", "onCreateView: " + arrayList);
+            extrasCheck.putStringArrayList("titles", arrayList);
             openCheckoutPage();
         });
         String email = Preferences.readUserEmail();
@@ -271,14 +275,14 @@ public class ShoppingCart extends Fragment {
     }
 
     public void openCheckoutPage() {
-        /*final int homeContainer = R.id.shopPage;
+        final int homeContainer = R.id.shopPage;
         Checkout checkout = new Checkout();
-        checkout.setArguments(extras);
+        checkout.setArguments(extrasCheck);
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.addToBackStack(null);
         ft.replace(homeContainer, checkout);
-        ft.commit();*/
+        ft.commit();
     }
 
 }
