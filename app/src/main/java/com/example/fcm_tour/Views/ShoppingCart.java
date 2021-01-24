@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.fcm_tour.API;
@@ -39,11 +41,18 @@ public class ShoppingCart extends Fragment {
     View v;
     RecyclerView recyclerView;
     Bundle extras;
-    CatalogPage.MyAdapter adapter;
+    MyAdapter adapter;
+    List<String> numbers;
+    List<String> titles;
+    List<String> images;
+    List<String> prices;
+    int total = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Preferences.init(getContext());
+
     }
 
     @Override
@@ -51,15 +60,18 @@ public class ShoppingCart extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         v = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
+        extras = new Bundle();
         recyclerView = v.findViewById(R.id.recyclerView);
-
+        String email =Preferences.readUserEmail();
+        getShoppingCart(email, getContext());
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
         return v;
     }
 
-/*    class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
+  class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         private Context context;
         List<String> productNumbers;
         List<String> productNames;
@@ -77,7 +89,7 @@ public class ShoppingCart extends Fragment {
         @NonNull
         @Override
         public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(context).inflate(R.layout.product, parent, false);
+            View view = LayoutInflater.from(context).inflate(R.layout.product_cart, parent, false);
             return new MyViewHolder(view);
         }
 
@@ -103,13 +115,13 @@ public class ShoppingCart extends Fragment {
             public MyViewHolder(@NonNull View itemView) {
                 super(itemView);
 
-                image = itemView.findViewById(R.id.productImg);
-                title = itemView.findViewById(R.id.productName);
-                price = itemView.findViewById(R.id.productPrice);
-
+                image = itemView.findViewById(R.id.img);
+                title = itemView.findViewById(R.id.name);
+                price = itemView.findViewById(R.id.prize);
                 itemView.setOnClickListener(v -> {
                     for (int i = 0; i < productNumbers.size(); i++) {
                         if (getAdapterPosition() == i) {
+                            Log.d("SIGA", "MyViewHolder: " + productNumbers.get(i));
                             getProductById(productNumbers.get(i), v.getContext());
                         }
                     }
@@ -135,28 +147,59 @@ public class ShoppingCart extends Fragment {
             titles.add(name);
             prices.add(price);
             numbers.add(number);
+
+            total = total + Integer.parseInt(price);
+            Log.d("SIGA", "locationSort: " + total);
         }
         adapter = new MyAdapter(v.getContext(), titles, images, prices, numbers);
         recyclerView.setAdapter(adapter);
     }
 
+    public void getShoppingCart(String email, Context context) {
+        String postUrl = API.API_URL + "/carrinho/" + email ;
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, postUrl, null,
+                response -> {
+                    try {
+                        locationSort(response);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> Toast.makeText(context, "Erro: " + error, Toast.LENGTH_SHORT).show()) {
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("language", Preferences.readLanguage());
+                headers.put("Authorization", "Bearer " + Preferences.readUserToken());
+                return headers;
+            }
+        };
+        requestQueue.add(jsonArrayRequest);
+    }
+
     public void getProductById(String productId, Context context) {
-        String postUrl = API.API_URL + "/produtos/" + productId;
+        String postUrl = API.API_URL + "/produtos/" + productId + "/" + Preferences.readUserEmail();
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
                 response -> {
                     try {
+                        Log.d("SIGA", "getProductById: " + response);
                         String id = response.getString("number");
                         String name = response.getString("name");
                         String price = response.getString("price");
                         String description = response.getString("description");
                         String img = response.getString("img");
+                        String state = response.getString("state");
                         extras.putString("id", id);
                         extras.putString("name", name);
                         extras.putString("price", price);
                         extras.putString("description", description);
                         extras.putString("img", img);
+                        extras.putString("state", state);
                         openProductPage();
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -175,6 +218,8 @@ public class ShoppingCart extends Fragment {
         requestQueue.add(jsonObjectRequest);
     }
 
+
+
     public void openProductPage() {
         final int homeContainer = R.id.shopPage;
         ProductPage productPage = new ProductPage();
@@ -184,5 +229,5 @@ public class ShoppingCart extends Fragment {
         ft.addToBackStack(null);
         ft.replace(homeContainer, productPage);
         ft.commit();
-    }*/
+    }
 }
