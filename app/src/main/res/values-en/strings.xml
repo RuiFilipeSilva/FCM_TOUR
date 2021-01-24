@@ -194,11 +194,14 @@
 
     <!--Shop-->
     <string name="addToCardBtn">Add to Card</string>
+    <string name="removeFromCart">Remove from Card</string>
     <string name="leaveShop">Leave</string>
 
     <!--ProductPage-->
     <string name="catalogBtn">Catálogo</string>
     <string name="store">Store</string>
+    <string name="addToCartResponse">Product added to cart!</string>
+    <string name="removedFromCartResponse">Product removed from cart!</string>
 
     <!--Shopping Cart-->
     <string name="shopping_cart">Cart</string>

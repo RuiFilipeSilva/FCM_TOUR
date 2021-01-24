@@ -244,7 +244,7 @@ public class CatalogPage extends Fragment {
     }
 
     public void getProductById(String productId, Context context) {
-        String postUrl = API.API_URL + "/produtos/" + productId;
+        String postUrl = API.API_URL + "/produtos/" + productId + "/" + Preferences.readUserEmail();
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
@@ -255,11 +255,13 @@ public class CatalogPage extends Fragment {
                         String price = response.getString("price");
                         String description = response.getString("description");
                         String img = response.getString("img");
+                        String state = response.getString("state");
                         extras.putString("id", id);
                         extras.putString("name", name);
                         extras.putString("price", price);
                         extras.putString("description", description);
                         extras.putString("img", img);
+                        extras.putString("state", state);
                         openProductPage();
                     } catch (Exception e) {
                         e.printStackTrace();

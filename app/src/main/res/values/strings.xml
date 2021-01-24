@@ -189,11 +189,14 @@
 
     <!--Shop-->
     <string name="addToCardBtn">Adicionar ao carrinho</string>
+    <string name="removeFromCart">Remover do carrinho</string>
     <string name="leaveShop">Sair</string>
 
     <!--ProductPage-->
     <string name="catalogBtn">Catalog</string>
     <string name="store">Loja</string>
+    <string name="addToCartResponse">Produto adicionado ao carrinho!</string>
+    <string name="removedFromCartResponse">Produto removido do carrinho!</string>
 
     <!--Shopping Cart-->
     <string name="shopping_cart">Carrinho</string>

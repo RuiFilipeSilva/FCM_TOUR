@@ -96,11 +96,10 @@
         android:layout_gravity="bottom"
         android:layout_marginBottom="75dp"
         android:elevation="40dp"
-        android:gravity="center"
-        android:visibility="visible">
+        android:gravity="center">
 
         <LinearLayout
-            android:id="@+id/beforeBtn"
+            android:id="@+id/addToCartBtn"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:background="@drawable/rounded_shop"
@@ -108,6 +107,7 @@
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
             android:src="@drawable/cart"
+            android:visibility="visible"
             app:backgroundTint="@color/tower">
 
             <ImageView
@@ -122,6 +122,33 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dp"
                 android:text="@string/addToCardBtn"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/removeFromCartBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="@drawable/rounded_shop"
+            android:clickable="true"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:src="@drawable/cart"
+            android:visibility="gone"
+            app:backgroundTint="@color/tower">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:background="@drawable/cart" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5dp"
+                android:text="@string/removeFromCart"
                 android:textColor="@color/white" />
         </LinearLayout>
     </RelativeLayout>
