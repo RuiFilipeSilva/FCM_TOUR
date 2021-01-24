@@ -2,28 +2,22 @@ package com.example.fcm_tour.Views;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ListView;
-import android.widget.Spinner;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,7 +26,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
-import com.example.fcm_tour.Controllers.Products;
 import com.example.fcm_tour.R;
 import com.squareup.picasso.Picasso;
 
@@ -48,14 +41,10 @@ import java.util.Map;
 public class CatalogPage extends Fragment {
     View v;
     RecyclerView recyclerView;
-    List<String> numbers;
-    List<String> titles;
-    List<String> images;
-    List<String> prices;
+    List<String> numbers, titles, images, prices;
     MyAdapter adapter;
     Bundle extras;
     Spinner spinner;
-    String TAG = "SIGA";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

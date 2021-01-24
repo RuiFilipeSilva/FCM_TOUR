@@ -83,7 +83,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginRight="20dp"
                 android:fontFamily="@font/barlow_light"
-                android:paddingBottom="100dp"
+                android:paddingBottom="135dp"
                 android:textColor="@color/black"
                 android:textSize="16dp" />
         </LinearLayout>

@@ -57,12 +57,10 @@ public class ProductPage extends Fragment {
         addToCartBtn = v.findViewById(R.id.addToCartBtn);
         addToCartBtn.setOnClickListener(v -> {
             addToCart(productId, getContext());
-            Log.d("SIGA", "addToCart: ");
         });
         removeFromCartBtn = v.findViewById(R.id.removeFromCartBtn);
         removeFromCartBtn.setOnClickListener(v -> {
             removeFromCart(productId, getContext());
-            Log.d("SIGA", "removeFromCart: ");
         });
         displayProductInfo();
 
@@ -76,7 +74,6 @@ public class ProductPage extends Fragment {
         productImg = bundle.getString("img");
         productId = bundle.getString("id");
         productState = bundle.getString("state");
-        Log.d("SIGA", "displayProductInfo: " + productState);
         changeCartBtn(productState);
         nameTxt.setText(productName);
         descTxt.setText(productDesc);

@@ -108,6 +108,13 @@ public class Preferences {
         prefsEditor.commit();
     }
 
+    public static void saveShoppingCartPrice(Integer value) {
+        SharedPreferences.Editor prefsEditor = mSharedPref.edit();
+        prefsEditor.remove("shoppingCartPrice");
+        prefsEditor.putInt("shoppingCartPrice", value);
+        prefsEditor.commit();
+    }
+
     public static void removeLanguage() {
         SharedPreferences.Editor prefsEditor = mSharedPref.edit();
         prefsEditor.remove("language");
@@ -185,6 +192,10 @@ public class Preferences {
 
     public static Boolean readQuizzState() {
         return mSharedPref.getBoolean("quizzState", false);
+    }
+
+    public static Integer readShoppingCartPrice() {
+        return mSharedPref.getInt("shoppingCartPrice", 0);
     }
 
     public static String readRoomsAccessCode() {
