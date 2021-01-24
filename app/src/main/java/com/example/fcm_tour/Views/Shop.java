@@ -38,7 +38,7 @@ public class Shop extends AppCompatActivity {
         openCatalog();
 
         navigationView.initWithSaveInstanceState(savedInstanceState);
-        navigationView.addSpaceItem(new SpaceItem("", R.drawable.doc));
+        navigationView.addSpaceItem(new SpaceItem("", R.drawable.order));
         navigationView.addSpaceItem(new SpaceItem("", R.drawable.cart));
 
         navigationView.setSpaceOnClickListener(new SpaceOnClickListener() {

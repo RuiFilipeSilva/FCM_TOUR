@@ -39,7 +39,7 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/shop"
-            android:icon="@drawable/cart"
+            android:icon="@drawable/store_01"
             android:title="@string/shopLabel" />
         <item
             android:id="@+id/roleta"

@@ -195,16 +195,16 @@
     <!--Shop-->
     <string name="addToCardBtn">Add to Card</string>
     <string name="removeFromCart">Remove from Card</string>
-    <string name="leaveShop">Leave</string>
+    <string name="leaveShop">LEAVE</string>
 
     <!--ProductPage-->
-    <string name="catalogBtn">Catálogo</string>
-    <string name="store">Store</string>
+    <string name="catalogBtn">Catalog</string>
+    <string name="store">STORE</string>
     <string name="addToCartResponse">Product added to cart!</string>
     <string name="removedFromCartResponse">Product removed from cart!</string>
 
     <!--Shopping Cart-->
-    <string name="shopping_cart">Cart</string>
+    <string name="shopping_cart">CART</string>
 
     <!--This string is used for square devices and overridden by hello_world in    values-round/strings.xml for round devices.-->
     <string name="hello_world">Hello Square World!</string>
