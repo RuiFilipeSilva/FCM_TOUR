@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
@@ -44,10 +45,19 @@ public class Shop extends AppCompatActivity {
             @Override
             public void onCentreButtonClick() {
                 navigationView.setCentreButtonSelectable(true);
+                openCatalog();
             }
 
             @Override
             public void onItemClick(int itemIndex, String itemName) {
+                switch (itemIndex) {
+                    case 0:
+                        openCatalog();
+                        break;
+                    case 1:
+                        openCart();
+                        break;
+                }
             }
 
             @Override
@@ -62,6 +72,15 @@ public class Shop extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(homeContainer, catalogPage);
+        ft.commit();
+    }
+
+    public void openCart() {
+        final int homeContainer = R.id.shopPage;
+        ShoppingCart shoppingCart = new ShoppingCart();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(homeContainer, shoppingCart);
         ft.commit();
     }
 }
