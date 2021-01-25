@@ -1,12 +1,11 @@
 package com.example.fcm_tour.Views;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.fcm_tour.R;
 import com.google.ar.core.Anchor;

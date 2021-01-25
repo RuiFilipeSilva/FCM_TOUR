@@ -20,4 +20,5 @@
     <color name="color2">#008577</color>
     <color name="shop">#C6237B</color>
     <color name="bottomNavColor">#BABABA</color>
+    <color name="spaceBackgroundColor">#F4F4F4</color>
 </resources>

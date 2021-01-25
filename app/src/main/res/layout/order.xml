@@ -40,6 +40,5 @@
             android:gravity="center|start"
             android:textColor="@color/black"
             android:textSize="20dp" />
-
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

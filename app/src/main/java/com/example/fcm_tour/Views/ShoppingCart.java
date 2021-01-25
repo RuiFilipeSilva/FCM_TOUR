@@ -185,7 +185,7 @@ public class ShoppingCart extends Fragment {
     public void getShoppingCart(String email, Context context) {
         String postUrl = API.API_URL + "/carrinho/" + email;
         RequestQueue requestQueue = Volley.newRequestQueue(context);
-        Log.d("SIGA", "getShoppingCart: " + postUrl);
+
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, postUrl, null,
                 response -> {
                     try {
@@ -291,5 +291,4 @@ public class ShoppingCart extends Fragment {
         ft.replace(homeContainer, checkout);
         ft.commit();
     }
-
 }

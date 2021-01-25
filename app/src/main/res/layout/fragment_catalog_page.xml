@@ -47,7 +47,6 @@
                 android:spinnerMode="dialog" />
         </androidx.cardview.widget.CardView>
 
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"

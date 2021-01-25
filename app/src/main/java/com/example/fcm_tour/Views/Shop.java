@@ -41,7 +41,6 @@ public class Shop extends AppCompatActivity {
         navigationView.addSpaceItem(new SpaceItem("", R.drawable.painting));
         navigationView.addSpaceItem(new SpaceItem("", R.drawable.order));
 
-
         navigationView.setSpaceOnClickListener(new SpaceOnClickListener() {
             @Override
             public void onCentreButtonClick() {
@@ -73,8 +72,6 @@ public class Shop extends AppCompatActivity {
                 }
             }
         });
-
-
     }
 
     public void openCatalog() {

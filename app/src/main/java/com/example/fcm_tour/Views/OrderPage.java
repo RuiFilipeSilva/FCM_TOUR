@@ -162,5 +162,4 @@ public class OrderPage extends Fragment {
         };
         requestQueue.add(jsonObjectRequest);
     }
-
 }
