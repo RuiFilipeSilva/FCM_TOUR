@@ -206,6 +206,7 @@
     <!--Shopping Cart-->
     <string name="shopping_cart">CART</string>
     <string name="finals_shop"> CHECKOUT</string>
+    <string name="emptyCart">YOUR CART IS EMPTY!</string>
 
 
     <!--Payments-->

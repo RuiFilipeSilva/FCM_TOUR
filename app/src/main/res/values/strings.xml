@@ -201,7 +201,8 @@
 
     <!--Shopping Cart-->
     <string name="shopping_cart">CARRINHO</string>
-    <string name="finals_shop"> FINALIZAR COMPRA</string>
+    <string name="finals_shop">FINALIZAR COMPRA</string>
+    <string name="emptyCart">O CARRINHO ESTÁ VAZIO!</string>
 
     <!--Payments-->
     <string name="payment">PAGAMENTO</string>

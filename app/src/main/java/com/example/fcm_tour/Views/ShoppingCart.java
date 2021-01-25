@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,7 +47,8 @@ public class ShoppingCart extends Fragment {
     MyAdapter adapter;
     List<String> numbers, titles, images, prices;
     TextView totalPrice;
-    LinearLayout checkoutBtn;
+    LinearLayout checkoutBtn, emptyCart;
+    RelativeLayout cartLayout;
     int total = 0;
 
     @Override
@@ -62,6 +64,8 @@ public class ShoppingCart extends Fragment {
         v = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
         extras = new Bundle();
         recyclerView = v.findViewById(R.id.recyclerView);
+        emptyCart = v.findViewById(R.id.emptyCart);
+        cartLayout = v.findViewById(R.id.cartLayout);
         checkoutBtn = v.findViewById(R.id.checkout);
         checkoutBtn.setOnClickListener(v -> {
             openCheckoutPage();
@@ -167,6 +171,13 @@ public class ShoppingCart extends Fragment {
         Preferences.saveShoppingCartPrice(total);
         totalPrice = v.findViewById(R.id.total);
         totalPrice.setText(total + "€");
+        if(total == 0) {
+            cartLayout.setVisibility(View.GONE);
+            emptyCart.setVisibility(View.VISIBLE);
+        } else {
+            cartLayout.setVisibility(View.VISIBLE);
+            emptyCart.setVisibility(View.GONE);
+        }
         adapter = new MyAdapter(v.getContext(), titles, images, prices, numbers);
         recyclerView.setAdapter(adapter);
     }

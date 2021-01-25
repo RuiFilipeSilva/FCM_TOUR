@@ -29,6 +29,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
+import com.google.android.material.textfield.TextInputEditText;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -51,6 +52,7 @@ public class Checkout extends Fragment {
     List<String> titles, prices;
     MyAdapter adapter;
     JSONArray shoppingCart;
+    TextInputEditText name, adress, zipCode, city;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,10 @@ public class Checkout extends Fragment {
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_checkout, container, false);
         recyclerView = v.findViewById(R.id.recyclerView);
+        name = v.findViewById(R.id.nametxt);
+        adress = v.findViewById(R.id.adressTxt);
+        zipCode = v.findViewById(R.id.postalCodeTxt);
+        city = v.findViewById(R.id.cityTxt);
         total = v.findViewById(R.id.total);
         total.setText(Preferences.readShoppingCartPrice().toString() + "€");
         nameClient = v.findViewById(R.id.nametxt);
@@ -76,8 +82,7 @@ public class Checkout extends Fragment {
             alert.setMessage(getString(R.string.conf_message_pay));
             alert.setPositiveButton(R.string.confirmOrder, (dialog, whichButton) -> {
                 dialog.dismiss();
-                returnToCatalog();
-                Toast.makeText(getContext(), R.string.toast_get_awards, Toast.LENGTH_LONG).show();
+                postOrder(Preferences.readUserEmail(), getContext());
             });
             alert.setNegativeButton(R.string.cancelBtn,
                     (dialog, which) -> {
@@ -160,6 +165,52 @@ public class Checkout extends Fragment {
                     try {
                         shoppingCart = response;
                         locationSort(response);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> Toast.makeText(context, "Erro: " + error, Toast.LENGTH_SHORT).show()) {
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("language", Preferences.readLanguage());
+                headers.put("Authorization", "Bearer " + Preferences.readUserToken());
+                return headers;
+            }
+        };
+        requestQueue.add(jsonArrayRequest);
+    }
+
+    public void postOrder(String email, Context context) {
+        String postUrl = API.API_URL + "/encomenda/" + email;
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+
+        JSONArray array = new JSONArray();
+        JSONObject info = new JSONObject();
+        JSONObject products = new JSONObject();
+        try {
+            info.put("name", name.getText().toString());
+            info.put("adress", adress.getText().toString());
+            info.put("zipCode", zipCode.getText().toString());
+            info.put("city", city.getText().toString());
+            info.put("total", Preferences.readShoppingCartPrice());
+            products.put("products", shoppingCart);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        array.put(info);
+        array.put(products);
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.POST, postUrl, array,
+                response -> {
+                    try {
+                        JSONObject jsonObject = response.getJSONObject(0);
+                        int state = jsonObject.getInt("state");
+                        if (state == 0) {
+                            Toast.makeText(getContext(), R.string.toast_get_awards, Toast.LENGTH_LONG).show();
+                            returnToCatalog();
+                        }
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

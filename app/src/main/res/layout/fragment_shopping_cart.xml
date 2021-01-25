@@ -41,8 +41,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/stratum1_bold"
-                android:textColor="@color/black"
                 android:text="TOTAL"
+                android:textColor="@color/black"
                 android:textSize="25dp" />
 
             <TextView
@@ -51,19 +51,19 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/barlow_medium"
                 android:gravity="right"
-                android:text="100"
                 android:textColor="@color/black"
                 android:textSize="25dp" />
         </LinearLayout>
 
 
         <RelativeLayout
-            android:id="@+id/navigateRoomsLayout"
+            android:id="@+id/cartLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="75dp"
             android:elevation="40dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
@@ -75,8 +75,8 @@
                 android:id="@+id/checkout"
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
-                android:layout_alignParentEnd="true"
                 android:layout_alignBottom="@id/recyclerView"
+                android:layout_alignParentEnd="true"
                 android:layout_marginRight="20dp"
                 android:background="@drawable/rounded_shop"
                 android:clickable="true"
@@ -95,10 +95,38 @@
                 <ImageView
                     android:layout_width="6dp"
                     android:layout_height="12dp"
-                    android:layout_marginLeft="10dp"
                     android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
                     android:background="@drawable/arrow_right" />
             </LinearLayout>
         </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/emptyCart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="120dp"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/shopcart"
+                android:backgroundTint="@color/bottomNavColor" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/barlow_medium"
+                android:text="@string/emptyCart"
+                android:textColor="@color/bottomNavColor"
+                android:textSize="25sp" />
+        </LinearLayout>
     </LinearLayout>
+
+
 </FrameLayout>
