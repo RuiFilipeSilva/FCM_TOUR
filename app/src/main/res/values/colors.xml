@@ -17,4 +17,8 @@
     <color name="roulette">#E41E26</color>
     <color name="fcm">#13007C</color>
     <color name="dialogTextColor">#000000</color>
+    <color name="color2">#008577</color>
+    <color name="shop">#C6237B</color>
+    <color name="bottomNavColor">#BABABA</color>
+    <color name="spaceBackgroundColor">#F4F4F4</color>
 </resources>

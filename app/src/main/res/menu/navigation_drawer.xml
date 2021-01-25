@@ -38,6 +38,10 @@
         android:id="@+id/group2"
         android:checkableBehavior="single">
         <item
+            android:id="@+id/shop"
+            android:icon="@drawable/store_01"
+            android:title="@string/shopLabel" />
+        <item
             android:id="@+id/roleta"
             android:icon="@drawable/ic_roleta_icon"
             android:title="@string/rouletteLabel" />

@@ -58,19 +58,6 @@
                     android:textColor="@color/black"
                     android:textSize="13dp"
                     app:backgroundTint="@color/white" />
-
-                <Button
-                    android:id="@+id/startQuizzBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="50dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginRight="20dp"
-                    android:background="@drawable/rounded_tower"
-                    android:text="@string/startQuizzBtn"
-                    android:textColor="@color/white"
-                    android:visibility="invisible"
-                    app:backgroundTint="@color/tower" />
             </RelativeLayout>
 
             <TextView

@@ -62,7 +62,7 @@ import java.util.Map;
 public class AudioPage extends Fragment {
     View v;
     String title, description, link, getImgs, nextRoomNum, beforeRoomNum;
-    Button btnTxt, btnAudio, goBackBtn, startQuizzBtn;
+    Button btnTxt, btnAudio, goBackBtn;
     LinearLayout nextRoomBtn, previousRoomBtn;
     RelativeLayout navigateRoomsLayout;
     ImageSlider imageSlider;
@@ -93,16 +93,16 @@ public class AudioPage extends Fragment {
         });
         nextRoomBtn = v.findViewById(R.id.nextBtn);
         nextRoomBtn.setOnClickListener(v -> {
-            GetRoomsByNumber(nextRoomNum);
+            if (nextBtnTxt.getText().toString().equals("Quizz")) {
+                AudioPlayer.stopAudio();
+                openQuizzFragment();
+            } else {
+                GetRoomsByNumber(nextRoomNum);
+            }
         });
         previousRoomBtn = v.findViewById(R.id.beforeBtn);
         previousRoomBtn.setOnClickListener(v -> {
             GetRoomsByNumber(beforeRoomNum);
-        });
-        startQuizzBtn = v.findViewById(R.id.startQuizzBtn);
-        startQuizzBtn.setOnClickListener(v -> {
-            AudioPlayer.stopAudio();
-            openQuizzFragment();
         });
         btnTxt = v.findViewById(R.id.txtBtn);
         btnAudio = v.findViewById(R.id.audio);
@@ -184,6 +184,7 @@ public class AudioPage extends Fragment {
         QuizzPage quizzPage = new QuizzPage();
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.addToBackStack(null);
         ft.replace(quizzContainer, quizzPage);
         ft.commit();
     }
@@ -309,12 +310,9 @@ public class AudioPage extends Fragment {
                 nextBtnTxt.setText(R.string.nextBtn);
                 nextRoomNum = Rooms.getBeforeAfterRooms(titleTxt).get(3);
                 nextRoomBtn.getBackground().setColorFilter(Color.parseColor(getString(R.color.tower)), PorterDuff.Mode.SRC_ATOP);
-                startQuizzBtn.setVisibility(View.GONE);
             } else {
                 nextBtnTxt.setText("Quizz");
-                nextRoomBtn.setClickable(false);
-                nextRoomBtn.getBackground().setColorFilter(Color.parseColor(getString(R.color.grey_light)), PorterDuff.Mode.SRC_ATOP);
-                startQuizzBtn.setVisibility(View.VISIBLE);
+                nextRoomBtn.setClickable(true);
             }
         } else {
             navigateRoomsLayout.setVisibility(View.GONE);
