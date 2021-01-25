@@ -59,7 +59,7 @@
         app:active_centre_button_icon_color="@color/white"
         app:active_item_color="@color/shop"
         app:centre_button_color="@color/bottomNavColor"
-        app:centre_button_icon="@drawable/home"
+        app:centre_button_icon="@drawable/shopcart"
         app:inactive_centre_button_icon_color="@color/white"
         app:inactive_item_color="@color/bottomNavColor"
         app:space_background_color="#F4F4F4"

@@ -205,6 +205,8 @@
 
     <!--Shopping Cart-->
     <string name="shopping_cart">CART</string>
+    <string name="finals_shop"> CHECKOUT</string>
+
 
     <!--Payments-->
     <string name="payment">CHECKOUT</string>

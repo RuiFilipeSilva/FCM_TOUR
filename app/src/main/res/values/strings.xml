@@ -198,8 +198,10 @@
     <string name="addToCartResponse">Produto adicionado ao carrinho!</string>
     <string name="removedFromCartResponse">Produto removido do carrinho!</string>
 
+
     <!--Shopping Cart-->
     <string name="shopping_cart">CARRINHO</string>
+    <string name="finals_shop"> FINALIZAR COMPRA</string>
 
     <!--Payments-->
     <string name="payment">PAGAMENTO</string>

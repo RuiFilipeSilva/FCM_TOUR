@@ -67,12 +67,12 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
                     android:layout_marginTop="20dp"
-                    android:layout_marginRight="40dp"
-                    android:fontFamily="@font/stratum1_black"
+                    android:layout_marginRight="20dp"
+                    android:fontFamily="@font/barlow_light"
                     android:gravity="center_horizontal"
                     android:text="@string/titleTextView"
                     android:textColor="@color/grey"
-                    android:textSize="30dp" />
+                    android:textSize="25dp" />
             </RelativeLayout>
 
             <TextView
@@ -114,7 +114,8 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:background="@drawable/cart" />
+                android:background="@drawable/cart"
+                android:backgroundTint="#FFFFFF" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -141,7 +142,8 @@
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
-                android:background="@drawable/cart" />
+                android:background="@drawable/cart"
+                android:backgroundTint="#FFFFFF" />
 
             <TextView
                 android:layout_width="wrap_content"

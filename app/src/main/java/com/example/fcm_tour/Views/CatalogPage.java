@@ -27,6 +27,8 @@ import com.android.volley.toolbox.Volley;
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
+import com.google.android.material.navigation.NavigationView;
+import com.luseen.spacenavigation.SpaceNavigationView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -56,7 +58,6 @@ public class CatalogPage extends Fragment {
         v = inflater.inflate(R.layout.fragment_catalog_page, container, false);
         recyclerView = v.findViewById(R.id.recyclerView);
         extras = new Bundle();
-
         spinner = v.findViewById(R.id.spinner);
         loadFilters();
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {

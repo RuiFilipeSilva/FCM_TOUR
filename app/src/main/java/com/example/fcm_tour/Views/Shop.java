@@ -38,14 +38,15 @@ public class Shop extends AppCompatActivity {
         openCatalog();
 
         navigationView.initWithSaveInstanceState(savedInstanceState);
+        navigationView.addSpaceItem(new SpaceItem("", R.drawable.painting));
         navigationView.addSpaceItem(new SpaceItem("", R.drawable.order));
-        navigationView.addSpaceItem(new SpaceItem("", R.drawable.cart));
+
 
         navigationView.setSpaceOnClickListener(new SpaceOnClickListener() {
             @Override
             public void onCentreButtonClick() {
                 navigationView.setCentreButtonSelectable(true);
-                openCatalog();
+                openCart();
             }
 
             @Override
@@ -55,7 +56,7 @@ public class Shop extends AppCompatActivity {
                         openCatalog();
                         break;
                     case 1:
-                        openCart();
+                        openCatalog();
                         break;
                 }
             }
@@ -64,6 +65,8 @@ public class Shop extends AppCompatActivity {
             public void onItemReselected(int itemIndex, String itemName) {
             }
         });
+
+
     }
 
     public void openCatalog() {
