@@ -190,7 +190,7 @@
     <!--Shop-->
     <string name="addToCardBtn">Adicionar ao carrinho</string>
     <string name="removeFromCart">Remover do carrinho</string>
-    <string name="leaveShop">SAIR</string>
+    <string name="leaveShop">FCM</string>
 
     <!--ProductPage-->
     <string name="catalogBtn">Catálogo</string>
@@ -203,6 +203,14 @@
     <string name="shopping_cart">CARRINHO</string>
     <string name="finals_shop">FINALIZAR COMPRA</string>
     <string name="emptyCart">O CARRINHO ESTÁ VAZIO!</string>
+
+    <!--Orders-->
+    <string name="orderTitle">ENCOMENDA Nº</string>
+    <string name="orderState">Em Processamento</string>
+    <string name="orderStateDone">Concluído</string>
+    <string name="stateTxt">Estado: </string>
+    <string name="totalPriceTxt">TOTAL: </string>
+    <string name="productsTxt">PRODUTOS</string>
 
     <!--Payments-->
     <string name="payment">PAGAMENTO</string>

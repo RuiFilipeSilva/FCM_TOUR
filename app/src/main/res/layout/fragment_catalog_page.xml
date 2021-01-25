@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:backgroundTint="@color/white"
     tools:context=".Views.CatalogPage">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -29,20 +31,21 @@
             android:layout_marginLeft="20dp"
             android:background="@drawable/rec"
             android:backgroundTint="@color/shop" />
-    <androidx.cardview.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        android:layout_gravity="end"
-        android:backgroundTint="#F4F4F4"
-        app:cardCornerRadius="24dp"
-        android:layout_marginEnd="20dp">
 
-        <Spinner
-            android:id="@+id/spinner"
+        <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:spinnerMode="dialog" />
-    </androidx.cardview.widget.CardView>
+            android:layout_height="25dp"
+            android:layout_gravity="end"
+            android:layout_marginEnd="20dp"
+            android:backgroundTint="#F4F4F4"
+            app:cardCornerRadius="24dp">
+
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dialog" />
+        </androidx.cardview.widget.CardView>
 
 
         <androidx.recyclerview.widget.RecyclerView
@@ -50,6 +53,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:layout_marginBottom="25dp"/>
+            android:layout_marginBottom="50dp" />
     </LinearLayout>
 </FrameLayout>

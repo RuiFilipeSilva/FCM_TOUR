@@ -56,13 +56,21 @@ public class Shop extends AppCompatActivity {
                         openCatalog();
                         break;
                     case 1:
-                       openOrder();
+                        openOrder();
                         break;
                 }
             }
 
             @Override
             public void onItemReselected(int itemIndex, String itemName) {
+                switch (itemIndex) {
+                    case 0:
+                        openCatalog();
+                        break;
+                    case 1:
+                        openOrder();
+                        break;
+                }
             }
         });
 
@@ -74,6 +82,7 @@ public class Shop extends AppCompatActivity {
         CatalogPage catalogPage = new CatalogPage();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.addToBackStack(null);
         ft.replace(homeContainer, catalogPage);
         ft.commit();
     }
@@ -83,6 +92,7 @@ public class Shop extends AppCompatActivity {
         ShoppingCart shoppingCart = new ShoppingCart();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.addToBackStack(null);
         ft.replace(homeContainer, shoppingCart);
         ft.commit();
     }
@@ -92,6 +102,7 @@ public class Shop extends AppCompatActivity {
         Order order = new Order();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.addToBackStack(null);
         ft.replace(homeContainer, order);
         ft.commit();
     }

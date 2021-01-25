@@ -5,28 +5,26 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
-import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
-import com.squareup.picasso.Picasso;
+import com.google.android.material.textfield.TextInputEditText;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -37,26 +35,28 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-public class Order extends Fragment {
+public class OrderPage extends Fragment {
     View v;
-    List<String> numbers, titles, totals;
+    TextView stateTxt, totalTxt, orderNum;
     RecyclerView recyclerView;
+    List<String> titles, prices;
     MyAdapter adapter;
-    Bundle extras;
+    Bundle bundle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Preferences.init(getContext());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_order, container, false);
-        extras = new Bundle();
-        String email = Preferences.readUserEmail();
-        getOrders(email, getContext());
+        v = inflater.inflate(R.layout.fragment_order_page, container, false);
+        bundle = getArguments();
+        String orderId = bundle.getString("orderId");
+        getOrderById(orderId, getContext());
+        stateTxt = v.findViewById(R.id.orderState);
+        totalTxt = v.findViewById(R.id.orderTotal);
+        orderNum = v.findViewById(R.id.orderNumber);
         recyclerView = v.findViewById(R.id.recyclerView);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 1, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
@@ -67,33 +67,31 @@ public class Order extends Fragment {
 
     class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         private Context context;
-        List<String> productNumbers;
         List<String> productNames;
         List<String> productPrices;
 
-        public MyAdapter(Context context, List<String> productNames, List<String> productPrices, List<String> productNumbers) {
+        public MyAdapter(Context context, List<String> productNames, List<String> productPrices) {
             this.context = context;
             this.productNames = productNames;
             this.productPrices = productPrices;
-            this.productNumbers = productNumbers;
         }
 
         @NonNull
         @Override
-        public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(context).inflate(R.layout.order, parent, false);
-            return new MyViewHolder(view);
+        public MyAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View view = LayoutInflater.from(context).inflate(R.layout.checkout_product, parent, false);
+            return new MyAdapter.MyViewHolder(view);
         }
 
         @Override
-        public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-            holder.title.setText(getString(R.string.orderTitle) + productNumbers.get(position));
+        public void onBindViewHolder(@NonNull MyAdapter.MyViewHolder holder, int position) {
+            holder.title.setText(productNames.get(position));
             holder.price.setText(productPrices.get(position) + "€");
         }
 
         @Override
         public int getItemCount() {
-            return productNumbers.size();
+            return productNames.size();
         }
 
         public class MyViewHolder extends RecyclerView.ViewHolder {
@@ -103,46 +101,51 @@ public class Order extends Fragment {
             public MyViewHolder(@NonNull View itemView) {
                 super(itemView);
                 title = itemView.findViewById(R.id.name);
-                price = itemView.findViewById(R.id.prize);
-                itemView.setOnClickListener(v -> {
-                    for (int i = 0; i < productNumbers.size(); i++) {
-                        if (getAdapterPosition() == i) {
-                            extras.putString("orderId", productNumbers.get(i));
-                            openOrderPage();
-                        }
-                    }
-                });
+                price = itemView.findViewById(R.id.price);
             }
         }
-
     }
 
-    public void locationSort(JSONArray result) throws JSONException {
-        numbers = new ArrayList<>();
+    public void locationSort(JSONArray result, int state, String totalPrice, String orderNumber) throws JSONException {
         titles = new ArrayList<>();
-        totals = new ArrayList<>();
+        prices = new ArrayList<>();
 
         for (int i = 0; i <= result.length() - 1; i++) {
             JSONObject product = result.getJSONObject(i);
             String name = product.getString("name");
-            String total = product.getString("total");
-            String number = product.getString("number");
+            String price = product.getString("price");
             titles.add(name);
-            totals.add(total);
-            numbers.add(number);
+            prices.add(price);
         }
-        adapter = new MyAdapter(v.getContext(), titles, totals, numbers);
+
+        switch (state) {
+            case 0:
+                stateTxt.setText(R.string.orderState);
+                break;
+            case 1:
+                stateTxt.setText(R.string.orderStateDone);
+                break;
+            default:
+                break;
+        }
+        totalTxt.setText(totalPrice + "€");
+        orderNum.setText(getString(R.string.orderTitle) + orderNumber);
+        adapter = new MyAdapter(v.getContext(), titles, prices);
         recyclerView.setAdapter(adapter);
     }
 
-    public void getOrders(String email, Context context) {
-        String postUrl = API.API_URL + "/encomenda/utilizador/" + email;
+    public void getOrderById(String orderId, Context context) {
+        String postUrl = API.API_URL + "/encomenda/numero/" + orderId;
         RequestQueue requestQueue = Volley.newRequestQueue(context);
 
-        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(Request.Method.GET, postUrl, null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
                 response -> {
                     try {
-                        locationSort(response);
+                        String products = response.getString("products");
+                        JSONArray productsArray = new JSONArray(products);
+                        int state = response.getInt("state");
+                        String totalPrice = response.getString("total");
+                        locationSort(productsArray, state, totalPrice, orderId);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -157,17 +160,7 @@ public class Order extends Fragment {
                 return headers;
             }
         };
-        requestQueue.add(jsonArrayRequest);
+        requestQueue.add(jsonObjectRequest);
     }
 
-    public void openOrderPage() {
-        final int homeContainer = R.id.shopPage;
-        OrderPage orderPage = new OrderPage();
-        orderPage.setArguments(extras);
-        FragmentManager fragmentManager = getParentFragmentManager();
-        FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.addToBackStack(null);
-        ft.replace(homeContainer, orderPage);
-        ft.commit();
-    }
 }

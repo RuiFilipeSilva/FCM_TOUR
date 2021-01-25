@@ -195,7 +195,7 @@
     <!--Shop-->
     <string name="addToCardBtn">Add to Card</string>
     <string name="removeFromCart">Remove from Card</string>
-    <string name="leaveShop">LEAVE</string>
+    <string name="leaveShop">FCM</string>
 
     <!--ProductPage-->
     <string name="catalogBtn">Catalog</string>
@@ -207,6 +207,14 @@
     <string name="shopping_cart">CART</string>
     <string name="finals_shop"> CHECKOUT</string>
     <string name="emptyCart">YOUR CART IS EMPTY!</string>
+
+    <!--Orders-->
+    <string name="orderTitle">ORDER Nº</string>
+    <string name="orderState">Processing</string>
+    <string name="orderStateDone">Concluded</string>
+    <string name="stateTxt">State: </string>
+    <string name="totalPriceTxt">TOTAL: </string>
+    <string name="productsTxt">PRODUCTS</string>
 
 
     <!--Payments-->
