@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.example.fcm_tour.Controllers.Users;
 import com.example.fcm_tour.MainActivity;
@@ -29,6 +30,9 @@ public class Login2 extends AppCompatActivity {
         SocialMediaAuth socialMediaAuth = new SocialMediaAuth();
         openFragment(socialMediaAuth, container);
         btnVoltar = findViewById(R.id.voltar);
+        if (btnVoltar.getText().toString().equals("Return V")) {
+            btnVoltar.getLayoutParams().width = 280;
+        }
         btnVoltar.setOnClickListener(v -> {
             comeBack = new Intent(v.getContext(), SideBar.class);
             startActivity(comeBack);

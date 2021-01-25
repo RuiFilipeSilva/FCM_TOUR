@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="MyDialogTheme" parent="ThemeOverlay.MaterialComponents.Dialog.Alert">
+        <!--buttons color-->
+        <item name="colorAccent">#000000</item>
+        <!--title and message color-->
+        <item name="android:windowTitleStyle">@style/title</item>
+        <item name="android:alertDialogTheme">@style/message</item>
+
+        <item name="android:buttonBarPositiveButtonStyle">@style/PositiveButtonStyle</item>
+        <item name="android:buttonBarNegativeButtonStyle">@style/NegativeButtonStyle</item>
+        <item name="android:buttonBarNeutralButtonStyle">@style/NeutralButtonStyle</item>
+        <!--dialog background-->
+        <item name="android:fontFamily">@font/stratum1_black</item>
+    </style>
+
+    <style name="NegativeButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/grey</item>
+    </style>
+
+    <style name="PositiveButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/fcm</item>
+    </style>
+    <style name="NeutralButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/fcm</item>
+    </style>
+
+    <style name="title" parent="TextAppearance.AppCompat.Title">
+        <item name="android:textColor">@color/fcm</item>
+        <item name="android:fontFamily">@font/stratum1_black</item>
+        <item name="android:textSize">65px</item>
+    </style>
+
+    <style name="message" parent="Base.TextAppearance.AppCompat.Subhead">
+        <item name="android:fontFamily">@font/barlow_light</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+</resources>

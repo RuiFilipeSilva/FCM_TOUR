@@ -1,7 +1,11 @@
 package com.example.fcm_tour.Views;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.res.ColorStateList;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
+import android.graphics.drawable.Drawable;
 import android.media.AudioAttributes;
 import android.media.MediaPlayer;
 import android.os.AsyncTask;
@@ -17,12 +21,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.RelativeLayout.LayoutParams;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.example.fcm_tour.API;
@@ -44,18 +54,23 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class AudioPage extends Fragment {
     View v;
     String title, description, link, getImgs, nextRoomNum, beforeRoomNum;
-    Button btnTxt, btnAudio, nextRoomBtn, beforeRoomBtn, goBackBtn;
+    Button btnTxt, btnAudio, goBackBtn;
+    LinearLayout nextRoomBtn, previousRoomBtn;
+    RelativeLayout navigateRoomsLayout;
     ImageSlider imageSlider;
     Boolean roomsAccess;
     Integer pageType;
     Bundle extras, bundle;
     ImageView imgView, underline;
+    TextView nextBtnTxt;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -69,24 +84,30 @@ public class AudioPage extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_audio_page, container, false);
         Preferences.removeQR();
+        navigateRoomsLayout = v.findViewById(R.id.navigateRoomsLayout);
+        nextBtnTxt = v.findViewById(R.id.nextBtnTxt);
         goBackBtn = v.findViewById(R.id.goBackBtn);
         goBackBtn.setOnClickListener(v -> {
-            openDescFragment();
+            AudioPlayer.stopAudio();
             goBackFragment();
         });
         nextRoomBtn = v.findViewById(R.id.nextBtn);
         nextRoomBtn.setOnClickListener(v -> {
-            new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + nextRoomNum);
+            if (nextBtnTxt.getText().toString().equals("Quizz")) {
+                AudioPlayer.stopAudio();
+                openQuizzFragment();
+            } else {
+                GetRoomsByNumber(nextRoomNum);
+            }
         });
-        beforeRoomBtn = v.findViewById(R.id.beforeBtn);
-        beforeRoomBtn.setOnClickListener(v -> {
-            new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + beforeRoomNum);
+        previousRoomBtn = v.findViewById(R.id.beforeBtn);
+        previousRoomBtn.setOnClickListener(v -> {
+            GetRoomsByNumber(beforeRoomNum);
         });
         btnTxt = v.findViewById(R.id.txtBtn);
         btnAudio = v.findViewById(R.id.audio);
         btnTxt.setOnClickListener(v1 -> openDescFragment());
         btnAudio.setOnClickListener(v12 -> openAudioFragment());
-
         pageType = Preferences.readPageType();
         try {
             loadRoomInfo();
@@ -121,7 +142,7 @@ public class AudioPage extends Fragment {
         final int descriptionContainer = R.id.audioPageFrame;
         Description description = new Description();
         description.setArguments(extras);
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(descriptionContainer, description);
         ft.commit();
@@ -152,9 +173,19 @@ public class AudioPage extends Fragment {
         final int audioContainer = R.id.audioPageFrame;
         AudioPlayer audioPlayer = new AudioPlayer();
         audioPlayer.setArguments(extras);
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(audioContainer, audioPlayer);
+        ft.commit();
+    }
+
+    public void openQuizzFragment() {
+        final int quizzContainer = R.id.fullpage;
+        QuizzPage quizzPage = new QuizzPage();
+        FragmentManager fragmentManager = getParentFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.addToBackStack(null);
+        ft.replace(quizzContainer, quizzPage);
         ft.commit();
     }
 
@@ -217,40 +248,34 @@ public class AudioPage extends Fragment {
         openDescFragment();
     }
 
-    class GetRoomsByNumber extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... fileUrl) {
-            StringBuilder stringBuilder = new StringBuilder();
-            try {
-                URL url = new URL(fileUrl[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                InputStream in = connection.getInputStream();
-                stringBuilder = new StringBuilder();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-            } catch (Exception e) {
+    public void GetRoomsByNumber(String number) {
+        String postUrl = API.API_URL + "/torre/salas/" + number;
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
+                response -> {
+                    try {
+                        getImgs = response.getString("imgs");
+                        description = response.getString("description");
+                        link = response.getString("audio");
+                        title = response.getString("name");
+                        if (title.equals("Início") && Preferences.readLanguage().equals("EN")) {
+                            title = "Beginning";
+                        }
+                        loadNextRoomInfo();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> Toast.makeText(getContext(), "Erro" + error, Toast.LENGTH_LONG).show()) {
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("language", Preferences.readLanguage());
+                return headers;
             }
-            return stringBuilder.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                JSONObject rooms = new JSONObject(result);
-                getImgs = rooms.getString("imgs");
-                description = rooms.getString("description");
-                link = rooms.getString("audio");
-                title = rooms.getString("name");
-                loadNextRoomInfo();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+        };
+        requestQueue.add(jsonObjectRequest);
     }
 
     public void loadNextRoomInfo() throws JSONException {
@@ -268,22 +293,29 @@ public class AudioPage extends Fragment {
         openDescFragment();
     }
 
+    @SuppressLint("ResourceType")
     public void verifyRooms(String titleTxt) {
-        if (roomsAccess == true) {
+        if (roomsAccess == true && pageType == 0) {
+            navigateRoomsLayout.setVisibility(View.VISIBLE);
             if (Rooms.getBeforeAfterRooms(titleTxt).get(0) != null) {
-                beforeRoomBtn.setVisibility(View.VISIBLE);
+                previousRoomBtn.setClickable(true);
                 beforeRoomNum = Rooms.getBeforeAfterRooms(titleTxt).get(2);
-                beforeRoomBtn.setText(Rooms.getBeforeAfterRooms(titleTxt).get(0));
+                previousRoomBtn.getBackground().setColorFilter(Color.parseColor(getString(R.color.tower)), PorterDuff.Mode.SRC_ATOP);
             } else {
-                beforeRoomBtn.setVisibility(View.INVISIBLE);
+                previousRoomBtn.setClickable(false);
+                previousRoomBtn.getBackground().setColorFilter(Color.parseColor(getString(R.color.grey_light)), PorterDuff.Mode.SRC_ATOP);
             }
             if (Rooms.getBeforeAfterRooms(titleTxt).get(1) != null) {
-                nextRoomBtn.setVisibility(View.VISIBLE);
+                nextRoomBtn.setClickable(true);
+                nextBtnTxt.setText(R.string.nextBtn);
                 nextRoomNum = Rooms.getBeforeAfterRooms(titleTxt).get(3);
-                nextRoomBtn.setText(Rooms.getBeforeAfterRooms(titleTxt).get(1));
+                nextRoomBtn.getBackground().setColorFilter(Color.parseColor(getString(R.color.tower)), PorterDuff.Mode.SRC_ATOP);
             } else {
-                nextRoomBtn.setVisibility(View.INVISIBLE);
+                nextBtnTxt.setText("Quizz");
+                nextRoomBtn.setClickable(true);
             }
+        } else {
+            navigateRoomsLayout.setVisibility(View.GONE);
         }
     }
 
@@ -293,12 +325,12 @@ public class AudioPage extends Fragment {
         switch (pageType) {
             case 0:
                 if (roomsAccess == true) {
-                    Preferences.saveRoomsAccess();
+                    Preferences.saveRoomsAccess(Preferences.readRoomsAccessCode());
                 }
                 final int roomContainer = R.id.fullpage;
                 RoomPage rooms = new RoomPage();
                 rooms.setArguments(extras);
-                fragmentManager = getFragmentManager();
+                fragmentManager = getParentFragmentManager();
                 ft = fragmentManager.beginTransaction();
                 ft.setCustomAnimations(R.anim.from_right, R.anim.to_left);
                 ft.addToBackStack(null);
@@ -309,7 +341,7 @@ public class AudioPage extends Fragment {
                 final int museumContainer = R.id.fullpage;
                 Museum museum = new Museum();
                 museum.setArguments(extras);
-                fragmentManager = getFragmentManager();
+                fragmentManager = getParentFragmentManager();
                 ft = fragmentManager.beginTransaction();
                 ft.setCustomAnimations(R.anim.from_right, R.anim.to_left);
                 ft.addToBackStack(null);
@@ -320,7 +352,7 @@ public class AudioPage extends Fragment {
                 final int collectionsContainer = R.id.fullpage;
                 CollectionsPage collectionsPage = new CollectionsPage();
                 collectionsPage.setArguments(extras);
-                fragmentManager = getFragmentManager();
+                fragmentManager = getParentFragmentManager();
                 ft = fragmentManager.beginTransaction();
                 ft.setCustomAnimations(R.anim.from_right, R.anim.to_left);
                 ft.addToBackStack(null);
@@ -331,7 +363,7 @@ public class AudioPage extends Fragment {
                 final int musicContainer = R.id.fullpage;
                 Music music = new Music();
                 music.setArguments(extras);
-                fragmentManager = getFragmentManager();
+                fragmentManager = getParentFragmentManager();
                 ft = fragmentManager.beginTransaction();
                 ft.setCustomAnimations(R.anim.from_right, R.anim.to_left);
                 ft.addToBackStack(null);

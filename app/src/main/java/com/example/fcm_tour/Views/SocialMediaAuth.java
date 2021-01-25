@@ -9,8 +9,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.fcm_tour.API;
+import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.Controllers.Users;
 import com.example.fcm_tour.R;
 import com.example.fcm_tour.SideBar;
@@ -25,6 +27,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
@@ -36,11 +39,13 @@ import java.util.Arrays;
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class SocialMediaAuth extends Fragment {
-    LoginButton loginButton;
+    LoginButton facebookBtn;
+    SignInButton googleBtn;
     private static final int RC_GET_TOKEN = 9002;
     CallbackManager callbackManager;
     GoogleSignInAccount account;
     GoogleSignInClient mGoogleSignInClient;
+    View v;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -57,15 +62,20 @@ public class SocialMediaAuth extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_social_media_auth, container, false);
-        v.findViewById(R.id.sign_in_button).setOnClickListener((v1 -> {
+        v = inflater.inflate(R.layout.fragment_social_media_auth, container, false);
+        googleBtn = v.findViewById(R.id.sign_in_button);
+        TextView textView = (TextView) googleBtn.getChildAt(0);
+        textView.setText("Google");
+        textView.setPadding(0,8,0,0);
+        googleBtn.setOnClickListener((v1 -> {
             Intent signInIntent = mGoogleSignInClient.getSignInIntent();
             startActivityForResult(signInIntent, RC_GET_TOKEN);
         }));
-        loginButton = v.findViewById(R.id.login_button);
-        loginButton.setFragment(this);
-        loginButton.setReadPermissions(Arrays.asList("public_profile", "email"));
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        facebookBtn = v.findViewById(R.id.login_button);
+        facebookBtn.setFragment(this);
+        facebookBtn.setReadPermissions(Arrays.asList("public_profile", "email"));
+        //facebookBtn.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
+        facebookBtn.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 GraphRequest request = GraphRequest.newMeRequest(

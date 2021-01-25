@@ -106,9 +106,10 @@ public class QrScan extends AppCompatActivity {
             try {
                 JSONObject jsonResponse = new JSONObject(result);
                 String state = jsonResponse.getString("state");
+                String code = jsonResponse.getString("code");
                 if (state.equals("Ticket válido")) {
-                    Rooms.getRoomsAccess(getApplicationContext());
-                    AlertDialog alertDialog = new AlertDialog.Builder(QrScan.this).create();
+                    Rooms.getRoomsAccess(code);
+                    AlertDialog alertDialog = new AlertDialog.Builder(QrScan.this, R.style.MyDialogTheme).create();
                     alertDialog.setTitle(R.string.validTicketMsg);
                     alertDialog.setMessage(getString(R.string.validMessageQrScan));
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -118,7 +119,7 @@ public class QrScan extends AppCompatActivity {
                             });
                     alertDialog.show();
                 } else {
-                    AlertDialog alertDialog = new AlertDialog.Builder(QrScan.this).create();
+                    AlertDialog alertDialog = new AlertDialog.Builder(QrScan.this, R.style.MyDialogTheme).create();
                     alertDialog.setTitle(R.string.noResultsDialog);
                     alertDialog.setMessage(getString(R.string.invalidMessageTicket));
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
@@ -129,7 +130,7 @@ public class QrScan extends AppCompatActivity {
                     alertDialog.show();
                 }
             } catch (JSONException e) {
-                AlertDialog alertDialog2 = new AlertDialog.Builder(QrScan.this).create();
+                AlertDialog alertDialog2 = new AlertDialog.Builder(QrScan.this, R.style.MyDialogTheme).create();
                 alertDialog2.setTitle(R.string.noResultsDialog);
                 alertDialog2.setMessage(getString(R.string.invalidMessageTicket));
                 alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",

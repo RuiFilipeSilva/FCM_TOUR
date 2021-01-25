@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Views.ChangePwPage">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp">
+
+
+            <TextView
+                android:id="@+id/titlePass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/stratum1_bold"
+                android:text="@string/changePassword"
+                android:textColor="@color/black"
+                android:textSize="25sp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/currentPWTxt"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/titlePass"
+                android:layout_marginTop="30dp"
+                android:hint="@string/currentPassword"
+                android:visibility="visible">
+
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/currentPW"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:fontFamily="@font/barlow_light"
+                    android:inputType="textPassword"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/newPWTxt"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/currentPWTxt"
+                android:layout_marginTop="30dp"
+                android:hint="@string/newPassword">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/newPW"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:fontFamily="@font/barlow_light"
+                    android:inputType="textPassword"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/confirmPWTxt"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/newPWTxt"
+                android:layout_marginTop="30dp"
+                android:hint="@string/confNewPassword">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/confirmPW"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:fontFamily="@font/barlow_light"
+                    android:inputType="textPassword"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/confirmPWTxt"
+                android:layout_marginTop="30dp">
+
+                <Button
+                    android:id="@+id/changePW"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/rounded_button"
+                    android:backgroundTint="@null"
+                    android:enabled="false"
+                    android:fontFamily="@font/barlow_medium"
+                    android:text="@string/changePasswordBtn"
+                    android:visibility="gone" />
+
+                <Button
+                    android:id="@+id/addPW"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/rounded_button"
+                    android:backgroundTint="@null"
+                    android:enabled="false"
+                    android:fontFamily="@font/barlow_medium"
+                    android:text="@string/addPasswordBtn"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+        </RelativeLayout>
+    </LinearLayout>
+</FrameLayout>

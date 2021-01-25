@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--Users-->
+    <string name="successRegisterMsg">Successfully registered</string>
+    <string name="passwordErrorMsg">Error: Password does not meets the requirements!</string>
+    <string name="emailErrorMsg">Error: E-mail invalid!</string>
+    <string name="welcomeToast">Welcome!</string>
+    <string name="logoutToast">Session ended</string>
+    <string name="errorToast">Error:</string>
+
+    <!--AR_Sculptures-->
+    <string name="ARexception">Model can`t be Loaded</string>
+
+    <!--AudioPage-->
+    <string name="goBackMusic">Music</string>
+    <string name="gobackPaintings">Exhibitions</string>
+    <string name="goBackRooms">Rooms</string>
+    <string name="goBackCollections">Collections</string>
+    <string name="collectionsBtn">Collections</string>
+    <string name="titleTextView">1900</string>
+    <string name="nextBtn">Next</string>
+    <string name="previousBtn">Previous</string>
+
+    <!--AudioPlayer-->
+    <string name="dialogAudioText">Loading audio...</string>
+    <string name="startTime">0:00</string>
+    <string name="descriptionAudioPlayer">DESCRIPTION</string>
+
+
+    <!--Authentication-->
+    <string name="login">Login In</string>
+    <string name="register">Register</string>
+    <string name="backBtn">Return V</string>
+
+    <!--Collections-->
+    <string name="imageViewTxt1">00</string>
+
+    <!--CollectionsPage-->
+    <string name="collectionsTitlePage">COLLECTIONS</string>
+
+    <!--History-->
+    <string name="historyPageTitle">HISTORY</string>
+
+    <!--Library-->
+    <string name="libraryTitle">LIBRARY</string>
+
+    <!--Login2-->
+    <string name="createAccountLabel">Do not have an account yet?</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+
+    <!--Museum-->
+    <string name="museumTopBtn">Sculptures</string>
+    <string name="museumTitle">MUSEUM</string>
+    <string name="showsTitle">EXHIBITIONS</string>
+
+    <!--Music-->
+    <string name="musicPageTitle">MUSIC</string>
+    <string name="cupertinosTitle">OS CUPERTINOS</string>
+    <string name="ciclosTitle">CYCLES OF MUSIC AND POETRY</string>
+
+    <!--PaintingQrCodes-->
+    <string name="permissionGranted">Camera permission granted</string>
+    <string name="permissionDenied">Camera permission denied</string>
+    <string name="validResultDialog">Valid</string>
+    <string name="noResultsDialog">No Results</string>
+    <string name="validMessageDialog">Painting found, will be redirected to the page!</string>
+    <string name="invalidMessageTicket">No ticket found with that number!</string>
+    <string name="invalidMessageCode">No code found with that number!</string>
+
+    <!--Permanent-->
+    <string name="permanentTitle">PERMANENTS</string>
+
+    <!--QrScan-->
+    <string name="validTicketMsg">Ticket valid!</string>
+    <string name="validMessageQrScan">You now have access to all the rooms!</string>
+
+    <!--Register-->
+    <string name="namePlaceholder">Name</string>
+    <string name="confirmPassword">Confirm password</string>
+    <string name="hasAlreadyAccount">Already have an account?</string>
+
+    <!--RoomPage-->
+    <string name="roomPageTitle">ROOMS</string>
+    <string name="insertTicketAlertTitle">Ticket code</string>
+    <string name="ticketCodeMsg">Insert ticket code please!</string>
+
+    <!--Rooms-->
+    <string name="noAccessAlertTitle">You do not have access!</string>
+    <string name="scanTicketAccessTxt">Scan your ticket to gain access</string>
+    <string name="scanCodeTxt">Scan the code</string>
+
+    <!--SculpturePage-->
+    <string name="sculpturesPageTitle">SCULPTURES</string>
+
+    <!--Temporary-->
+    <string name="temporaryTitle">TEMPORARIES</string>
+
+    <!--Tower-->
+    <string name="startTourBtn">Start Tour</string>
+    <string name="towertTitlePage">LITERARY TOWER</string>
+
+    <!--menu_tour-->
+    <string name="action_settings">Settings</string>
+
+    <!--navigation_drawer-->
+    <string name="homePageLabel">Home</string>
+    <string name="towerLable">Literary Tower</string>
+    <string name="museumLabel">Museum</string>
+    <string name="libraryLabel">Library</string>
+    <string name="musicLabel">Music</string>
+    <string name="shopLabel">Shop</string>
+    <string name="rouletteLabel">Roulette</string>
+    <string name="definitionsLabel">Settings</string>
+    <string name="logoutLabel">Log out</string>
+
+    <!--changePWPage-->
+    <string name="changePwToast">Password successfully changed!</string>
+    <string name="addPwToast">Password successfully added!</string>
+    <string name="currentPassword">Current Password</string>
+    <string name="newPassword">New Password</string>
+    <string name="confNewPassword">Confirm New Password</string>
+    <string name="changePasswordBtn">Change Password</string>
+    <string name="addPasswordBtn">Add Password</string>
+
+
+    <!--Outros-->
+    <string name="FB_APP_ID">3302524869853214</string>
+    <string name="fb_login_protocol_scheme">fb3302524869853214</string>
+    <string name="app_name">FCM_TOUR</string>
+    <string name="title_activity_tour">ScrollingActivity</string>
+    <string name="helper_text">Password must contain at least 6 characters</string>
+    <string name="navigation_drawer_open">Open Navigation</string>
+    <string name="navigation_drawer_close">Close Navigation</string>
+    <string name="title_activity_a_r__sculptures">AR_Sculptures</string>
+    <string name="qrCodeState">Ticket valid</string>
+    <string name="alertDialogTitle">Ticket valid</string>
+    <string name="alert_roulette">Can not enter</string>
+    <string name="message_roulette">To have access to the roulette you must log in first</string>
+    <string name="message_shop">To have access to the shop you must log in first</string>
+
+    <!--Roullete-->
+    <string name="spin">Spin</string>
+    <string name="awards">Prizes</string>
+    <string name="title_alert_award">Roulette</string>
+    <string name="message_award">Congratulations you won </string>
+    <string name="message_award_2"> Cupertinos</string>
+    <string name="title_roulette">Roulette</string>
+    <string name="title_awards">Prizes</string>
+    <string name="tilte_alert_error">Can not spin!</string>
+    <string name="message_alert_error">You can not spin anymore today! Come back tomorrow to be able to spin and e collect more cupertinos!</string>
+
+    <!--AwardsPage-->
+    <string name="name_form">Name</string>
+    <string name="adress_form">Adress</string>
+    <string name="postal_code_form">Zip code</string>
+    <string name="city_form">City</string>
+    <string name="get_awards">Redeem</string>
+    <string name="title_get_awards">ERROR</string>
+    <string name="message_get_award">Field can not be empty!</string>
+    <string name="conf_title_get_awards">Confirm</string>
+    <string name="conf_message_get_awards">Do you want to get this prize?</string>
+    <string name="toast_get_awards">Your order is already being prepared</string>
+    <string name="back">Return</string>
+    <string name="no_cupertinos">You do not have enough Cupertinos to get this prize, come back here every day and play roulette so you can collect more Cupertinos!</string>
+
+    <!--Quizz-->
+    <string name="quizzWonPrize">Congratulations, all your answers are correct! You have shown yourself to be a true connoisseur of Portuguese literature, as a reward the Fundação Cupertino de Miranda will offer you a prize!
+    We will send you an email in order to claim the prize at the main counter.</string>
+    <string name="quizzParticipation">Thank you for participating in this quizz, unfortunately you didn`t get all the answers right. You have to be more attentive to the next one! :)</string>
+    <string name="startQuizzBtn">Start Quizz</string>
+    <string name="goToHomePage">Home Page</string>
+
+
+    <!--SideBar-->
+    <string name="changeLanguage">Change Language</string>
+
+    <!--SettingsPage-->
+    <string name="usernameTxt">Username</string>
+    <string name="emailPlaceholder">username@gmail.com</string>
+    <string name="changePassword">Change Password</string>
+    <string name="deleteAccount">Delete Account</string>
+    <string name="currentLang">EN</string>
+    <string name="noImageSelected">No image selected!</string>
+    <string name="deleteAccountDialogTitle">ATTENTION</string>
+    <string name="deleteAccountDialogMsg">Do you want to delete your account?</string>
+    <string name="deleteBtn">Delete</string>
+    <string name="cancelBtn">Cancel</string>
+    <string name="titleIntent">Select Picture</string>
+    <string name="deleteAccountToastMsg">Account deleted!</string>
+    <string name="loadingImageTxt">Loading image...</string>
+    <string name="imageUpdatedSuccess">Image Updated</string>
+    <string name="confirmOrder">Confirmar</string>
+
+    <!--Shop-->
+    <string name="addToCardBtn">Add to Card</string>
+    <string name="removeFromCart">Remove from Card</string>
+    <string name="leaveShop">FCM</string>
+
+    <!--ProductPage-->
+    <string name="catalogBtn">Catalog</string>
+    <string name="store">STORE</string>
+    <string name="addToCartResponse">Product added to cart!</string>
+    <string name="removedFromCartResponse">Product removed from cart!</string>
+
+    <!--Shopping Cart-->
+    <string name="shopping_cart">CART</string>
+    <string name="finals_shop"> CHECKOUT</string>
+    <string name="emptyCart">YOUR CART IS EMPTY!</string>
+
+    <!--Orders-->
+    <string name="orderTitle">ORDER Nº</string>
+    <string name="orderState">Processing</string>
+    <string name="orderStateDone">Concluded</string>
+    <string name="stateTxt">State: </string>
+    <string name="totalPriceTxt">TOTAL: </string>
+    <string name="productsTxt">PRODUCTS</string>
+
+
+    <!--Payments-->
+    <string name="payment">CHECKOUT</string>
+    <string name="finishPayment">Checkout</string>
+    <string name="total">Total</string>
+    <string name="conf_tittle_pay">Confirmation of your order</string>
+    <string name="conf_message_pay">After confirming your order you will receive in your email the reference to make your payment</string>
+
+    <!--Orders-->
+    <string name="orders">ORDERS</string>
+    <!--This string is used for square devices and overridden by hello_world in    values-round/strings.xml for round devices.-->
+    <string name="hello_world">Hello Square World!</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_language">Language</string>
+</resources>

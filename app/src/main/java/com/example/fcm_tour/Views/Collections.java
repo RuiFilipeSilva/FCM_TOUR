@@ -21,7 +21,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
@@ -37,6 +42,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class Collections extends Fragment {
@@ -79,7 +86,7 @@ public class Collections extends Fragment {
         listView.setOnItemClickListener((parent, view, position, id) -> {
             for (int i = 0; i < numbers.length; i++) {
                 if (position == i) {
-                    new Collections.GetCollectionsByNumber().execute(API.API_URL + "/biblioteca/acervos/" + numbers[i]);
+                    GetCollectionsByNumber(getContext(), numbers[i]);
                     break;
                 }
             }
@@ -131,7 +138,7 @@ public class Collections extends Fragment {
                     stringBuilder.append(line);
                 }
             } catch (Exception e) {
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
+                Toast.makeText(getContext(), "Exception: " + e,Toast.LENGTH_LONG);
             }
             return stringBuilder.toString();
         }
@@ -148,52 +155,43 @@ public class Collections extends Fragment {
         }
     }
 
-    class GetCollectionsByNumber extends AsyncTask<String, String, String> {
-        @Override
-        protected String doInBackground(String... fileUrl) {
-            StringBuilder stringBuilder = new StringBuilder();
-            try {
-                URL url = new URL(fileUrl[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                InputStream in = connection.getInputStream();
-                stringBuilder = new StringBuilder();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-            } catch (Exception e) {
+    public void GetCollectionsByNumber(Context context, String number) {
+        String postUrl = API.API_URL + "/biblioteca/acervos/" + number;
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
+                response -> {
+                    try {
+                        img = response.getString("img");
+                        description = response.getString("description");
+                        link = response.getString("audio");
+                        title = response.getString("name");
+                        extras.putString("img", img);
+                        extras.putString("title", title);
+                        extras.putString("description", description);
+                        extras.putString("link", link);
+                        Preferences.saveAudioPageType(2);
+                        final int homeContainer = R.id.fullpage;
+                        AudioPage audioPage = new AudioPage();
+                        audioPage.setArguments(extras);
+                        openFragment(audioPage, homeContainer);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> Toast.makeText(context, "Erro" + error, Toast.LENGTH_LONG).show()) {
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("language", Preferences.readLanguage());
+                return headers;
             }
-            return stringBuilder.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                JSONObject rooms = new JSONObject(result);
-                img = rooms.getString("img");
-                description = rooms.getString("description");
-                link = rooms.getString("audio");
-                title = rooms.getString("name");
-                extras.putString("img", img);
-                extras.putString("title", title);
-                extras.putString("description", description);
-                extras.putString("link", link);
-                Preferences.saveAudioPageType(2);
-                final int homeContainer = R.id.fullpage;
-                AudioPage audioPage = new AudioPage();
-                audioPage.setArguments(extras);
-                openFragment(audioPage, homeContainer);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
+        };
+        requestQueue.add(jsonObjectRequest);
     }
 
     private void openFragment(AudioPage audioPage, int homeContainer) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.setCustomAnimations(R.anim.from_left, R.anim.to_right);
         ft.addToBackStack(null);

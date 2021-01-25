@@ -31,7 +31,7 @@ public class CollectionsPage extends Fragment {
     }
 
     private void openFragment(Collections collections, int homeContainer) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(homeContainer, collections);
         ft.commit();

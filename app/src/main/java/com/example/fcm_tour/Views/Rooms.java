@@ -21,7 +21,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.fcm_tour.API;
 import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
@@ -37,12 +42,14 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Rooms extends Fragment {
     private static String[] numbers, names, imgs;
     private static int[] colors, icons;
     private static View actualView;
-    String description, link, title, imgsList;
+    String description, link, title, imgsList, currentTicket;
     Bundle extras;
 
     @Override
@@ -55,8 +62,8 @@ public class Rooms extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         actualView = inflater.inflate(R.layout.fragment_rooms, container, false);
         extras = new Bundle();
-        Preferences.removeRoomsAccess();
-        new GetRooms().execute(API.API_URL + "/torre/salas");
+        currentTicket = Preferences.readRoomsAccessCode();
+        loadRoomsLayout();
         return actualView;
     }
 
@@ -71,7 +78,13 @@ public class Rooms extends Fragment {
         for (int i = 0; i <= result.length() - 1; i++) {
             JSONObject room = result.getJSONObject(i);
             String img = room.getString("cover");
-            String name = room.getString("name");
+            String name;
+            if (i == 0 && Preferences.readLanguage().equals("EN")) {
+                name = "Beginning";
+            } else {
+                name = room.getString("name");
+            }
+            //String name = room.getString("name");
             String number = room.getString("number");
             if (i == 0) {
                 int color = R.color.tower;
@@ -99,7 +112,7 @@ public class Rooms extends Fragment {
                         Preferences.removeRoom();
                         Preferences.write("room", numbers[i]);
                         extras.putString("nextRoom", names[i + 1]);
-                        new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + numbers[i]);
+                        GetRoomsByNumber(getContext(), numbers[i]);
                         break;
                     } else {
                         access = false;
@@ -111,7 +124,7 @@ public class Rooms extends Fragment {
                         if (i < names.length - 1) {
                             extras.putString("nextRoom", names[i + 1]);
                         }
-                        new GetRoomsByNumber().execute(API.API_URL + "/torre/salas/" + numbers[i]);
+                        GetRoomsByNumber(getContext(), numbers[i]);
                     }
                 }
             }
@@ -173,6 +186,44 @@ public class Rooms extends Fragment {
         }
     }
 
+    public void GetRoomsByNumber(Context context, String number) {
+        String postUrl = API.API_URL + "/torre/salas/" + number;
+        RequestQueue requestQueue = Volley.newRequestQueue(context);
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, postUrl, null,
+                response -> {
+                    try {
+                        imgsList = response.getString("imgs");
+                        description = response.getString("description");
+                        link = response.getString("audio");
+                        title = response.getString("name");
+                        if(title.equals("Início") && Preferences.readLanguage().equals("EN")) {
+                            title = "Beginning";
+                        }
+                        extras.putString("imgsList", imgsList);
+                        extras.putString("title", title);
+                        extras.putString("description", description);
+                        extras.putString("link", link);
+                        Preferences.saveAudioPageType(0);
+                        final int homeContainer = R.id.fullpage;
+                        AudioPage audioPage = new AudioPage();
+                        audioPage.setArguments(extras);
+                        openFragment(audioPage, homeContainer);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                },
+                error -> Toast.makeText(context, "Erro" + error, Toast.LENGTH_LONG).show()) {
+            @Override
+            public Map<String, String> getHeaders() {
+                HashMap<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json");
+                headers.put("language", Preferences.readLanguage());
+                return headers;
+            }
+        };
+        requestQueue.add(jsonObjectRequest);
+    }
+
     class GetRooms extends AsyncTask<String, String, String> {
         @Override
         protected String doInBackground(String... fileUrl) {
@@ -189,7 +240,6 @@ public class Rooms extends Fragment {
                     stringBuilder.append(line);
                 }
             } catch (Exception e) {
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
             }
             return stringBuilder.toString();
         }
@@ -206,60 +256,20 @@ public class Rooms extends Fragment {
         }
     }
 
-    class GetRoomsByNumber extends AsyncTask<String, String, String> {
-
-        @Override
-        protected String doInBackground(String... fileUrl) {
-            StringBuilder stringBuilder = new StringBuilder();
-            try {
-                URL url = new URL(fileUrl[0]);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                connection.connect();
-                InputStream in = connection.getInputStream();
-                stringBuilder = new StringBuilder();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-                String line = "";
-                while ((line = reader.readLine()) != null) {
-                    stringBuilder.append(line);
-                }
-            } catch (Exception e) {
-            }
-            return stringBuilder.toString();
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-            try {
-                JSONObject rooms = new JSONObject(result);
-                imgsList = rooms.getString("imgs");
-                description = rooms.getString("description");
-                link = rooms.getString("audio");
-                title = rooms.getString("name");
-                extras.putString("imgsList", imgsList);
-                extras.putString("title", title);
-                extras.putString("description", description);
-                extras.putString("link", link);
-                Preferences.saveAudioPageType(0);
-                final int homeContainer = R.id.fullpage;
-                AudioPage audioPage = new AudioPage();
-                audioPage.setArguments(extras);
-                openFragment(audioPage, homeContainer);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static void getRoomsAccess(Context v) {
-        Preferences.saveRoomsAccess();
+    public static void getRoomsAccess(String code) {
+        Preferences.saveRoomsAccess(code);
         MyAdapter adapter = new MyAdapter(actualView.getContext(), names, numbers, imgs, colors, icons);
-        ListView listView = (ListView) actualView.findViewById(R.id.listCards);
+        ListView listView = actualView.findViewById(R.id.listCards);
         listView.setAdapter(adapter);
     }
 
+    public void loadRoomsLayout() {
+        new GetRooms().execute(API.API_URL + "/torre/salas");
+        new ValidateTicket().execute(API.API_URL + "/ticket/" + currentTicket);
+    }
+
     private void openFragment(AudioPage audioPage, int homeContainer) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.setCustomAnimations(R.anim.from_left, R.anim.to_right);
         ft.addToBackStack(null);
@@ -268,15 +278,15 @@ public class Rooms extends Fragment {
     }
 
     public void AlertDialogInsertTicket() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
         alert.setTitle(R.string.noAccessAlertTitle);
-        alert.setMessage("Digitalize o seu bilhete para ter acesso");
-        alert.setPositiveButton("Digitalize o Código", (dialog, whichButton) -> {
+        alert.setMessage(R.string.scanTicketAccessTxt);
+        alert.setPositiveButton(R.string.scanCodeTxt, (dialog, whichButton) -> {
             dialog.dismiss();
             Intent intent = new Intent(getContext(), QrScan.class);
             startActivity(intent);
         });
-        alert.setNegativeButton("Voltar",
+        alert.setNegativeButton(R.string.back,
                 (dialog, which) -> {
                     dialog.dismiss();
                     return;
@@ -314,5 +324,55 @@ public class Rooms extends Fragment {
         result.add(String.valueOf(beforeNum));
         result.add(String.valueOf(afterNum));
         return result;
+    }
+
+    class ValidateTicket extends AsyncTask<String, String, String> {
+        @Override
+        protected String doInBackground(String... fileUrl) {
+            StringBuilder stringBuilder = new StringBuilder();
+            try {
+                URL url = new URL(fileUrl[0]);
+                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                connection.connect();
+                InputStream in = connection.getInputStream();
+                stringBuilder = new StringBuilder();
+                BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+                String line = "";
+                while ((line = reader.readLine()) != null) {
+                    stringBuilder.append(line);
+                }
+            } catch (Exception e) {
+                Toast.makeText(getContext(), "Exception: " + e, Toast.LENGTH_SHORT).show();
+            }
+            return stringBuilder.toString();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            try {
+                JSONObject jsonResponse = new JSONObject(result);
+                String state = jsonResponse.getString("state");
+                String code = jsonResponse.getString("code");
+                if (state.equals("Ticket válido")) {
+                    Preferences.saveRoomsAccess(code);
+                    MyAdapter adapter = new MyAdapter(actualView.getContext(), names, numbers, imgs, colors, icons);
+                    ListView listView = actualView.findViewById(R.id.listCards);
+                    listView.setAdapter(adapter);
+                } else {
+                    Preferences.removeRoomsAccess();
+                    MyAdapter adapter = new MyAdapter(actualView.getContext(), names, numbers, imgs, colors, icons);
+                    ListView listView = actualView.findViewById(R.id.listCards);
+                    listView.setAdapter(adapter);
+                    RoomPage.showQrCodeScanners();
+                }
+            } catch (JSONException e) {
+                Preferences.removeRoomsAccess();
+                MyAdapter adapter = new MyAdapter(actualView.getContext(), names, numbers, imgs, colors, icons);
+                ListView listView = actualView.findViewById(R.id.listCards);
+                listView.setAdapter(adapter);
+                RoomPage.showQrCodeScanners();
+            }
+        }
     }
 }

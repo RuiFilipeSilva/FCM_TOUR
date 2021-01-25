@@ -103,7 +103,7 @@
             </LinearLayout>
 
             <ImageView
-                android:id="@+id/cover"
+                android:id="@+id/coverHistory"
                 android:layout_width="match_parent"
                 android:layout_height="280dp"
                 android:layout_marginTop="30dp"
@@ -125,6 +125,7 @@
                 android:layout_width="70dp"
                 android:layout_height="3dp"
                 android:layout_marginLeft="20dp"
+                android:backgroundTint="@color/fcm"
                 android:background="@drawable/rec"></ImageView>
 
             <TextView

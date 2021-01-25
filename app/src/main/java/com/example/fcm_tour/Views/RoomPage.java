@@ -16,8 +16,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.fcm_tour.API;
+import com.example.fcm_tour.Controllers.Preferences;
 import com.example.fcm_tour.R;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -31,6 +33,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class RoomPage extends Fragment {
+    static View v;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +42,7 @@ public class RoomPage extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_room_page, container, false);
+        v = inflater.inflate(R.layout.fragment_room_page, container, false);
         final int homeContainer = R.id.listRooms;
         Rooms rooms = new Rooms();
         openFragment(rooms, homeContainer);
@@ -51,7 +55,7 @@ public class RoomPage extends Fragment {
     }
 
     private void openFragment(Rooms rooms, int homeContainer) {
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(homeContainer, rooms);
         ft.commit();
@@ -73,7 +77,8 @@ public class RoomPage extends Fragment {
                     stringBuilder.append(line);
                 }
             } catch (Exception e) {
-                Log.e("MY_CUSTOM_ERRORS", "onCreate: " + e);
+                Toast.makeText(getContext(), "Exception: " + e, Toast.LENGTH_LONG);
+
             }
             return stringBuilder.toString();
         }
@@ -84,12 +89,17 @@ public class RoomPage extends Fragment {
             try {
                 JSONObject jsonResponse = new JSONObject(result);
                 String state = jsonResponse.getString("state");
+                String code = jsonResponse.getString("code");
                 if (state.equals("Ticket válido")) {
-                    Rooms.getRoomsAccess(getContext());
+                    hideQrCodeScanners();
+                    Preferences.saveRoomsAccess(code);
+                    final int homeContainer = R.id.listRooms;
+                    Rooms rooms = new Rooms();
+                    openFragment(rooms, homeContainer);
                 } else {
-                    AlertDialog alertDialog2 = new AlertDialog.Builder(getContext()).create();
+                    AlertDialog alertDialog2 = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme).create();
                     alertDialog2.setTitle(R.string.noResultsDialog);
-                    alertDialog2.setMessage("Não foi encontrado nenhum bilhete com esse número");
+                    alertDialog2.setMessage(getString(R.string.invalidMessageCode));
                     alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             (dialog, which) -> {
                                 dialog.dismiss();
@@ -98,9 +108,9 @@ public class RoomPage extends Fragment {
                     alertDialog2.show();
                 }
             } catch (JSONException e) {
-                AlertDialog alertDialog2 = new AlertDialog.Builder(getContext()).create();
+                AlertDialog alertDialog2 = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme).create();
                 alertDialog2.setTitle(R.string.noResultsDialog);
-                alertDialog2.setMessage("Não foi encontrado nenhum bilhete com esse número");
+                alertDialog2.setMessage(getString(R.string.invalidMessageCode));
                 alertDialog2.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                         (dialog, which) -> {
                             dialog.dismiss();
@@ -113,9 +123,9 @@ public class RoomPage extends Fragment {
     }
 
     public void AlertDialogInsertTicket() {
-        AlertDialog.Builder alert = new AlertDialog.Builder(getContext());
+        AlertDialog.Builder alert = new AlertDialog.Builder(getContext(), R.style.MyDialogTheme);
         alert.setTitle(R.string.insertTicketAlertTitle);
-        alert.setMessage("Insira o código que se encontra no bilhete");
+        alert.setMessage(getString(R.string.ticketCodeMsg));
         LinearLayout layout = new LinearLayout(getContext());
         layout.setOrientation(LinearLayout.VERTICAL);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -133,5 +143,19 @@ public class RoomPage extends Fragment {
                     return;
                 });
         alert.show();
+    }
+
+    public static void showQrCodeScanners() {
+        v.findViewById(R.id.qrCode).setVisibility(View.VISIBLE);
+        v.findViewById(R.id.cardViewQr).setVisibility(View.VISIBLE);
+        v.findViewById(R.id.keyBoard).setVisibility(View.VISIBLE);
+        v.findViewById(R.id.cardViewKeyboard).setVisibility(View.VISIBLE);
+    }
+
+    public void hideQrCodeScanners() {
+        v.findViewById(R.id.qrCode).setVisibility(View.INVISIBLE);
+        v.findViewById(R.id.cardViewQr).setVisibility(View.INVISIBLE);
+        v.findViewById(R.id.keyBoard).setVisibility(View.INVISIBLE);
+        v.findViewById(R.id.cardViewKeyboard).setVisibility(View.INVISIBLE);
     }
 }

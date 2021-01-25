@@ -5,8 +5,11 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 
 import com.example.fcm_tour.MainActivity;
 import com.example.fcm_tour.Controllers.Preferences;
@@ -39,6 +42,9 @@ public class Authentication extends AppCompatActivity {
         });
 
         btnBack = findViewById(R.id.voltar);
+        if(btnBack.getText().toString().equals("Return V")) {
+            btnBack.getLayoutParams().width = 280;
+        }
         btnBack.setOnClickListener(v -> {
             comeBack = new Intent(v.getContext(), SideBar.class);
             startActivity(comeBack);
