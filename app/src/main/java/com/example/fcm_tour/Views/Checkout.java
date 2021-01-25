@@ -244,7 +244,6 @@ public class Checkout extends Fragment {
         FragmentManager fragmentManager = getParentFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.setCustomAnimations(R.anim.from_right, R.anim.to_left);
-        ft.addToBackStack(null);
         ft.replace(homeContainer, catalogPage);
         ft.commit();
     }
