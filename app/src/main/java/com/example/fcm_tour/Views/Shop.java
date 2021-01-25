@@ -56,7 +56,7 @@ public class Shop extends AppCompatActivity {
                         openCatalog();
                         break;
                     case 1:
-                        openCatalog();
+                       openOrder();
                         break;
                 }
             }
@@ -84,6 +84,15 @@ public class Shop extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
         ft.replace(homeContainer, shoppingCart);
+        ft.commit();
+    }
+
+    public void openOrder() {
+        final int homeContainer = R.id.shopPage;
+        Order order = new Order();
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        FragmentTransaction ft = fragmentManager.beginTransaction();
+        ft.replace(homeContainer, order);
         ft.commit();
     }
 }
