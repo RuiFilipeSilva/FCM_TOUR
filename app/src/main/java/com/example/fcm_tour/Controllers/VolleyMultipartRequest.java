@@ -17,9 +17,9 @@ import java.util.Map;
 
 
 public class VolleyMultipartRequest extends Request<NetworkResponse> {
-    private final String twoHyphens = "--";
-    private final String lineEnd = "\r\n";
-    private final String boundary = "apiclient-" + System.currentTimeMillis();
+    private final String TWOHYPHENS = "--";
+    private final String LINEEND = "\r\n";
+    private final String BOUNDARY = "apiclient-" + System.currentTimeMillis();
     private Response.Listener<NetworkResponse> mListener;
     private Response.ErrorListener mErrorListener;
     private Map<String, String> mHeaders;
@@ -39,7 +39,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
 
     @Override
     public String getBodyContentType() {
-        return "multipart/form-data;boundary=" + boundary;
+        return "multipart/form-data;boundary=" + BOUNDARY;
     }
 
     @Override
@@ -55,7 +55,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
             if (data != null && data.size() > 0) {
                 dataParse(dos, data);
             }
-            dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+            dos.writeBytes(TWOHYPHENS + BOUNDARY + TWOHYPHENS + LINEEND);
             return bos.toByteArray();
         } catch (IOException e) {
             e.printStackTrace();
@@ -105,20 +105,20 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
     }
 
     private void buildTextPart(DataOutputStream dataOutputStream, String parameterName, String parameterValue) throws IOException {
-        dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
-        dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"" + parameterName + "\"" + lineEnd);
-        dataOutputStream.writeBytes(lineEnd);
-        dataOutputStream.writeBytes(parameterValue + lineEnd);
+        dataOutputStream.writeBytes(TWOHYPHENS + BOUNDARY + LINEEND);
+        dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"" + parameterName + "\"" + LINEEND);
+        dataOutputStream.writeBytes(LINEEND);
+        dataOutputStream.writeBytes(parameterValue + LINEEND);
     }
 
     private void buildDataPart(DataOutputStream dataOutputStream, DataPart dataFile, String inputName) throws IOException {
-        dataOutputStream.writeBytes(twoHyphens + boundary + lineEnd);
+        dataOutputStream.writeBytes(TWOHYPHENS + BOUNDARY + LINEEND);
         dataOutputStream.writeBytes("Content-Disposition: form-data; name=\"" +
-                inputName + "\"; filename=\"" + dataFile.getFileName() + "\"" + lineEnd);
+                inputName + "\"; filename=\"" + dataFile.getFileName() + "\"" + LINEEND);
         if (dataFile.getType() != null && !dataFile.getType().trim().isEmpty()) {
-            dataOutputStream.writeBytes("Content-Type: " + dataFile.getType() + lineEnd);
+            dataOutputStream.writeBytes("Content-Type: " + dataFile.getType() + LINEEND);
         }
-        dataOutputStream.writeBytes(lineEnd);
+        dataOutputStream.writeBytes(LINEEND);
         ByteArrayInputStream fileInputStream = new ByteArrayInputStream(dataFile.getContent());
         int bytesAvailable = fileInputStream.available();
         int maxBufferSize = 1024 * 1024;
@@ -131,7 +131,7 @@ public class VolleyMultipartRequest extends Request<NetworkResponse> {
             bufferSize = Math.min(bytesAvailable, maxBufferSize);
             bytesRead = fileInputStream.read(buffer, 0, bufferSize);
         }
-        dataOutputStream.writeBytes(lineEnd);
+        dataOutputStream.writeBytes(LINEEND);
     }
 
     public class DataPart {
