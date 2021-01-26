@@ -165,9 +165,9 @@
     <string name="no_cupertinos">You do not have enough Cupertinos to get this prize, come back here every day and play roulette so you can collect more Cupertinos!</string>
 
     <!--Quizz-->
-    <string name="quizzWonPrize">Congratulations, all your answers are correct! You have shown yourself to be a true connoisseur of Portuguese literature, as a reward the Fundação Cupertino de Miranda will offer you a prize!
-    We will send you an email in order to claim the prize at the main counter.</string>
-    <string name="quizzParticipation">Thank you for participating in this quizz, unfortunately you didn`t get all the answers right. You have to be more attentive to the next one! :)</string>
+    <string name="quizzWonPrize">Congratulations, all your answers are correct! You have shown yourself to be a true connoisseur of Portuguese literature, as a reward
+        we will send you an email for you to claim the prize at the main counter.</string>
+    <string name="quizzParticipation">Thank you for participating in this quizz, unfortunately you didn`t get all the answers right. You have to be more attentive to the next one!</string>
     <string name="startQuizzBtn">Start Quizz</string>
     <string name="goToHomePage">Home Page</string>
 

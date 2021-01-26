@@ -162,8 +162,8 @@
     <string name="no_cupertinos">Não têm cupertinos suficientes para adquirir este prémio, volte aqui todos os dia e jogo na roleta para pode coletar mais cupertinos!</string>
 
     <!--Quizz-->
-    <string name="quizzWonPrize">Parabéns, todas as tuas respostas estão corretas! Demonstras-te ser um verdadeiro sabedor da literatura portuguesa, como recompensa a Fundação Cupertino de Miranda vai oferecer-te um prémio! Envia-mos-te um email para poderes reclamar o prémio no balcão.</string>
-    <string name="quizzParticipation">Obrigado por teres participado neste quizz, infelizmente não acertaste todas as respostas. Tens que estar mais atento para a próxima! :)</string>
+    <string name="quizzWonPrize">Parabéns, todas as tuas respostas estão corretas! Demonstras-te ser um verdadeiro sabedor da literatura portuguesa, como recompensa envia-mos-te um email para poderes reclamar o prémio no balcão.</string>
+    <string name="quizzParticipation">Obrigado por teres participado neste quizz, infelizmente não acertaste todas as respostas. Tens que estar mais atento para a próxima!</string>
     <string name="startQuizzBtn">Iniciar Quizz</string>
     <string name="goToHomePage">Página Inicial</string>
 
