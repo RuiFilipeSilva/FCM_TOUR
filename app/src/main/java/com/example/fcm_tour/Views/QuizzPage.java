@@ -108,7 +108,6 @@ public class QuizzPage extends Fragment {
     }
 
     public void endQuizz() {
-        v.findViewById(R.id.quizzLogo).setVisibility(View.GONE);
         quizzLayout.setVisibility(View.GONE);
         endLayout.setVisibility(View.VISIBLE);
         if (correctAnswerCount == 5) {
