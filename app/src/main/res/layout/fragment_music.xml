@@ -42,8 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="270dp"
                 android:backgroundTint="@color/white"
-                android:scaleType="fitXY"
-                tools:layout_editor_absoluteX="-16dp" />
+                android:scaleType="center" />
 
             <TextView
                 android:id="@+id/Img1Title"
@@ -70,8 +69,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="270dp"
                 android:backgroundTint="@color/white"
-                android:scaleType="fitXY"
-                tools:layout_editor_absoluteX="-16dp" />
+                android:scaleType="center" />
 
             <TextView
                 android:id="@+id/Img2Title"

@@ -28,7 +28,7 @@
         android:layout_gravity="center_vertical"
         android:orientation="vertical"
         android:paddingBottom="20dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <Button
             android:id="@+id/authBtn"

@@ -193,7 +193,7 @@
     <string name="deleteAccountToastMsg">Account deleted!</string>
     <string name="loadingImageTxt">Loading image...</string>
     <string name="imageUpdatedSuccess">Image Updated</string>
-    <string name="confirmOrder">Confirmar</string>
+    <string name="confirmOrder">Confirm</string>
 
     <!--Shop-->
     <string name="addToCardBtn">Add to Card</string>
