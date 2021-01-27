@@ -79,7 +79,6 @@ public class Shop extends AppCompatActivity {
         CatalogPage catalogPage = new CatalogPage();
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction ft = fragmentManager.beginTransaction();
-        ft.addToBackStack(null);
         ft.replace(homeContainer, catalogPage);
         ft.commit();
     }
