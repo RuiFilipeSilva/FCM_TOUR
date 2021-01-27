@@ -25,7 +25,7 @@
                     android:id="@+id/productImg"
                     android:layout_width="match_parent"
                     android:layout_height="350dp"
-                    android:scaleType="fitXY"
+                    android:scaleType="fitCenter"
                     tools:layout_editor_absoluteX="-16dp" />
 
                 <Button
@@ -94,7 +94,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:layout_marginBottom="75dp"
+        android:layout_marginBottom="90dp"
         android:elevation="40dp"
         android:gravity="center">
 

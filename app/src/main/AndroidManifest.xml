@@ -18,7 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FCM_TOUR">
-        <activity android:name=".Views.Shop"></activity>
+        <activity
+            android:name=".Views.Shop"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Views.PaintingQrCodes"
             android:screenOrientation="portrait" />

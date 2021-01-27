@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,6 +37,7 @@ public class Language extends AppCompatActivity {
             Intent intent = new Intent(this, SideBar.class);
             startActivity(intent);
             finish();
+            Toast.makeText(getApplicationContext(), R.string.welcomeToastPT, Toast.LENGTH_SHORT).show();
         });
 
         EN = findViewById(R.id.EN);
@@ -51,6 +53,7 @@ public class Language extends AppCompatActivity {
             Intent intent = new Intent(this, SideBar.class);
             startActivity(intent);
             finish();
+            Toast.makeText(getApplicationContext(), R.string.welcomeToastEN, Toast.LENGTH_SHORT).show();
         });
     }
 }

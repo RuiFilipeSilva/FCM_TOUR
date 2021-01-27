@@ -4,7 +4,10 @@
     <string name="passwordErrorMsg">Erro: Palavra-Passe não cumpre os requisitos!</string>
     <string name="emailErrorMsg">Erro: E-mail inválido!</string>
     <string name="welcomeToast">Bem-vindo!</string>
-    <string name="logoutToast">Sessão Terminada</string>
+    <string name="welcomeToastPT">Bem-vindo!</string>
+    <string name="welcomeToastEN">Welcome!</string>
+    <string name="logoutToastEN">Session Ended</string>
+    <string name="logoutToastPT">Sessão Terminada</string>
     <string name="errorToast">Erro:</string>
 
     <!--AR_Sculptures-->

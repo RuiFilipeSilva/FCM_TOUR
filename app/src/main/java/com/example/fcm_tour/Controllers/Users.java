@@ -108,9 +108,12 @@ public class Users {
                             Intent homePage = new Intent(context, SideBar.class);
                             homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(homePage);
+                            if (Preferences.readLanguage().equals("EN")) {
+                                Toast.makeText(context, R.string.welcomeToastEN, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(context, R.string.welcomeToastPT, Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        Toast toast = Toast.makeText(context, R.string.welcomeToast, Toast.LENGTH_SHORT);
-                        toast.show();
                     } catch (JSONException e) {
                         e.printStackTrace();
                     } catch (Exception e) {
@@ -154,9 +157,12 @@ public class Users {
                             Intent homePage = new Intent(context, SideBar.class);
                             homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(homePage);
+                            if (Preferences.readLanguage().equals("EN")) {
+                                Toast.makeText(context, R.string.welcomeToastEN, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(context, R.string.welcomeToastPT, Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        Toast toast = Toast.makeText(context, R.string.welcomeToast, Toast.LENGTH_SHORT);
-                        toast.show();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -196,9 +202,12 @@ public class Users {
                             Intent homePage = new Intent(context, SideBar.class);
                             homePage.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(homePage);
+                            if (Preferences.readLanguage().equals("EN")) {
+                                Toast.makeText(context, R.string.welcomeToastEN, Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(context, R.string.welcomeToastPT, Toast.LENGTH_SHORT).show();
+                            }
                         }
-                        Toast toast = Toast.makeText(context, R.string.welcomeToast, Toast.LENGTH_SHORT);
-                        toast.show();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -218,7 +227,6 @@ public class Users {
     public static class JWTUtils {
         public static void decoded(String JWTEncoded) throws Exception {
             try {
-
                 String[] split = JWTEncoded.split("\\.");
                 JSONObject body = new JSONObject(getJson(split[1]));
                 String data = body.getString("data");
@@ -235,7 +243,6 @@ public class Users {
                 Preferences.saveUserPoints(points);
                 String date = body2.getString("date");
                 Preferences.saveUserDate(date);
-
             } catch (UnsupportedEncodingException e) {
                 //Error
             }
@@ -248,13 +255,17 @@ public class Users {
     }
 
     public static void Logout() {
+        if (Preferences.readLanguage().equals("EN")) {
+            Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.logoutToastEN), Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), getApplicationContext().getString(R.string.logoutToastPT), Toast.LENGTH_SHORT).show();
+        }
         Preferences.Logout();
         if (AccessToken.getCurrentAccessToken() == null) {
             return;
         } else {
             LoginManager.getInstance().logOut();
         }
-        Toast.makeText(getApplicationContext(), R.string.logoutToast, Toast.LENGTH_SHORT).show();
     }
 
     public static void handleError(VolleyError error, Context context) {
