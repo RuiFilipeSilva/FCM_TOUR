@@ -173,6 +173,7 @@
     <string name="quizzParticipation">Thank you for participating in this quizz, unfortunately you didn`t get all the answers right. You have to be more attentive to the next one!</string>
     <string name="startQuizzBtn">Start Quizz</string>
     <string name="goToHomePage">Home Page</string>
+    <string name="endBtn">FINISH</string>
 
     <!--SideBar-->
     <string name="changeLanguage">Change Language</string>

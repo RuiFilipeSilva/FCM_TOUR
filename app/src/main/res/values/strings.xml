@@ -169,6 +169,7 @@
     <string name="quizzParticipation">Obrigado por teres participado neste quizz, infelizmente não acertaste todas as respostas. Tens que estar mais atento para a próxima!</string>
     <string name="startQuizzBtn">Iniciar Quizz</string>
     <string name="goToHomePage">Página Inicial</string>
+    <string name="endBtn">TERMINAR</string>
 
     <!--SideBar-->
     <string name="changeLanguage">Alterar Idioma</string>
