@@ -214,7 +214,9 @@ public class SideBar extends AppCompatActivity {
                 }
                 break;
             case R.id.logout:
+                String lang = Preferences.readLanguage();
                 Users.Logout();
+                Preferences.saveLanguage(lang);
                 loadUserPicture();
                 menuItem.setVisible(false);
                 Intent intent = new Intent(this, SideBar.class);

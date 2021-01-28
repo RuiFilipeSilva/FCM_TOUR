@@ -3,6 +3,7 @@ package com.example.fcm_tour.Controllers;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class Preferences {
     private static SharedPreferences mSharedPref;

@@ -73,9 +73,6 @@ public class QrScan extends AppCompatActivity {
         if (requestCode == MY_CAMERA_REQUEST_CODE) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 mCodeScanner.startPreview();
-                Toast.makeText(this, R.string.permissionGranted, Toast.LENGTH_LONG).show();
-            } else {
-                Toast.makeText(this, R.string.permissionDenied, Toast.LENGTH_LONG).show();
             }
         }
     }

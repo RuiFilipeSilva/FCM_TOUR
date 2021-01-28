@@ -252,7 +252,9 @@ public class SettingsPage extends Fragment {
 
     public void logout() {
         SideBar.updateImg();
+        String lang = Preferences.readLanguage();
         Users.Logout();
+        Preferences.saveLanguage(lang);
         Intent intent = new Intent(v.getContext(), SideBar.class);
         startActivity(intent);
     }
@@ -330,10 +332,8 @@ public class SettingsPage extends Fragment {
     }
 
     public void changeLanguage() {
-
         Preferences.removeLanguage();
         Intent intent = new Intent(getContext(), Language.class);
         startActivity(intent);
-
     }
 }

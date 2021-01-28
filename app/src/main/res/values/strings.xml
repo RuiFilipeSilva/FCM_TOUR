@@ -4,7 +4,10 @@
     <string name="passwordErrorMsg">Erro: Palavra-Passe não cumpre os requisitos!</string>
     <string name="emailErrorMsg">Erro: E-mail inválido!</string>
     <string name="welcomeToast">Bem-vindo!</string>
-    <string name="logoutToast">Sessão Terminada</string>
+    <string name="welcomeToastPT">Bem-vindo!</string>
+    <string name="welcomeToastEN">Welcome!</string>
+    <string name="logoutToastEN">Session Ended</string>
+    <string name="logoutToastPT">Sessão Terminada</string>
     <string name="errorToast">Erro:</string>
 
     <!--AR_Sculptures-->
@@ -144,7 +147,7 @@
     <string name="message_award_2"> Cupertinos</string>
     <string name="title_roulette">Roleta</string>
     <string name="title_awards">Prémios</string>
-    <string name="tilte_alert_error">Não é Possível Rodar</string>
+    <string name="tilte_alert_error">Não é possível rodar</string>
     <string name="message_alert_error">Não pode rodar mais hoje! Apareça amanhã para poder rodar e coletar mais cupertinos</string>
 
     <!--AwardsPage-->
@@ -154,18 +157,19 @@
     <string name="city_form">Cidade</string>
     <string name="get_awards">Redimir</string>
     <string name="title_get_awards">ERRO</string>
-    <string name="message_get_award">Alguns campos não foram Preenchidos</string>
+    <string name="message_get_award">Alguns campos não foram preenchidos</string>
     <string name="conf_title_get_awards">Confirmação</string>
     <string name="conf_message_get_awards">Confirma que deseja receber este prémio?</string>
     <string name="toast_get_awards">A sua encomenda já está a ser processada</string>
     <string name="back">Voltar</string>
-    <string name="no_cupertinos">Não têm cupertinos suficientes para adquirir este prémio, volte aqui todos os dia e jogo na roleta para pode coletar mais cupertinos!</string>
+    <string name="no_cupertinos">Não tem cupertinos suficientes para adquirir este prémio, volte aqui todos os dia e jogue na roleta para pode coletar mais cupertinos!</string>
 
     <!--Quizz-->
     <string name="quizzWonPrize">Parabéns, todas as tuas respostas estão corretas! Demonstras-te ser um verdadeiro sabedor da literatura portuguesa, como recompensa envia-mos-te um email para poderes reclamar o prémio no balcão.</string>
     <string name="quizzParticipation">Obrigado por teres participado neste quizz, infelizmente não acertaste todas as respostas. Tens que estar mais atento para a próxima!</string>
     <string name="startQuizzBtn">Iniciar Quizz</string>
     <string name="goToHomePage">Página Inicial</string>
+    <string name="endBtn">TERMINAR</string>
 
     <!--SideBar-->
     <string name="changeLanguage">Alterar Idioma</string>

@@ -5,7 +5,10 @@
     <string name="passwordErrorMsg">Error: Password does not meets the requirements!</string>
     <string name="emailErrorMsg">Error: E-mail invalid!</string>
     <string name="welcomeToast">Welcome!</string>
-    <string name="logoutToast">Session ended</string>
+    <string name="welcomeToastPT">Bem-vindo!</string>
+    <string name="welcomeToastEN">Welcome!</string>
+    <string name="logoutToastEN">Session Ended</string>
+    <string name="logoutToastPT">Sessão Terminada</string>
     <string name="errorToast">Error:</string>
 
     <!--AR_Sculptures-->
@@ -148,7 +151,7 @@
     <string name="title_roulette">Roulette</string>
     <string name="title_awards">Prizes</string>
     <string name="tilte_alert_error">Can not spin!</string>
-    <string name="message_alert_error">You can not spin anymore today! Come back tomorrow to be able to spin and e collect more cupertinos!</string>
+    <string name="message_alert_error">You can not spin anymore today! Come back tomorrow to be able to spin and collect more cupertinos!</string>
 
     <!--AwardsPage-->
     <string name="name_form">Name</string>
@@ -162,15 +165,15 @@
     <string name="conf_message_get_awards">Do you want to get this prize?</string>
     <string name="toast_get_awards">Your order is already being prepared</string>
     <string name="back">Return</string>
-    <string name="no_cupertinos">You do not have enough Cupertinos to get this prize, come back here every day and play roulette so you can collect more Cupertinos!</string>
+    <string name="no_cupertinos">You do not have enough Cupertinos to get this prize, come back here every day and play the roulette so you can collect more Cupertinos!</string>
 
     <!--Quizz-->
-    <string name="quizzWonPrize">Congratulations, all your answers are correct! You have shown yourself to be a true connoisseur of Portuguese literature, as a reward
-        we will send you an email for you to claim the prize at the main counter.</string>
+    <string name="quizzWonPrize">Congratulations, all your answers are correct! You have shown yourself to be a true connoisseur of Portuguese literature, as a reward the Fundação Cupertino de Miranda will offer you a prize!
+    We will send you an email in order to claim the prize at the main counter.</string>
     <string name="quizzParticipation">Thank you for participating in this quizz, unfortunately you didn`t get all the answers right. You have to be more attentive to the next one!</string>
     <string name="startQuizzBtn">Start Quizz</string>
     <string name="goToHomePage">Home Page</string>
-
+    <string name="endBtn">FINISH</string>
 
     <!--SideBar-->
     <string name="changeLanguage">Change Language</string>
@@ -190,7 +193,7 @@
     <string name="deleteAccountToastMsg">Account deleted!</string>
     <string name="loadingImageTxt">Loading image...</string>
     <string name="imageUpdatedSuccess">Image Updated</string>
-    <string name="confirmOrder">Confirmar</string>
+    <string name="confirmOrder">Confirm</string>
 
     <!--Shop-->
     <string name="addToCardBtn">Add to Card</string>

@@ -58,8 +58,8 @@ public class Music extends Fragment {
         GetMusic(getContext());
         firstMusicGroup = v.findViewById(R.id.firstImg);
         secondMusicGroup = v.findViewById(R.id.secondImg);
-        firstMusicGroup.setOnClickListener(v -> GetCiclos(getContext()));
-        secondMusicGroup.setOnClickListener(v -> GetCupertinos(getContext()));
+        firstMusicGroup.setOnClickListener(v -> GetCupertinos(getContext()));
+        secondMusicGroup.setOnClickListener(v -> GetCiclos(getContext()));
         return v;
     }
 

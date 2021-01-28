@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
+            android:layout_gravity="center"
             android:fontFamily="@font/stratum1_bold"
             android:text="@string/temporaryTitle"
             android:textColor="@color/black"
@@ -40,7 +40,8 @@
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
                 app:cardCornerRadius="6dp"
-                app:cardElevation="8dp">
+                app:cardMaxElevation="4dp"
+                app:cardElevation="4dp">
 
                 <ImageButton
                     android:id="@+id/temp1"
@@ -57,8 +58,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="6dp"
-                app:cardElevation="8dp">
+                app:cardMaxElevation="4dp"
+                app:cardElevation="4dp">
 
                 <ImageButton
                     android:id="@+id/temp2"
@@ -75,8 +76,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="6dp"
-                app:cardElevation="8dp">
+                app:cardMaxElevation="4dp"
+                app:cardElevation="4dp">
 
                 <ImageButton
                     android:id="@+id/temp3"
@@ -93,8 +94,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="6dp"
-                app:cardElevation="8dp">
+                app:cardMaxElevation="4dp"
+                app:cardElevation="4dp">
 
                 <ImageButton
                     android:id="@+id/temp4"
